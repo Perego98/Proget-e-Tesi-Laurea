@@ -35,6 +35,10 @@ public class CrmUser {
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String email;
+	
+	@NotNull(message = "is required")
+	@Size(min = 10, message = "is required")
+	private String telephone;
 
 	public CrmUser() {
 
@@ -88,4 +92,13 @@ public class CrmUser {
 		this.email = email;
 	}
 
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	
 }

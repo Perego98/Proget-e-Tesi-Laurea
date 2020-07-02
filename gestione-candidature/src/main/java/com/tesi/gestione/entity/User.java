@@ -1,7 +1,18 @@
 package com.tesi.gestione.entity;
 
-import javax.persistence.*;
 import java.util.Collection;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
@@ -26,6 +37,9 @@ public class User {
 
 	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "numeroTel")
+	private String telephone;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "users_roles", 
@@ -36,21 +50,23 @@ public class User {
 	public User() {
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String email) {
+	public User(String userName, String password, String firstName, String lastName, String email, String telephone) {
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.telephone = telephone;
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String email,
+	public User(String userName, String password, String firstName, String lastName, String email, String telephone,
 			Collection<Role> roles) {
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.telephone = telephone;
 		this.roles = roles;
 	}
 
@@ -109,11 +125,21 @@ public class User {
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
+	
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 
 	@Override
 	public String toString() {
-		return "User{" + "id=" + id + ", userName='" + userName + '\'' + ", password='" + "*********" + '\''
-				+ ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\''
-				+ ", roles=" + roles + '}';
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", email=" + email + ", telephone=" + telephone + ", roles=" + roles + "]";
 	}
+
+	
+ 
 }

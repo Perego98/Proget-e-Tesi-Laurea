@@ -64,46 +64,53 @@
 					    </div>
 
 						<!-- User name -->
+						<form:errors path="userName" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-							<form:errors path="userName" cssClass="error" />
 							<form:input path="userName" placeholder="username (*)" class="form-control" />
 						</div>
 
 						<!-- Password -->
+						<form:errors path="password" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span> 
-							<form:errors path="password" cssClass="error" />
 							<form:password path="password" placeholder="password (*)" class="form-control" />
 						</div>
 						
 						<!-- Confirm Password -->
+						<form:errors path="matchingPassword" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span> 
-							<form:errors path="matchingPassword" cssClass="error" />
 							<form:password path="matchingPassword" placeholder="confirm password (*)" class="form-control" />
 						</div>
 					
 						
 						<!-- First name -->
+						<form:errors path="firstName" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-							<form:errors path="firstName" cssClass="error" />
 							<form:input path="firstName" placeholder="first name (*)" class="form-control" />
 						</div>
 						
 						<!-- Last name -->
+						<form:errors path="lastName" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-							<form:errors path="lastName" cssClass="error" />
 							<form:input path="lastName" placeholder="last name (*)" class="form-control" />
 						</div>
 						
 						<!-- Email -->
+						<form:errors path="email" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-							<form:errors path="email" cssClass="error" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span> 
 							<form:input path="email" placeholder="email (*)" class="form-control" />
+						</div>
+						
+						<!-- Telephone -->
+						<form:errors path="telephone" cssClass="error" />
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
+							<form:input path="telephone" placeholder="telephone number" class="form-control" />
 						</div>
 						
 						
