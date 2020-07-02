@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -46,6 +48,10 @@ public class User {
 	joinColumns = @JoinColumn(name = "user_id"), 
 	inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Collection<Role> roles;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="sedeAssegnamento")
+	private Sede sedeAssegnamento;
 
 	public User() {
 	}
