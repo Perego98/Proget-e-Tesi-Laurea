@@ -39,6 +39,10 @@ public class CrmUser {
 	@NotNull(message = "is required")
 	@Size(min = 10, message = "is required")
 	private String telephone;
+	
+	@NotNull(message = "is required")
+	@Size(min = 1, message = "is required")
+	private String idRole;
 
 	public CrmUser() {
 
@@ -100,5 +104,16 @@ public class CrmUser {
 		this.telephone = telephone;
 	}
 
+	public String getIdRole() {
+		return idRole;
+	}
+
+	public void setIdRole(String idRole) {
+		this.idRole = idRole;
+	}
+	
+
+
+	
 	
 }

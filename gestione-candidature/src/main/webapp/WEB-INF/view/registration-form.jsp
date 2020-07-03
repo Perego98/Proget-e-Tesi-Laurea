@@ -111,10 +111,26 @@
 						<form:errors path="telephone" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
-							<form:input path="telephone" placeholder="telephone number" class="form-control" />
+							<form:input path="telephone" placeholder="telephone number (*)" class="form-control" />
 						</div>
 						
-						<!-- Show the Role -->
+						<!-- Role -->
+						<form:errors path="idRole" cssClass="error" />
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
+							Ruolo: 
+							
+							
+						</div>
+						
+						<!-- Print the radiobutton role -->
+						<c:forEach var="tempRole" items="${roles}">
+										<form:radiobutton path="idRole" value="${tempRole.name}"/> ${tempRole.name} 
+										</br>																
+						</c:forEach>
+						
+						
+						<!-- Show the Role
 						<div id="container">
 							
 							<div id="content">
@@ -125,7 +141,7 @@
 										<th>Role Name</th>
 									</tr>
 									
-									<!-- Loop over a print our Role -->
+									<!-- Loop over a print our Role 
 								
 									<c:forEach var="tempRole" items="${roles}">
 										<tr>
@@ -138,7 +154,7 @@
 							
 							</div>
 						
-						</div>
+						</div> -->
 
 						<!-- Register Button -->
 						<div style="margin-top: 10px" class="form-group">						
