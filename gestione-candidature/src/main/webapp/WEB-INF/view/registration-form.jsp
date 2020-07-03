@@ -106,6 +106,7 @@
 							<form:input path="email" placeholder="email (*)" class="form-control" />
 						</div>
 						
+						
 						<!-- Telephone -->
 						<form:errors path="telephone" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
@@ -113,7 +114,31 @@
 							<form:input path="telephone" placeholder="telephone number" class="form-control" />
 						</div>
 						
+						<!-- Show the Role -->
+						<div id="container">
+							
+							<div id="content">
+							
+								<table>
+									<tr>
+										<th>Id</th>
+										<th>Role Name</th>
+									</tr>
+									
+									<!-- Loop over a print our Role -->
+								
+									<c:forEach var="tempRole" items="${roles}">
+										<tr>
+											<th>${tempRole.id}</th>
+											<th>${tempRole.name}</th>
+
+										</tr>								
+									</c:forEach>
+								</table>
+							
+							</div>
 						
+						</div>
 
 						<!-- Register Button -->
 						<div style="margin-top: 10px" class="form-group">						

@@ -1,10 +1,13 @@
 package com.tesi.gestione.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tesi.gestione.entity.Role;
 
@@ -34,5 +37,25 @@ public class RoleDaoImpl implements RoleDao {
 		}
 		
 		return theRole;
+	}
+
+	@Override
+	@Transactional
+	public List<Role> getRoles() {
+		System.out.println(" ********** RoleDaoImpl -> Entrato in getRoles().");
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// create a query
+		Query<Role> theQuery = 
+				currentSession.createQuery("from Role", Role.class);
+		
+		// execute query and get result list
+		List<Role> customers = theQuery.getResultList();
+		
+		System.out.println(" ********** RoelDaoImpl -> Customers: " + customers.toString());
+		
+		// return the result
+		return customers;
 	}
 }

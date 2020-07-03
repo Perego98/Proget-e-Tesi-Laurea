@@ -1,5 +1,6 @@
 package com.tesi.gestione.controller;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.validation.Valid;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tesi.gestione.user.CrmUser;
+import com.tesi.gestione.dao.RoleDao;
+import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.service.UserService;
+import com.tesi.gestione.user.CrmUser;
 
 @Controller
 @RequestMapping("/register")
@@ -26,8 +29,15 @@ public class RegistrationController {
 	
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private RoleDao roleDao;
+    
 	
     private Logger logger = Logger.getLogger(getClass().getName());
+    
+    
+    
     
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
@@ -42,6 +52,16 @@ public class RegistrationController {
 		
 		theModel.addAttribute("crmUser", new CrmUser());
 		
+		System.out.println(" ********** RegistrationController -> Entrato in showMyLoginPage().");
+		// get Role from dao
+		List<Role> theRoles = roleDao.getRoles();
+		
+		System.out.println(" ********** RegistrationController -> Recuperati Ruoli: " + theRoles.toString());
+		// add the role to the model
+		theModel.addAttribute("roles", theRoles);
+		System.out.println(" ********** RegistrationController -> Aggiunti al modello: " + theModel.toString());
+		
+		
 		return "registration-form";
 	}
 
@@ -50,6 +70,7 @@ public class RegistrationController {
 				@Valid @ModelAttribute("crmUser") CrmUser theCrmUser, 
 				BindingResult theBindingResult, 
 				Model theModel) {
+		
 		
 		String userName = theCrmUser.getUserName();
 		logger.info("Processing registration form for: " + userName);
