@@ -72,6 +72,10 @@
 		<div>
 			<a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New User</a>
 		</div>
+		
+		<div>
+			<a href="${pageContext.request.contextPath}/register/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>
+		</div>
 	</security:authorize>
 	
 </body>

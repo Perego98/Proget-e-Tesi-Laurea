@@ -36,12 +36,12 @@ CREATE TABLE `candidato` (
   `tipoOfferta` enum('lavoro','stage','candidatura_spontanea') NOT NULL,
   `canale_provenienza` varchar(150) NOT NULL,
   `aspettative` varchar(100) DEFAULT NULL,
-  `note` mediumtext,
+  `note` text,
   `curriculum` blob NOT NULL COMMENT 'curriculum o caricato direttamente o si potrebbe salvare il percorso del file',
-  `supervisore` varchar(45) NOT NULL,
+  `supervisore` int NOT NULL,
   PRIMARY KEY (`codiceFiscale`),
   KEY `fk_Candidato_utente1_idx` (`supervisore`),
-  CONSTRAINT `fk_Candidato_utente1` FOREIGN KEY (`supervisore`) REFERENCES `user` (`username`) ON UPDATE CASCADE
+  CONSTRAINT `fk_Candidato_utente1` FOREIGN KEY (`supervisore`) REFERENCES `user` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -106,12 +106,14 @@ CREATE TABLE `schedavalutazione` (
   `dinamicità` enum('insuff','suff','discreto','buono','ottimo') DEFAULT NULL,
   `disponibilitàSpostamentiTrasferimenti` enum('si','no') DEFAULT NULL,
   `sede_preferita` int DEFAULT NULL,
-  `utente_relatore` varchar(45) NOT NULL,
+  `utente_relatore` int NOT NULL,
   `candidato_relativo` varchar(16) NOT NULL,
-  PRIMARY KEY (`utente_relatore`,`candidato_relativo`),
   KEY `fk_candidato_idx` (`candidato_relativo`),
+  KEY `fk_sede_preferita_idx` (`sede_preferita`),
+  KEY `fk_utente_relatore_idx` (`utente_relatore`),
   CONSTRAINT `fk_candidato` FOREIGN KEY (`candidato_relativo`) REFERENCES `candidato` (`codiceFiscale`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_utente_relatore` FOREIGN KEY (`utente_relatore`) REFERENCES `user` (`username`) ON UPDATE CASCADE
+  CONSTRAINT `fk_sede_preferita` FOREIGN KEY (`sede_preferita`) REFERENCES `sede` (`id`),
+  CONSTRAINT `fk_utente_relatore` FOREIGN KEY (`utente_relatore`) REFERENCES `user` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -225,4 +227,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-06 11:04:56
+-- Dump completed on 2020-07-06 13:06:55

@@ -23,6 +23,7 @@ import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.service.UserService;
+import com.tesi.gestione.user.CrmCandidato;
 import com.tesi.gestione.user.CrmUser;
 
 @Controller
@@ -135,4 +136,26 @@ public class RegistrationController {
         
         return "registration-confirmation";		
 	}
+	
+	@PostMapping("/processRegistrationCandidatoForm")
+	public String processRegistrationCandidatoForm(
+				@Valid @ModelAttribute("crmUser") CrmUser theCrmUser, 
+				BindingResult theBindingResult, 
+				Model theModel) {
+		
+		
+		// TODO: Salvataggio candidato
+        
+        return "registration-confirmation";		
+	}
+	
+	
+	@GetMapping("/showCandidatoRegistrationForm")
+	public String showMyCandidatoRegistrationPage(Model theModel) {
+		
+		theModel.addAttribute("crmCandidato", new CrmCandidato());
+		
+		return "registra-candidato";
+	}
+	
 }
