@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `gestione_candidature` /*!40100 DEFAULT CHARACTER SET latin1 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `gestione_candidature`;
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: gestione_candidature
+-- Host: 127.0.0.1    Database: gestione_candidature
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -67,7 +65,7 @@ CREATE TABLE `role` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,12 +132,12 @@ DROP TABLE IF EXISTS `sede`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sede` (
-  `id_città` int NOT NULL AUTO_INCREMENT,
-  `nomeCittà` varchar(45) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name_city` varchar(45) NOT NULL,
   `via` varchar(55) NOT NULL,
   `cap` int NOT NULL,
-  `numeroCivico` int NOT NULL,
-  PRIMARY KEY (`id_città`)
+  `civic_number` int NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -169,11 +167,12 @@ CREATE TABLE `user` (
   `numeroTel` char(12) DEFAULT NULL,
   `email` varchar(55) NOT NULL,
   `sedeAssegnamento` int DEFAULT NULL,
+  `qualified` tinyint NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   KEY `fk_sedeAssegnamento_idx` (`sedeAssegnamento`),
-  CONSTRAINT `fk_sedeAssegnamento` FOREIGN KEY (`sedeAssegnamento`) REFERENCES `sede` (`id_città`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_sedeAssegnamento` FOREIGN KEY (`sedeAssegnamento`) REFERENCES `sede` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +181,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (3,'admin','$2a$10$IsKbFuOq2vobVBxqUDGQUuIMyXIr3t/D5pRSjpho6fkvjB7hMNOcy','admin','admin',NULL,'admin@gmail.com',NULL),(4,'lele_perego','$2a$10$gtpzs7DgZNk6al.zhZFjte9Y/LuSEd0KwS2brKMpPvdD.NwC9v3em','daniele','perego',NULL,'peregopr@gmail.com',NULL);
+INSERT INTO `user` VALUES (8,'admin','$2a$10$gRrRBwskYrqBFX5eXIPpFOLSYmilkR9cLw9BXhumXuDo97tO6jp72','admin','admin','1234567890','admin@gmail.com',NULL,1),(9,'hr','$2a$10$kPRAotY9YY7CBwjyLC9Mru5OX3EjZdg1IhaBYU7tHdVYzsJF5iM.K','hr','hr','1234567890','hr@gmail.com',NULL,1),(10,'manager','$2a$10$lckRmWVTvOfSNUYv4V/v.ubRhlIMQEnTsMFFkOVuPH39UQMjEOVAW','manager','manager','1234567890','manager@gmail.com',NULL,1),(11,'test','$2a$10$gYSU55usADM4apYxJOXhZ.Afsd4dU4xzlTGpnsGlAbxNUgal1vywK','manager','test','12345678980','test@gmail.com',NULL,1),(12,'sede','$2a$10$Db49Wn9Da.p16H04ttdQ9.NBT3NF6SAN/J9W4ISD2mlDfAfC6g1Yi','sede','sede','1234567890','sede@gmail.com',NULL,1),(13,'sede2','$2a$10$Ct0ms96jMSxdY2sZCTmKdOw6c.cCB.dyBSLi73saUHgzFi5Dlp.ku','sede2','sede2','1234567890','sede2@gmail.com',4,1),(14,'test2','$2a$10$.GMSZLQCm.dB.mtb/h0aE.h/v/LPnpXla9wvoj/EoaLG6Qcx/nb.q','test2','test2','1234567890','test2@gmail.com',5,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -197,7 +196,9 @@ CREATE TABLE `users_roles` (
   `user_id` int NOT NULL,
   `role_id` int NOT NULL,
   PRIMARY KEY (`user_id`,`role_id`),
-  KEY `FK_id_ruolo_idx` (`role_id`)
+  KEY `FK_id_ruolo_idx` (`role_id`),
+  CONSTRAINT `FK_ROLE_ID` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
+  CONSTRAINT `FK_USER_ID` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -207,7 +208,7 @@ CREATE TABLE `users_roles` (
 
 LOCK TABLES `users_roles` WRITE;
 /*!40000 ALTER TABLE `users_roles` DISABLE KEYS */;
-INSERT INTO `users_roles` VALUES (3,1),(3,2),(3,3),(4,3);
+INSERT INTO `users_roles` VALUES (8,1),(14,1),(9,2),(10,3),(11,3),(12,3),(13,3);
 /*!40000 ALTER TABLE `users_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,4 +225,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-02 10:47:39
+-- Dump completed on 2020-07-06 11:04:56
