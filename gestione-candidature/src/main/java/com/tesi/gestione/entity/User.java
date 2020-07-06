@@ -42,6 +42,9 @@ public class User {
 	
 	@Column(name = "numeroTel")
 	private String telephone;
+	
+	@Column(name = "qualified")
+	private boolean qualified;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "users_roles", 
@@ -56,16 +59,17 @@ public class User {
 	public User() {
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String email, String telephone) {
+	public User(String userName, String password, String firstName, String lastName, String email, String telephone, boolean qualified) {
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.telephone = telephone;
+		this.qualified = qualified;
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String email, String telephone,
+	public User(String userName, String password, String firstName, String lastName, String email, String telephone, boolean qualified, 
 			Collection<Role> roles) {
 		this.userName = userName;
 		this.password = password;
@@ -73,6 +77,7 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.telephone = telephone;
+		this.qualified = qualified;
 		this.roles = roles;
 	}
 
@@ -149,12 +154,25 @@ public class User {
 	public void setSedeAssegnamento(Sede sedeAssegnamento) {
 		this.sedeAssegnamento = sedeAssegnamento;
 	}
+	
+	
+
+	public boolean isQualified() {
+		return qualified;
+	}
+
+	public void setQualified(boolean qualified) {
+		this.qualified = qualified;
+	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + ", telephone=" + telephone + ", roles=" + roles + "]";
+				+ ", lastName=" + lastName + ", email=" + email + ", telephone=" + telephone + ", qualified="
+				+ qualified + ", roles=" + roles + ", sedeAssegnamento=" + sedeAssegnamento + "]";
 	}
+
+
 
 	
  

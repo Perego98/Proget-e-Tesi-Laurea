@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 
 <html>
 
@@ -40,13 +41,19 @@
 	
 	
 	<security:authorize access="hasRole('ADMIN')">  
-
-		<!-- Add a link to point to /systems ... this is for the admins -->
+	
+		Qualified: ${user.qualified}
+		<c:if test= "${user.qualified}">
 		
-		<p>
-			<a href="${pageContext.request.contextPath}/systems">IT Systems Meeting</a>
-			(Only for Admin peeps)
-		</p>
+			<!-- Add a link to point to /systems ... this is for the admins -->
+			
+			<p>
+				<a href="${pageContext.request.contextPath}/systems">IT Systems Meeting</a>
+				(Only for Admin peeps)
+			</p>
+		
+		</c:if>
+		
 	
 	</security:authorize>
 	

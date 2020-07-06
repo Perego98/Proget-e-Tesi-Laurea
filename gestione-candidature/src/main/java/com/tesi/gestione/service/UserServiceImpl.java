@@ -55,6 +55,8 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(crmUser.getEmail());
 		user.setTelephone(crmUser.getTelephone());
 
+		// set default qualidfied
+		user.setQualified(true);
 
 		// set the role
 		user.setRoles(Arrays.asList(roleDao.findRoleByName(crmUser.getIdRole())));
