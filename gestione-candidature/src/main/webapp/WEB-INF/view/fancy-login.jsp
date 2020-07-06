@@ -89,7 +89,7 @@
 							</div>
 						</div>
 
-						<!-- I'm manually adding tokens ... Bro! -->
+						<!-- I'm manually adding tokens -->
 
 						<input type="hidden"
 							   name="${_csrf.parameterName}"
@@ -101,9 +101,6 @@
 				
 			</div>
 
-			<div>
-				<a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New User</a>
-			</div>
 
 		</div>
 

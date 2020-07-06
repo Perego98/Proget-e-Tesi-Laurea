@@ -43,6 +43,9 @@ public class CrmUser {
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String idRole;
+	
+	@NotNull(message = "is required")
+	private int Sedeid;
 
 	public CrmUser() {
 
@@ -111,6 +114,15 @@ public class CrmUser {
 	public void setIdRole(String idRole) {
 		this.idRole = idRole;
 	}
+
+	public int getSedeid() {
+		return Sedeid;
+	}
+
+	public void setSedeid(int sedeid) {
+		Sedeid = sedeid;
+	}
+	
 	
 
 

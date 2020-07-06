@@ -117,17 +117,34 @@
 						<!-- Role -->
 						<form:errors path="idRole" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
+							<!-- <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> -->
 							Ruolo: 
-							
+							</br>
+							<!-- Print the radiobutton role -->
+							<c:forEach var="tempRole" items="${roles}">
+								<form:radiobutton path="idRole" value="${tempRole.name}"/> ${tempRole.name} 
+								</br>																
+							</c:forEach>
 							
 						</div>
 						
-						<!-- Print the radiobutton role -->
-						<c:forEach var="tempRole" items="${roles}">
-										<form:radiobutton path="idRole" value="${tempRole.name}"/> ${tempRole.name} 
-										</br>																
-						</c:forEach>
+						
+						
+						
+						<!-- Sede -->
+						<form:errors path="Sedeid" cssClass="error" />
+						<div style="margin-bottom: 25px" class="input-group">
+							Sede: 
+							</br>
+							<!-- Print the radiobutton sedi -->
+							<c:forEach var="tempSedi" items="${sedi}">
+								<form:radiobutton path="Sedeid" value="${tempSedi.id}"/> ${tempSedi.nameCity}, ${tempSedi.via},  ${tempSedi.civicNumber}, ${tempSedi.cap}.
+								</br>																
+							</c:forEach>
+							
+						</div>
+						
+						
 						
 						
 						<!-- Show the Role

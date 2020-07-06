@@ -140,6 +140,16 @@ public class User {
 		this.telephone = telephone;
 	}
 
+	
+	
+	public Sede getSedeAssegnamento() {
+		return sedeAssegnamento;
+	}
+
+	public void setSedeAssegnamento(Sede sedeAssegnamento) {
+		this.sedeAssegnamento = sedeAssegnamento;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName

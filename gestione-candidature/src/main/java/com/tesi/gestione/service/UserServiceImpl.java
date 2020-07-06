@@ -1,8 +1,10 @@
 package com.tesi.gestione.service;
 
 import com.tesi.gestione.dao.RoleDao;
+import com.tesi.gestione.dao.SedeDao;
 import com.tesi.gestione.dao.UserDao;
 import com.tesi.gestione.entity.Role;
+import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.user.CrmUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class UserServiceImpl implements UserService {
 	private RoleDao roleDao;
 	
 	@Autowired
+	private SedeDao sedeDao;
+	
+	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
@@ -51,10 +56,19 @@ public class UserServiceImpl implements UserService {
 		user.setTelephone(crmUser.getTelephone());
 
 
-		// give user default role of "employee"
+		// set the role
 		user.setRoles(Arrays.asList(roleDao.findRoleByName(crmUser.getIdRole())));
+		
+		//set the Sede
+		int sedeId = crmUser.getSedeid();
+		Sede tmpSede = sedeDao.findSedeByCityID(sedeId);
+		
+		if(tmpSede != null)
+			user.setSedeAssegnamento(tmpSede);
+		
+		//user.setSedeAssegnamento(sedeDao.findSedeByCityID(crmUser.getSedeid()));
 
-		 // save user in the database
+		// save user in the database
 		userDao.save(user);
 	}
 

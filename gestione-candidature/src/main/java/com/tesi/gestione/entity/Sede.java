@@ -86,8 +86,8 @@ public class Sede {
 
 	@Override
 	public String toString() {
-		return "Sede [id=" + id + ", nameCity=" + nameCity + ", via=" + via + ", cap=" + cap + ", civicNumber="
-				+ civicNumber + "]";
+		return "id(" + id + ") città=" + nameCity + ", via=" + via + ", numero civico="
+				+ civicNumber + ", cap=" + cap ;
 	}
 
 	

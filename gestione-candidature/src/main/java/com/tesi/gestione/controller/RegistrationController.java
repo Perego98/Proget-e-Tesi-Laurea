@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tesi.gestione.dao.RoleDao;
+import com.tesi.gestione.dao.SedeDao;
 import com.tesi.gestione.entity.Role;
+import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.service.UserService;
 import com.tesi.gestione.user.CrmUser;
@@ -27,11 +29,16 @@ import com.tesi.gestione.user.CrmUser;
 @RequestMapping("/register")
 public class RegistrationController {
 	
+	
+	
     @Autowired
     private UserService userService;
     
     @Autowired
     private RoleDao roleDao;
+    
+    @Autowired
+    private SedeDao sedeDao;
     
 	
     private Logger logger = Logger.getLogger(getClass().getName());
@@ -53,12 +60,23 @@ public class RegistrationController {
 		theModel.addAttribute("crmUser", new CrmUser());
 		
 		System.out.println(" ********** RegistrationController -> Entrato in showMyLoginPage().");
+		
 		// get Role from dao
 		List<Role> theRoles = roleDao.getRoles();
 		
+		// fet Sedi from dao
+		List<Sede> theSedi = sedeDao.getSedi();
+		
+		
 		System.out.println(" ********** RegistrationController -> Recuperati Ruoli: " + theRoles.toString());
+		System.out.println(" ********** RegistrationController -> Recuperati Sedi: " + theSedi.toString());
+		
 		// add the role to the model
 		theModel.addAttribute("roles", theRoles);
+		
+		// add the sedi to the model
+		theModel.addAttribute("sedi", theSedi);
+		
 		System.out.println(" ********** RegistrationController -> Aggiunti al modello: " + theModel.toString());
 		
 		
@@ -70,6 +88,27 @@ public class RegistrationController {
 				@Valid @ModelAttribute("crmUser") CrmUser theCrmUser, 
 				BindingResult theBindingResult, 
 				Model theModel) {
+		
+		
+		System.out.println(" ********** RegistrationController -> Entrato in showMyLoginPage().");
+		
+		// get Role from dao
+		List<Role> theRoles = roleDao.getRoles();
+		
+		// fet Sedi from dao
+		List<Sede> theSedi = sedeDao.getSedi();
+		
+		
+		System.out.println(" ********** RegistrationController -> Recuperati Ruoli: " + theRoles.toString());
+		System.out.println(" ********** RegistrationController -> Recuperati Sedi: " + theSedi.toString());
+		
+		// add the role to the model
+		theModel.addAttribute("roles", theRoles);
+		
+		// add the sedi to the model
+		theModel.addAttribute("sedi", theSedi);
+		
+		System.out.println(" ********** RegistrationController -> Aggiunti al modello: " + theModel.toString());
 		
 		
 		String userName = theCrmUser.getUserName();
