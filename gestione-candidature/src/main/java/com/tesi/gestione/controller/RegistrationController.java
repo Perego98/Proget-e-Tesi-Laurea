@@ -139,7 +139,7 @@ public class RegistrationController {
 	
 	@PostMapping("/processRegistrationCandidatoForm")
 	public String processRegistrationCandidatoForm(
-				@Valid @ModelAttribute("crmUser") CrmUser theCrmUser, 
+				@Valid @ModelAttribute("crmCandidato") CrmCandidato CrmCandidato, 
 				BindingResult theBindingResult, 
 				Model theModel) {
 		
