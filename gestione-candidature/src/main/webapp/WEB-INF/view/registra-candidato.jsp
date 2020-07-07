@@ -7,6 +7,7 @@
 <head>
 	
 	<title>Register New Candidato</title>
+	
 
 <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -75,16 +76,6 @@
 							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
 							<form:input path="codiceFiscale" placeholder="codice fiscale(*)" class="form-control" />
 						</div>
-
-						<!-- Stato candidatura -->
-						<form:errors path="statoCandidatura" cssClass="error" />
-						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-							
-							<!-- TODO: stampare i stati candidatura ammessi -->
-							
-						</div>
-
 					
 						
 						<!-- First name -->
@@ -117,28 +108,38 @@
 						</div>
 						
 						<!-- Data di nascita -->
-						<!--  TODO: mettere calendario -->
+						<!--  TODO: mettere calendario
 						<form:errors path="dataNascita" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span> 
-							<form:input path="dataNascita" placeholder="data di nascita dd/mm//aaaa (*)" class="form-control" />
-						</div>
+							<form:input path="dataNascita" type="date" placeholder="data di nascita dd/mm//aaaa (*)" class="form-control" />
+						</div>  -->
+
 						
 						<!-- Tipo di contratto -->
 						<form:errors path="tipoContratto" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-							
-							<!-- TODO: stampare i stati candidatura ammessi -->
-							
+							Tipo di contratto:
+							<div>
+								<!-- ENUM('tempo_indeterminato', 'tempo_determinato', 'somministrazione', 'a_chiamata', 'a_progetto', 'accessorio', 'apprendistato', 'tirocinio_formativo_e_orientamento', 'part-time', 'not_set') -->
+								<form:radiobutton path="tipoContratto" value="tempo_indeterminato"/> Tempo Indeterminato
+								</br>
+								<form:radiobutton path="tipoContratto" value="somministrazione"/> Somministrazione
+								</br>
+								<form:radiobutton path="tipoContratto" value="a_chiamata"/> A Chiamata 
+								</br>
+								<form:radiobutton path="tipoContratto" value="a_progetto"/> A Progetto
+								</br>
+								<form:radiobutton path="tipoContratto" value="accessorio"/> Accessorio
+								</br>
+								<form:radiobutton path="tipoContratto" value="apprendistato"/> Apprendistato
+								</br>
+								<form:radiobutton path="tipoContratto" value="tirocinio_formativo_e_orientamento"/> Tirocinio Formativo e Orientamento
+								</br>
+								<form:radiobutton path="tipoContratto" value="part-time"/> part-time
+							</div>
 						</div>
 						
-						<!-- Telephone -->
-						<form:errors path="telephone" cssClass="error" />
-						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
-							<form:input path="telephone" placeholder="telephone number (*)" class="form-control" />
-						</div>
 						
 						<!-- ral -->
 						<form:errors path="ral" cssClass="error" />
@@ -157,9 +158,16 @@
 						<!-- offerta -->
 						<form:errors path="offerta" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
 							
-							<!-- TODO: stampare i stati candidatura ammessi -->
+							Offerta:
+							<div>
+								<form:radiobutton path="offerta" value="lavoro"/> Lavoro
+								</br>
+								<form:radiobutton path="offerta" value="stage"/> Stage
+								</br>
+								<form:radiobutton path="offerta" value="candidatura_spontanea"/> Candidatura Spontanea 
+								</br>
+							</div>
 							
 						</div>
 						
@@ -177,12 +185,12 @@
 							<form:input path="aspettative" placeholder="telephone number (*)" class="form-control" />
 						</div>
 						
-						<!-- note -->
+						<!-- note 
 						<form:errors path="note" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
 							<form:input path="note" placeholder="telephone number (*)" class="form-control" />
-						</div>
+						</div>-->
 						
 						<!-- TODO: Caricamento del curriculum -->
 						

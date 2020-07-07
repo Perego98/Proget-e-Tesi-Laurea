@@ -118,6 +118,7 @@
 						<form:errors path="idRole" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
 							<!-- <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> -->
+							
 							Ruolo: 
 							</br>
 							<!-- Print the radiobutton role -->
@@ -134,6 +135,7 @@
 						<!-- Sede -->
 						<form:errors path="Sedeid" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
+						
 							Sede: 
 							</br>
 							<!-- Print the radiobutton sedi -->

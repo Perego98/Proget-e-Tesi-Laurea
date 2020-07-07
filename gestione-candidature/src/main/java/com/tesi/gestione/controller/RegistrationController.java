@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tesi.gestione.dao.RoleDao;
 import com.tesi.gestione.dao.SedeDao;
+import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
+import com.tesi.gestione.service.CandidatoService;
 import com.tesi.gestione.service.UserService;
 import com.tesi.gestione.user.CrmCandidato;
 import com.tesi.gestione.user.CrmUser;
@@ -30,7 +32,8 @@ import com.tesi.gestione.user.CrmUser;
 @RequestMapping("/register")
 public class RegistrationController {
 	
-	
+	@Autowired
+	private CandidatoService candidatoService;
 	
     @Autowired
     private UserService userService;
@@ -143,15 +146,38 @@ public class RegistrationController {
 				BindingResult theBindingResult, 
 				Model theModel) {
 		
+		System.out.println(" ********** RegistrationController -> dentro processRegistrationCandidatoForm()");
 		
-		// TODO: Salvataggio candidato
+		
+		// form validation
+	 	if (theBindingResult.hasErrors()){
+	 		return "registra-candidato";
+        }
+
+	 	String codFiscale = CrmCandidato.getCodiceFiscale();
+		// check the database if user already exists
+        Candidato existing = candidatoService.findByCodiceFiscale(codFiscale);
+        if (existing != null){
+        	theModel.addAttribute("crmCandidato", new CrmCandidato());
+			theModel.addAttribute("registrationError", "Candidato already exists.");
+
+			logger.warning("Candidato already exists.");
+        	return "registra-candidato";
+        }
+		// create user account        						
+		candidatoService.save(CrmCandidato);
+		
+		logger.info("Successfully created user: " + codFiscale);
+		        
         
-        return "registration-confirmation";		
+        return "registration-candidato-confirmation";		
 	}
 	
 	
 	@GetMapping("/showCandidatoRegistrationForm")
 	public String showMyCandidatoRegistrationPage(Model theModel) {
+		
+		System.out.println(" ********** RegistrationController -> dentro showMyCandidatoRegistrationPage()");
 		
 		theModel.addAttribute("crmCandidato", new CrmCandidato());
 		

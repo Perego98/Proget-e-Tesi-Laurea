@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: gestione_candidature
+-- Host: localhost    Database: gestione_candidature
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -24,12 +24,12 @@ DROP TABLE IF EXISTS `candidato`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `candidato` (
   `codiceFiscale` varchar(16) NOT NULL,
-  `sato_candidatura` enum('new','assegnato_hr','assegnato_manager','in_valutazione','assunto','rigettato') NOT NULL DEFAULT 'new',
+  `stato_candidatura` enum('new','assegnato_hr','assegnato_manager','in_valutazione','assunto','rigettato') NOT NULL DEFAULT 'new',
   `nome` varchar(45) NOT NULL,
   `cognome` varchar(45) NOT NULL,
   `telefono` varchar(12) NOT NULL,
   `email` varchar(55) NOT NULL,
-  `dataNascita` date NOT NULL,
+  `dataNascita` date DEFAULT NULL,
   `tipoContratto` enum('tempo_indeterminato','tempo_determinato','somministrazione','a_chiamata','a_progetto','accessorio','apprendistato','tirocinio_formativo_e_orientamento','part-time','not_set') NOT NULL DEFAULT 'not_set',
   `ral` float NOT NULL DEFAULT '0',
   `tempo_preavviso_giorni` int NOT NULL DEFAULT '10' COMMENT 'Numero di giorni preavviso',
@@ -37,8 +37,8 @@ CREATE TABLE `candidato` (
   `canale_provenienza` varchar(150) NOT NULL,
   `aspettative` varchar(100) DEFAULT NULL,
   `note` text,
-  `curriculum` blob NOT NULL COMMENT 'curriculum o caricato direttamente o si potrebbe salvare il percorso del file',
-  `supervisore` int NOT NULL,
+  `curriculum` blob COMMENT 'curriculum o caricato direttamente o si potrebbe salvare il percorso del file',
+  `supervisore` int DEFAULT NULL,
   PRIMARY KEY (`codiceFiscale`),
   KEY `fk_Candidato_utente1_idx` (`supervisore`),
   CONSTRAINT `fk_Candidato_utente1` FOREIGN KEY (`supervisore`) REFERENCES `user` (`id`) ON UPDATE CASCADE
@@ -183,7 +183,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (8,'admin','$2a$10$gRrRBwskYrqBFX5eXIPpFOLSYmilkR9cLw9BXhumXuDo97tO6jp72','admin','admin','1234567890','admin@gmail.com',NULL,1),(9,'hr','$2a$10$kPRAotY9YY7CBwjyLC9Mru5OX3EjZdg1IhaBYU7tHdVYzsJF5iM.K','hr','hr','1234567890','hr@gmail.com',NULL,1),(10,'manager','$2a$10$lckRmWVTvOfSNUYv4V/v.ubRhlIMQEnTsMFFkOVuPH39UQMjEOVAW','manager','manager','1234567890','manager@gmail.com',NULL,1),(11,'test','$2a$10$gYSU55usADM4apYxJOXhZ.Afsd4dU4xzlTGpnsGlAbxNUgal1vywK','manager','test','12345678980','test@gmail.com',NULL,1),(12,'sede','$2a$10$Db49Wn9Da.p16H04ttdQ9.NBT3NF6SAN/J9W4ISD2mlDfAfC6g1Yi','sede','sede','1234567890','sede@gmail.com',NULL,1),(13,'sede2','$2a$10$Ct0ms96jMSxdY2sZCTmKdOw6c.cCB.dyBSLi73saUHgzFi5Dlp.ku','sede2','sede2','1234567890','sede2@gmail.com',4,1),(14,'test2','$2a$10$.GMSZLQCm.dB.mtb/h0aE.h/v/LPnpXla9wvoj/EoaLG6Qcx/nb.q','test2','test2','1234567890','test2@gmail.com',5,0);
+INSERT INTO `user` VALUES (8,'admin','$2a$10$gRrRBwskYrqBFX5eXIPpFOLSYmilkR9cLw9BXhumXuDo97tO6jp72','admin','admin','1234567890','admin@gmail.com',NULL,1),(9,'hr','$2a$10$kPRAotY9YY7CBwjyLC9Mru5OX3EjZdg1IhaBYU7tHdVYzsJF5iM.K','hr','hr','1234567890','hr@gmail.com',NULL,1),(10,'manager','$2a$10$lckRmWVTvOfSNUYv4V/v.ubRhlIMQEnTsMFFkOVuPH39UQMjEOVAW','manager','manager','1234567890','manager@gmail.com',NULL,1),(11,'test','$2a$10$gYSU55usADM4apYxJOXhZ.Afsd4dU4xzlTGpnsGlAbxNUgal1vywK','manager','test','12345678980','test@gmail.com',NULL,1),(14,'test2','$2a$10$.GMSZLQCm.dB.mtb/h0aE.h/v/LPnpXla9wvoj/EoaLG6Qcx/nb.q','test2','test2','1234567890','test2@gmail.com',5,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,7 +210,7 @@ CREATE TABLE `users_roles` (
 
 LOCK TABLES `users_roles` WRITE;
 /*!40000 ALTER TABLE `users_roles` DISABLE KEYS */;
-INSERT INTO `users_roles` VALUES (8,1),(14,1),(9,2),(10,3),(11,3),(12,3),(13,3);
+INSERT INTO `users_roles` VALUES (8,1),(14,1),(9,2),(10,3),(11,3);
 /*!40000 ALTER TABLE `users_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,4 +227,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-06 13:06:55
+-- Dump completed on 2020-07-07 11:46:51

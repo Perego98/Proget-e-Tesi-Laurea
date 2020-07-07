@@ -15,7 +15,7 @@ public class CrmCandidato {
 	@Size(min = 16, max = 16, message = "must be 16 digits")
 	private String codiceFiscale;
 
-	@NotNull(message = "is required")
+	//@NotNull(message = "is required")
 	private String statoCandidatura;
 	
 
@@ -36,7 +36,7 @@ public class CrmCandidato {
 	@Size(min = 10, message = "is required")
 	private String telephone;
 	
-	@NotNull(message = "is required")
+	//@NotNull(message = "is required")
 	private Date dataNascita;
 	
 	@NotNull(message = "is required")
@@ -61,7 +61,7 @@ public class CrmCandidato {
 	@Size(max = 65535, message = "Maximum length 65535 characters")
 	private String note;
 	
-	@NotNull(message = "is required")
+	//@NotNull(message = "is required")
 	private Blob curriculum;
 
 	public CrmCandidato() {

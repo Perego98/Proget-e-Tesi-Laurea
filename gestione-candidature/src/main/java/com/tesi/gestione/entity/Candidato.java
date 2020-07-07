@@ -10,7 +10,7 @@ import java.sql.Blob;
 
 @Entity
 @Table(name = "candidato")
-public class Candidiato {
+public class Candidato {
 	
 	@Id
 	@Column(name = "codiceFiscale")
@@ -60,7 +60,12 @@ public class Candidiato {
 	@Column(name = "curriculum")
 	private Blob curriculum;
 
-	public Candidiato(String codiceFiscale, String statoCandidatura, String nome, String cognome, String telephone,
+	
+	
+	public Candidato() {
+	}
+
+	public Candidato(String codiceFiscale, String statoCandidatura, String nome, String cognome, String telephone,
 			String email, Date dataNascita, String tipoContratto, float ral, int preavviso, String offerta,
 			String proveninenza, Blob curriculum) {
 		super();
@@ -79,7 +84,7 @@ public class Candidiato {
 		this.curriculum = curriculum;
 	}
 
-	public Candidiato(String codiceFiscale, String statoCandidatura, String nome, String cognome, String telephone,
+	public Candidato(String codiceFiscale, String statoCandidatura, String nome, String cognome, String telephone,
 			String email, Date dataNascita, String tipoContratto, float ral, int preavviso, String offerta,
 			String proveninenza, String aspettative, String note, Blob curriculum) {
 		super();
