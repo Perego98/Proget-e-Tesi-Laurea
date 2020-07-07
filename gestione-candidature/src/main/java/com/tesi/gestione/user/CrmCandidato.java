@@ -64,7 +64,7 @@ public class CrmCandidato {
 	private String note;
 	
 	//@NotNull(message = "is required")
-	private Blob curriculum;
+	private byte[] curriculum;
 
 	public CrmCandidato() {
 		
@@ -182,11 +182,11 @@ public class CrmCandidato {
 		this.note = note;
 	}
 
-	public Blob getCurriculum() {
+	public byte[] getCurriculum() {
 		return curriculum;
 	}
 
-	public void setCurriculum(Blob curriculum) {
+	public void setCurriculum(byte[] curriculum) {
 		this.curriculum = curriculum;
 	}
 	

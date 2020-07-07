@@ -66,7 +66,8 @@ public class CandidatoServiceImpl implements CandidatoService {
 		// salvo la data
 		candidato.setDataNascita(theData);
 		
-		
+		// salvo curriculum
+		candidato.setCurriculum(crmCandidato.getCurriculum());
 
 		
 		

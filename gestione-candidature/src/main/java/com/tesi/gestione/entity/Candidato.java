@@ -1,6 +1,7 @@
 package com.tesi.gestione.entity;
 
 import java.sql.Date;
+import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,7 +59,7 @@ public class Candidato {
 	private String note;
 	
 	@Column(name = "curriculum")
-	private Blob curriculum;
+	private byte[] curriculum;
 
 	
 	
@@ -67,7 +68,7 @@ public class Candidato {
 
 	public Candidato(String codiceFiscale, String statoCandidatura, String nome, String cognome, String telephone,
 			String email, Date dataNascita, String tipoContratto, float ral, int preavviso, String offerta,
-			String proveninenza, Blob curriculum) {
+			String proveninenza, byte[] curriculum) {
 		super();
 		this.codiceFiscale = codiceFiscale;
 		this.statoCandidatura = statoCandidatura;
@@ -84,9 +85,11 @@ public class Candidato {
 		this.curriculum = curriculum;
 	}
 
+	
+
 	public Candidato(String codiceFiscale, String statoCandidatura, String nome, String cognome, String telephone,
 			String email, Date dataNascita, String tipoContratto, float ral, int preavviso, String offerta,
-			String proveninenza, String aspettative, String note, Blob curriculum) {
+			String proveninenza, String aspettative, String note, byte[] curriculum) {
 		super();
 		this.codiceFiscale = codiceFiscale;
 		this.statoCandidatura = statoCandidatura;
@@ -217,23 +220,25 @@ public class Candidato {
 		this.note = note;
 	}
 
-	public Blob getCurriculum() {
+	public byte[] getCurriculum() {
 		return curriculum;
 	}
 
-	public void setCurriculum(Blob curriculum) {
+	public void setCurriculum(byte[] curriculum) {
 		this.curriculum = curriculum;
 	}
 
 	@Override
 	public String toString() {
-		return "Candidiato [codiceFiscale=" + codiceFiscale + ", statoCandidatura=" + statoCandidatura + ", nome="
-				+ nome + ", cognome=" + cognome + ", telephone=" + telephone + ", email=" + email + ", dataNascita="
+		return "Candidato [codiceFiscale=" + codiceFiscale + ", statoCandidatura=" + statoCandidatura + ", nome=" + nome
+				+ ", cognome=" + cognome + ", telephone=" + telephone + ", email=" + email + ", dataNascita="
 				+ dataNascita + ", tipoContratto=" + tipoContratto + ", ral=" + ral + ", preavviso=" + preavviso
 				+ ", offerta=" + offerta + ", proveninenza=" + proveninenza + ", aspettative=" + aspettative + ", note="
-				+ note + ", curriculum=" + curriculum + "]";
+				+ note + ", curriculum=" + Arrays.toString(curriculum) + "]";
 	}
-	
+
+
+
 	
 	
 	
