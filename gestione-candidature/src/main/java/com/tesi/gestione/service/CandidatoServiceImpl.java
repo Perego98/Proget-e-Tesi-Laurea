@@ -1,5 +1,7 @@
 package com.tesi.gestione.service;
 
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +45,28 @@ public class CandidatoServiceImpl implements CandidatoService {
 		
 		// set default statoCandidatura
 		candidato.setStatoCandidatura("new");
+		
+		// recupero la data in forma String
+		String data = crmCandidato.getDataNascita();
+		
+		//Estraggo i giorni
+		String giorno, mese, anno;
+		giorno = data.substring(0, data.indexOf("/"));
+		mese = data.substring(data.indexOf("/")+1, data.lastIndexOf("/"));
+		anno = data.substring(data.lastIndexOf("/")+1, data.length());	
+		
+		int d = Integer.parseInt(giorno);
+		int m = Integer.parseInt(mese);
+		int a = Integer.parseInt(anno);
+		 
+		// creo la data
+		Date theData =  new Date(d, m, a);
+		
+		// salvo la data
+		candidato.setDataNascita(theData);
+		
+		
+
 		
 		
 		

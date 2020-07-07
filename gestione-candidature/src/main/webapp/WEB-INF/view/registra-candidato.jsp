@@ -108,12 +108,12 @@
 						</div>
 						
 						<!-- Data di nascita -->
-						<!--  TODO: mettere calendario
+						<!--  TODO: mettere calendario-->
 						<form:errors path="dataNascita" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span> 
-							<form:input path="dataNascita" type="date" placeholder="data di nascita dd/mm//aaaa (*)" class="form-control" />
-						</div>  -->
+							<form:input path="dataNascita" type="date" placeholder="data di nascita dd/mm/aaaa (*)" class="form-control" />
+						</div>  
 
 						
 						<!-- Tipo di contratto -->
@@ -175,14 +175,14 @@
 						<form:errors path="proveninenza" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
-							<form:input path="proveninenza" placeholder="telephone number (*)" class="form-control" />
+							<form:input path="proveninenza" placeholder="proveninenza (*)" class="form-control" />
 						</div>
 						
 						<!-- aspettative -->
 						<form:errors path="aspettative" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
-							<form:input path="aspettative" placeholder="telephone number (*)" class="form-control" />
+							<form:input path="aspettative" placeholder="aspettative (*)" class="form-control" />
 						</div>
 						
 						<!-- note 

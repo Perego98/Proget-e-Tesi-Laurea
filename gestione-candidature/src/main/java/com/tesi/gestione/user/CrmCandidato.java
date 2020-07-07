@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.tesi.gestione.validation.FieldMatch;
+import com.tesi.gestione.validation.ValidData;
 import com.tesi.gestione.validation.ValidEmail;
 
 public class CrmCandidato {
@@ -36,8 +37,9 @@ public class CrmCandidato {
 	@Size(min = 10, message = "is required")
 	private String telephone;
 	
-	//@NotNull(message = "is required")
-	private Date dataNascita;
+	@NotNull(message = "is required")
+	@ValidData
+	private String dataNascita;
 	
 	@NotNull(message = "is required")
 	private String tipoContratto;
@@ -116,11 +118,11 @@ public class CrmCandidato {
 		this.telephone = telephone;
 	}
 
-	public Date getDataNascita() {
+	public String getDataNascita() {
 		return dataNascita;
 	}
 
-	public void setDataNascita(Date dataNascita) {
+	public void setDataNascita(String dataNascita) {
 		this.dataNascita = dataNascita;
 	}
 
