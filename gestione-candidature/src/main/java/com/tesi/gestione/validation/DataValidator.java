@@ -25,10 +25,6 @@ public class DataValidator implements ConstraintValidator<ValidData, String> {
 			return false;
 		}
 
-		// se ci sono i - come separatori, metto i /
-		if(data.contains("-")) {
-			data.replace("-", "/");
-		}
 		
 		if(data.contains("/")) {
 			

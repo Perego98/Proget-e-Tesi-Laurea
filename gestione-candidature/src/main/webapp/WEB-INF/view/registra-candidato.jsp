@@ -111,15 +111,32 @@
 						<!--  TODO: mettere calendario-->
 						<form:errors path="dataNascita" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span> 
+							<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
 							<form:input path="dataNascita" type="date" placeholder="data di nascita dd/mm/aaaa (*)" class="form-control" />
 						</div>  
 
 						
+						<!-- ral -->
+						<form:errors path="ral" cssClass="error" />
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span> 
+							<form:input path="ral" placeholder="ral (*)" class="form-control" />
+						</div>
+						
+						<!-- preavviso -->
+						<form:errors path="ral" cssClass="error" />
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
+							<form:input path="preavviso" placeholder="preavviso (*)" class="form-control" />
+						</div>
+						
 						<!-- Tipo di contratto -->
 						<form:errors path="tipoContratto" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
-							Tipo di contratto:
+							<label>
+								Tipo di contratto:
+							</label>
+							</br>
 							<div>
 								<!-- ENUM('tempo_indeterminato', 'tempo_determinato', 'somministrazione', 'a_chiamata', 'a_progetto', 'accessorio', 'apprendistato', 'tirocinio_formativo_e_orientamento', 'part-time', 'not_set') -->
 								<form:radiobutton path="tipoContratto" value="tempo_indeterminato"/> Tempo Indeterminato
@@ -140,26 +157,13 @@
 							</div>
 						</div>
 						
-						
-						<!-- ral -->
-						<form:errors path="ral" cssClass="error" />
-						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
-							<form:input path="ral" placeholder="ral (*)" class="form-control" />
-						</div>
-						
-						<!-- preavviso -->
-						<form:errors path="ral" cssClass="error" />
-						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
-							<form:input path="preavviso" placeholder="ral (*)" class="form-control" />
-						</div>
-						
 						<!-- offerta -->
 						<form:errors path="offerta" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group">
-							
+							<label>
 							Offerta:
+							</label>
+							</br>
 							<div>
 								<form:radiobutton path="offerta" value="lavoro"/> Lavoro
 								</br>
@@ -173,26 +177,36 @@
 						
 						<!-- proveninenza -->
 						<form:errors path="proveninenza" cssClass="error" />
+						<label>
+								Provenienza:
+						</label>
 						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
-							<form:input path="proveninenza" placeholder="proveninenza (*)" class="form-control" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+							<form:textarea path="proveninenza" rows = "5" cols = "80" placeholder="proveninenza (*)" class="form-control" />
 						</div>
 						
 						<!-- aspettative -->
 						<form:errors path="aspettative" cssClass="error" />
+						<label>
+							Aspettative:
+						</label>
 						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
-							<form:input path="aspettative" placeholder="aspettative (*)" class="form-control" />
+							
+							<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+							<form:textarea path="aspettative" rows = "5" cols = "80" placeholder="aspettative (*)" class="form-control" />
 						</div>
 						
-						<!-- note 
+						<!-- note -->
 						<form:errors path="note" cssClass="error" />
+						<label>
+								Note:
+						</label>
 						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
-							<form:input path="note" placeholder="telephone number (*)" class="form-control" />
-						</div>-->
+							<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span> 
+							<form:textarea path="note" rows = "10" cols = "180" placeholder="Note (*)" class="form-control" />
+						</div>
 						
-						<!-- TODO: Caricamento del curriculum -->
+						<!-- TODO: Caricamento del curriculum  glyphicon glyphicon-folder-open -->
 						
 					
 

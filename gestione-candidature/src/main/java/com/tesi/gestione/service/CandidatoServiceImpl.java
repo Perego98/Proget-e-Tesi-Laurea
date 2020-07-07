@@ -42,6 +42,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 		candidato.setOfferta(crmCandidato.getOfferta());
 		candidato.setProveninenza(crmCandidato.getProveninenza());
 		candidato.setAspettative(crmCandidato.getAspettative());
+		candidato.setNote(crmCandidato.getNote());
 		
 		// set default statoCandidatura
 		candidato.setStatoCandidatura("new");
