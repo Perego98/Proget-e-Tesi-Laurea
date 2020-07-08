@@ -45,14 +45,14 @@
 			<div class="panel panel-primary">
 
 				<div class="panel-heading">
-					<div class="panel-title">Register New User</div>
+					<div class="panel-title">Register New Candidato</div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
 					
 					<!-- Registration Form -->
 					<security:authentication property="principal.username" />
-					<form:form action="${pageContext.request.contextPath}/register/processRegistrationCandidatoForm" 
+					<form:form action="${pageContext.request.contextPath}/registerHr/processRegistrationCandidatoForm" 
 						  	   modelAttribute="crmCandidato"
 						  	   class="form-horizontal">
 

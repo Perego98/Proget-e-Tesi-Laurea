@@ -75,13 +75,17 @@
 		<div>
 			<a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New User</a>
 		</div>
+		</br>
+		<div>
+			<a href="${pageContext.request.contextPath}/admin/showListUsers" class="btn btn-primary" role="button" aria-pressed="true">Show List of Users</a>
+		</div>
 	</security:authorize>
 	
 	<security:authorize access="hasRole('HR')">  
 		<c:if test= "${user.qualified}">
 			<div>
 			
-			 <a href="${pageContext.request.contextPath}/register/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>
+			 <a href="${pageContext.request.contextPath}/registerHr/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>
 	
 			</div>
 		</c:if>

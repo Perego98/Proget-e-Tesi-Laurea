@@ -61,6 +61,9 @@ public class RegistrationController {
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}	
 	
+//	@GetMapping("showListUsers")
+//	public String showMyListUsers() {}
+//	
 	@GetMapping("/showRegistrationForm")
 	public String showMyLoginPage(Model theModel) {
 		
@@ -143,56 +146,5 @@ public class RegistrationController {
         return "registration-confirmation";		
 	}
 	
-	// candidato 
-	@PostMapping("/processRegistrationCandidatoForm")
-	public String processRegistrationCandidatoForm(
-				@Valid @ModelAttribute("crmCandidato") CrmCandidato CrmCandidato, 
-				BindingResult theBindingResult, 
-				Model theModel) {
-		
-		System.out.println(" ********** RegistrationController -> dentro processRegistrationCandidatoForm()");
-		
-		
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		CrmCandidato.setHrId(currentPrincipalName);
-		
-		System.out.println(" ********** RegistrationController -> dentro processRegistrationCandidatoForm -> hrId: " + CrmCandidato.getHrId());
-		
-		// form validation
-	 	if (theBindingResult.hasErrors()){
-	 		return "registra-candidato";
-        }
-
-	 	String codFiscale = CrmCandidato.getCodiceFiscale();
-		// check the database if user already exists
-        Candidato existing = candidatoService.findByCodiceFiscale(codFiscale);
-        if (existing != null){
-        	theModel.addAttribute("crmCandidato", new CrmCandidato());
-			theModel.addAttribute("registrationError", "Candidato already exists.");
-
-			logger.warning("Candidato already exists.");
-        	return "registra-candidato";
-        }
-		// create user account   
-        
-		candidatoService.save(CrmCandidato);
-		
-		logger.info("Successfully created user: " + codFiscale);
-		        
-        
-        return "registration-candidato-confirmation";		
-	}
-	
-	
-	@GetMapping("/showCandidatoRegistrationForm")
-	public String showMyCandidatoRegistrationPage(Model theModel) {
-		
-		System.out.println(" ********** RegistrationController -> dentro showMyCandidatoRegistrationPage()");
-		
-		theModel.addAttribute("crmCandidato", new CrmCandidato());
-		
-		return "registra-candidato";
-	}
 	
 }
