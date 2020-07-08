@@ -2,12 +2,15 @@ package com.tesi.gestione.entity;
 
 import java.sql.Date;
 import java.util.Arrays;
+import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.sql.Blob;
 
 @Entity
 @Table(name = "candidato")
@@ -33,7 +36,7 @@ public class Candidato {
 	private String email;
 	
 	@Column(name = "dataNascita")
-	private Date dataNascita;
+	private Calendar dataNascita;
 	
 	@Column(name = "tipoContratto")
 	private String tipoContratto;
@@ -61,13 +64,15 @@ public class Candidato {
 	@Column(name = "curriculum")
 	private byte[] curriculum;
 
-	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="supervisore")
+	private User supervisore;
 	
 	public Candidato() {
 	}
 
 	public Candidato(String codiceFiscale, String statoCandidatura, String nome, String cognome, String telephone,
-			String email, Date dataNascita, String tipoContratto, float ral, int preavviso, String offerta,
+			String email, Calendar dataNascita, String tipoContratto, float ral, int preavviso, String offerta,
 			String proveninenza, byte[] curriculum) {
 		super();
 		this.codiceFiscale = codiceFiscale;
@@ -88,7 +93,7 @@ public class Candidato {
 	
 
 	public Candidato(String codiceFiscale, String statoCandidatura, String nome, String cognome, String telephone,
-			String email, Date dataNascita, String tipoContratto, float ral, int preavviso, String offerta,
+			String email, Calendar dataNascita, String tipoContratto, float ral, int preavviso, String offerta,
 			String proveninenza, String aspettative, String note, byte[] curriculum) {
 		super();
 		this.codiceFiscale = codiceFiscale;
@@ -156,11 +161,11 @@ public class Candidato {
 		this.email = email;
 	}
 
-	public Date getDataNascita() {
+	public Calendar getDataNascita() {
 		return dataNascita;
 	}
 
-	public void setDataNascita(Date dataNascita) {
+	public void setDataNascita(Calendar dataNascita) {
 		this.dataNascita = dataNascita;
 	}
 
@@ -226,6 +231,16 @@ public class Candidato {
 
 	public void setCurriculum(byte[] curriculum) {
 		this.curriculum = curriculum;
+	}
+
+	
+	
+	public User getSupervisore() {
+		return supervisore;
+	}
+
+	public void setSupervisore(User supervisore) {
+		this.supervisore = supervisore;
 	}
 
 	@Override

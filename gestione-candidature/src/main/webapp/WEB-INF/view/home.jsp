@@ -5,15 +5,15 @@
 <html>
 
 <head>
-	<title>luv2code Company Home Page</title>
+	<title>Company Home Page</title>
 </head>
 
 <body>
-	<h2>luv2code Company Home Page</h2>
+	<h2>Company Home Page</h2>
 	<hr>
 	
 	<p>
-	Welcome to the luv2code company home page!
+	Welcome to the company home page!
 	</p>
 	
 	<hr>
@@ -24,8 +24,11 @@
 		User: <security:authentication property="principal.username" />
 		<br><br>
 		Role(s): <security:authentication property="principal.authorities" />
-		<br><br>
-		First name: ${user.firstName}, Last name: ${user.lastName}, Email: ${user.email}, Telephone: ${user.telephone}, Sede: ${user.sedeAssegnamento}
+		<br><br> 
+		First name: ${user.firstName}, Last name: ${user.lastName},
+		Email: ${user.email}, Telephone: ${user.telephone}, 
+		Sede: ${user.sedeAssegnamento}
+
 	</p>
 	
 	<security:authorize access="hasRole('MANAGER')">
@@ -72,10 +75,16 @@
 		<div>
 			<a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New User</a>
 		</div>
-		
-		<div>
-			<a href="${pageContext.request.contextPath}/register/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>
-		</div>
+	</security:authorize>
+	
+	<security:authorize access="hasRole('HR')">  
+		<c:if test= "${user.qualified}">
+			<div>
+			
+			 <a href="${pageContext.request.contextPath}/register/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>
+	
+			</div>
+		</c:if>
 	</security:authorize>
 	
 </body>

@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tesi.gestione.dao.RoleDao;
 import com.tesi.gestione.dao.SedeDao;
@@ -140,6 +143,7 @@ public class RegistrationController {
         return "registration-confirmation";		
 	}
 	
+	// candidato 
 	@PostMapping("/processRegistrationCandidatoForm")
 	public String processRegistrationCandidatoForm(
 				@Valid @ModelAttribute("crmCandidato") CrmCandidato CrmCandidato, 
@@ -148,6 +152,12 @@ public class RegistrationController {
 		
 		System.out.println(" ********** RegistrationController -> dentro processRegistrationCandidatoForm()");
 		
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		CrmCandidato.setHrId(currentPrincipalName);
+		
+		System.out.println(" ********** RegistrationController -> dentro processRegistrationCandidatoForm -> hrId: " + CrmCandidato.getHrId());
 		
 		// form validation
 	 	if (theBindingResult.hasErrors()){
@@ -164,7 +174,8 @@ public class RegistrationController {
 			logger.warning("Candidato already exists.");
         	return "registra-candidato";
         }
-		// create user account        						
+		// create user account   
+        
 		candidatoService.save(CrmCandidato);
 		
 		logger.info("Successfully created user: " + codFiscale);

@@ -29,7 +29,7 @@ CREATE TABLE `candidato` (
   `cognome` varchar(45) NOT NULL,
   `telefono` varchar(12) NOT NULL,
   `email` varchar(55) NOT NULL,
-  `dataNascita` date DEFAULT NULL,
+  `dataNascita` date NOT NULL,
   `tipoContratto` enum('tempo_indeterminato','tempo_determinato','somministrazione','a_chiamata','a_progetto','accessorio','apprendistato','tirocinio_formativo_e_orientamento','part-time','not_set') NOT NULL DEFAULT 'not_set',
   `ral` float NOT NULL DEFAULT '0',
   `tempo_preavviso_giorni` int NOT NULL DEFAULT '10' COMMENT 'Numero di giorni preavviso',
@@ -38,10 +38,10 @@ CREATE TABLE `candidato` (
   `aspettative` varchar(100) DEFAULT NULL,
   `note` text,
   `curriculum` blob COMMENT 'curriculum o caricato direttamente o si potrebbe salvare il percorso del file',
-  `supervisore` int DEFAULT NULL,
+  `supervisore` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`codiceFiscale`),
   KEY `fk_Candidato_utente1_idx` (`supervisore`),
-  CONSTRAINT `fk_Candidato_utente1` FOREIGN KEY (`supervisore`) REFERENCES `user` (`id`) ON UPDATE CASCADE
+  CONSTRAINT `fk_Candidato_supervisore` FOREIGN KEY (`supervisore`) REFERENCES `user` (`username`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,6 +51,7 @@ CREATE TABLE `candidato` (
 
 LOCK TABLES `candidato` WRITE;
 /*!40000 ALTER TABLE `candidato` DISABLE KEYS */;
+INSERT INTO `candidato` VALUES ('BRNLNE10R55F205R','new','ELAINE','BRUNELLI','1254398760','elaine.b@gmail.com','1910-10-15','a_chiamata',0,0,'stage','q',NULL,NULL,'','admin'),('NCLVLI05T65H501O','new','Viola','Nicoletti','1234567890','nicol@gmail.com','1905-12-25','part-time',0,0,'lavoro','Università milano-bicocca','Lavoro tempo pieno','Rispetta consegne, puntuale',_binary 'C:\\Users\\Daniele\\Downloads\\Appelli Laurea 2020.pdf','admin'),('SLRPPL08C23H501Z','new','PIERPAOLO','SALERNO','1234567890','rprppr@gmail.com','1908-03-23','a_chiamata',0,0,'stage','na',NULL,NULL,'','admin');
 /*!40000 ALTER TABLE `candidato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,14 +107,14 @@ CREATE TABLE `schedavalutazione` (
   `dinamicità` enum('insuff','suff','discreto','buono','ottimo') DEFAULT NULL,
   `disponibilitàSpostamentiTrasferimenti` enum('si','no') DEFAULT NULL,
   `sede_preferita` int DEFAULT NULL,
-  `utente_relatore` int NOT NULL,
+  `utente_relatore` varchar(50) NOT NULL,
   `candidato_relativo` varchar(16) NOT NULL,
   KEY `fk_candidato_idx` (`candidato_relativo`),
   KEY `fk_sede_preferita_idx` (`sede_preferita`),
   KEY `fk_utente_relatore_idx` (`utente_relatore`),
   CONSTRAINT `fk_candidato` FOREIGN KEY (`candidato_relativo`) REFERENCES `candidato` (`codiceFiscale`) ON UPDATE CASCADE,
   CONSTRAINT `fk_sede_preferita` FOREIGN KEY (`sede_preferita`) REFERENCES `sede` (`id`),
-  CONSTRAINT `fk_utente_relatore` FOREIGN KEY (`utente_relatore`) REFERENCES `user` (`id`) ON UPDATE CASCADE
+  CONSTRAINT `fk_utente_relatore` FOREIGN KEY (`utente_relatore`) REFERENCES `user` (`username`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -161,7 +162,6 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` char(80) NOT NULL,
   `first_name` varchar(45) NOT NULL,
@@ -170,11 +170,11 @@ CREATE TABLE `user` (
   `email` varchar(55) NOT NULL,
   `sedeAssegnamento` int DEFAULT NULL,
   `qualified` tinyint NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`username`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   KEY `fk_sedeAssegnamento_idx` (`sedeAssegnamento`),
   CONSTRAINT `fk_sedeAssegnamento` FOREIGN KEY (`sedeAssegnamento`) REFERENCES `sede` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +183,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (8,'admin','$2a$10$gRrRBwskYrqBFX5eXIPpFOLSYmilkR9cLw9BXhumXuDo97tO6jp72','admin','admin','1234567890','admin@gmail.com',NULL,1),(9,'hr','$2a$10$kPRAotY9YY7CBwjyLC9Mru5OX3EjZdg1IhaBYU7tHdVYzsJF5iM.K','hr','hr','1234567890','hr@gmail.com',NULL,1),(10,'manager','$2a$10$lckRmWVTvOfSNUYv4V/v.ubRhlIMQEnTsMFFkOVuPH39UQMjEOVAW','manager','manager','1234567890','manager@gmail.com',NULL,1),(11,'test','$2a$10$gYSU55usADM4apYxJOXhZ.Afsd4dU4xzlTGpnsGlAbxNUgal1vywK','manager','test','12345678980','test@gmail.com',NULL,1),(14,'test2','$2a$10$.GMSZLQCm.dB.mtb/h0aE.h/v/LPnpXla9wvoj/EoaLG6Qcx/nb.q','test2','test2','1234567890','test2@gmail.com',5,1);
+INSERT INTO `user` VALUES ('admin','$2a$10$ZiXoqpmryJ9nnSRG8EIzO.sVTX8Xe3flfore5g9tl5M52qaYa.7Be','daniele','perego','1234567890','peregopr@gmail.com',7,1),('manager','$2a$10$b/dFt5HyRPQ/NEp4WLQ38e.GLTX2Y0zOHvFeecPLbmSk5xOTfgcc.','manager','manager','1234567890','themanager@gmail.com',4,1),('master','$2a$10$o6RprHf658Ww6xgjZmVJ5eRg0G5xMgInCnoeIYEpaUGjMxFqfLsd.','master','master','1234567890','master@gmail.com',6,1),('test','$2a$10$KWqi.1kxzwYogz1ka4WgG.K7HDl9ncDfTc/wkuvx2a7EnjSMAjh2K','manager','test','1234567890','testm@gmail.com',7,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -195,12 +195,12 @@ DROP TABLE IF EXISTS `users_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users_roles` (
-  `user_id` int NOT NULL,
+  `user_username` varchar(50) NOT NULL,
   `role_id` int NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`),
+  PRIMARY KEY (`user_username`,`role_id`),
   KEY `FK_id_ruolo_idx` (`role_id`),
   CONSTRAINT `FK_ROLE_ID` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
-  CONSTRAINT `FK_USER_ID` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `FK_USER_USERNAME` FOREIGN KEY (`user_username`) REFERENCES `user` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -210,7 +210,7 @@ CREATE TABLE `users_roles` (
 
 LOCK TABLES `users_roles` WRITE;
 /*!40000 ALTER TABLE `users_roles` DISABLE KEYS */;
-INSERT INTO `users_roles` VALUES (8,1),(14,1),(9,2),(10,3),(11,3);
+INSERT INTO `users_roles` VALUES ('admin',1),('master',1),('master',2),('manager',3),('master',3),('test',3);
 /*!40000 ALTER TABLE `users_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,4 +227,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-07 11:46:51
+-- Dump completed on 2020-07-08 11:26:02

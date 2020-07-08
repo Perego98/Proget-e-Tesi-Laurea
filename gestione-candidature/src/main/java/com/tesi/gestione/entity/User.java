@@ -21,10 +21,6 @@ import javax.persistence.Table;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
-
 	@Column(name = "username")
 	private String userName;
 
@@ -48,13 +44,15 @@ public class User {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "users_roles", 
-	joinColumns = @JoinColumn(name = "user_id"), 
+	joinColumns = @JoinColumn(name = "user_username"), 
 	inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Collection<Role> roles;
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="sedeAssegnamento")
 	private Sede sedeAssegnamento;
+	
+	
 
 	public User() {
 	}
@@ -79,14 +77,6 @@ public class User {
 		this.telephone = telephone;
 		this.qualified = qualified;
 		this.roles = roles;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getUserName() {
@@ -167,10 +157,11 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + ", telephone=" + telephone + ", qualified="
-				+ qualified + ", roles=" + roles + ", sedeAssegnamento=" + sedeAssegnamento + "]";
+		return "User [userName=" + userName + ", password=" + password + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", email=" + email + ", telephone=" + telephone + ", qualified=" + qualified + ", roles="
+				+ roles + ", sedeAssegnamento=" + sedeAssegnamento + "]";
 	}
+
 
 
 

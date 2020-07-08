@@ -1,13 +1,17 @@
 package com.tesi.gestione.service;
 
 import java.sql.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tesi.gestione.dao.CandidatoDao;
+import com.tesi.gestione.dao.UserDao;
 import com.tesi.gestione.entity.Candidato;
+import com.tesi.gestione.entity.User;
 import com.tesi.gestione.user.CrmCandidato;
 
 @Service
@@ -15,6 +19,9 @@ public class CandidatoServiceImpl implements CandidatoService {
 	
 	@Autowired
 	private CandidatoDao candidatoDao;
+	
+	@Autowired
+	private UserDao userDao;
 	
 	@Override
 	@Transactional
@@ -35,7 +42,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 		candidato.setNome(crmCandidato.getNome());
 		candidato.setCognome(crmCandidato.getCognome());
 		candidato.setTelephone(crmCandidato.getTelephone());
-		candidato.setEmail(crmCandidato.getTelephone());
+		candidato.setEmail(crmCandidato.getEmail());
 		candidato.setTipoContratto(crmCandidato.getTipoContratto());
 		candidato.setRal(crmCandidato.getRal());
 		candidato.setPreavviso(crmCandidato.getPreavviso());
@@ -61,16 +68,30 @@ public class CandidatoServiceImpl implements CandidatoService {
 		int a = Integer.parseInt(anno);
 		 
 		// creo la data
-		Date theData =  new Date(d, m, a);
-		
+		Calendar calendar = GregorianCalendar.getInstance();
+	    calendar.set(Calendar.DAY_OF_MONTH, d);
+	    calendar.set(Calendar.MONTH, m-1);
+	    calendar.set(Calendar.YEAR, a);
+	    calendar.set(Calendar.MILLISECOND, 0);
+	    calendar.set(Calendar.SECOND, 0);
+	    calendar.set(Calendar.MINUTE, 0);
+	    calendar.set(Calendar.HOUR_OF_DAY, 0);    
+
 		// salvo la data
-		candidato.setDataNascita(theData);
+		candidato.setDataNascita(calendar);
 		
 		// salvo curriculum
 		candidato.setCurriculum(crmCandidato.getCurriculum());
 
 		
+		// salvo l'hr che ha creato il candidato
+				// di default viene assegnato a lui
+		//	Recupero l'username
+		User theHr = userDao.findByUserName(crmCandidato.getHrId());
 		
+		// se esiste lo collego
+		if(theHr != null)
+			candidato.setSupervisore(theHr);
 		
 		// save user in the database
 		candidatoDao.save(candidato);

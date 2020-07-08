@@ -66,6 +66,9 @@ public class CrmCandidato {
 	//@NotNull(message = "is required")
 	private byte[] curriculum;
 
+	// idHr
+	private String hrId;
+	
 	public CrmCandidato() {
 		
 	}
@@ -189,6 +192,15 @@ public class CrmCandidato {
 	public void setCurriculum(byte[] curriculum) {
 		this.curriculum = curriculum;
 	}
+
+	public String getHrId() {
+		return hrId;
+	}
+
+	public void setHrId(String hrId) {
+		this.hrId = hrId;
+	}
+	
 	
 	
 	

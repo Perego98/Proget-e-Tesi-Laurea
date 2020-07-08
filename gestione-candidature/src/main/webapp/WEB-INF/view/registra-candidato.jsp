@@ -1,8 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	
@@ -30,12 +32,13 @@
 
 	Qui si registrerà il nuovo candidato
 	
+	User: <security:authentication property="principal.username" />
 	
 	
 	<!-- FIX -->
 	
 	<div>
-		
+		<a href="${pageContext.request.contextPath}/">Back to Home Page</a>
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
 			
@@ -46,8 +49,9 @@
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
-
+					
 					<!-- Registration Form -->
+					<security:authentication property="principal.username" />
 					<form:form action="${pageContext.request.contextPath}/register/processRegistrationCandidatoForm" 
 						  	   modelAttribute="crmCandidato"
 						  	   class="form-horizontal">
@@ -216,6 +220,7 @@
 							<span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span> 
 							<form:input path="curriculum" type="file"  placeholder="Curriculum" class="form-control" />
 						</div>
+					
 					
 
 						<!-- Register Button -->

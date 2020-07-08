@@ -1,11 +1,17 @@
 package com.tesi.gestione.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -30,8 +36,9 @@ public class Sede {
 	@Column(name = "civic_number")
 	private String civicNumber;
 	
-	@OneToOne(mappedBy="sedeAssegnamento", cascade=CascadeType.ALL)
-	private User user;
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="sedeAssegnamento")
+	private List<User> user;
 
 	public Sede() {
 	}
@@ -82,6 +89,14 @@ public class Sede {
 
 	public void setCivicNumber(String civicNumber) {
 		this.civicNumber = civicNumber;
+	}
+	
+	public List<User> getUser() {
+		return user;
+	}
+
+	public void setUser(List<User> user) {
+		this.user = user;
 	}
 
 	@Override
