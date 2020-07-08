@@ -42,8 +42,17 @@ public class Role {
 		this.name = name;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Role{" + "id=" + id + ", name='" + name + '\'' + '}';
+//	}
+	
 	@Override
 	public String toString() {
-		return "Role{" + "id=" + id + ", name='" + name + '\'' + '}';
+		
+		String temp = name;
+		temp = temp.replace("ROLE_", "");
+		
+		return temp;
 	}
 }

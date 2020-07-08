@@ -99,10 +99,16 @@ public class Sede {
 		this.user = user;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "id(" + id + ") città=" + nameCity + ", via=" + via + ", numero civico="
+//				+ civicNumber + ", cap=" + cap ;
+//	}
+	
 	@Override
 	public String toString() {
-		return "id(" + id + ") città=" + nameCity + ", via=" + via + ", numero civico="
-				+ civicNumber + ", cap=" + cap ;
+		return "città: " + nameCity + ", via: " + via + ",\n numero civico: "
+				+ civicNumber + ", cap: " + cap ;
 	}
 
 	

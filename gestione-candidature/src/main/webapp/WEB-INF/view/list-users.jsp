@@ -44,9 +44,14 @@
 		
 			<table>
 				<tr>
+					<th>Username</th>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Email</th>
+					<th>telephone</th>
+					<th>qualified</th>
+					<th>roles</th>
+					<th>sede Assegnamento</th>
 					<th>Action</th>
 				</tr>
 			
@@ -70,6 +75,12 @@
 						<td> ${tempUser.firstName}</td>
 						<td> ${tempUser.lastName}</td>
 						<td> ${tempUser.email}</td>
+						<td> ${tempUser.telephone}</td>
+						<td> ${tempUser.qualified}</td>
+						<td> ${tempUser.roles}</td>
+						<td> ${tempUser.sedeAssegnamento}</td>
+						
+						
 						
 						<td>
 							<input type="button" value="Update"
@@ -90,6 +101,10 @@
 	
 	</div>
 
+	<div>
+		
+	<a href="${pageContext.request.contextPath}/">Back to Home Page</a>
+	</div>
 </body>
 
 </html>
