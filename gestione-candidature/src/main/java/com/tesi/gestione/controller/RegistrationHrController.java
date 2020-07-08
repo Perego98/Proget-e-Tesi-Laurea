@@ -104,4 +104,5 @@ public class RegistrationHrController {
 		return "registra-candidato";
 	}
 	
+	
 }

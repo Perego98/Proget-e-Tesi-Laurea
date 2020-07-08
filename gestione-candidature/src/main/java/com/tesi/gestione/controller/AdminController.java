@@ -73,6 +73,15 @@ public class AdminController {
 		return "list-users";		
 	}
 	
+	@GetMapping("/deleteUser")
+	public String deleteUser(@RequestParam("userUsername") String theUsername) {
+		
+		System.out.println("!!!!!! ******** Admin COntroller DELETE " + theUsername);
+		
+		userService.deleteUser(theUsername);
+		
+		return "redirect:/admin/showListUsers";		
+	}
 
 	
 	

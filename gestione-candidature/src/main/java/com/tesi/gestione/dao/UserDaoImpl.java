@@ -64,4 +64,19 @@ public class UserDaoImpl implements UserDao {
 		return users;
 	}
 
+	@Override
+	public void deleteUser(String username) {
+		
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// delete the obj with PK
+		Query theQuery = currentSession.createQuery("delete from User where username=:theUsername");
+		
+		theQuery.setParameter("theUsername", username);
+		
+		theQuery.executeUpdate();
+		
+	}
+
 }

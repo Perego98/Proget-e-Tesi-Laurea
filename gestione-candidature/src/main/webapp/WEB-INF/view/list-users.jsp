@@ -64,10 +64,10 @@
 						<c:param name="customerId" value="${tempCustomer.id}"/>
 					</c:url> -->
 					
-					<!-- construct an "delete" link with customer id 
-					<c:url var="deleteLink" value="/customer/delete">
-						<c:param name="customerId" value="${tempCustomer.id}"/>
-					</c:url> -->
+					<!-- construct an "delete" link with customer id -->
+					<c:url var="deleteLink" value="${pageContext.request.contextPath}/admin/deleteUser">
+						<c:param name="userUsername" value="${tempUser.userName}"/>
+					</c:url> 
 						
 				
 					<tr>
@@ -83,12 +83,19 @@
 						
 						
 						<td>
-							<input type="button" value="Update"
+							<!--  <input type="button" value="Update"
 											onclick="window.location.href='${updateLink}'; return false;"
 											class="update-button"/>		
+											
+											
+											<input type="button" value="Delete"
+											onclick="if((confirm('Are you sure you want to delete this user?'))) window.location.href='${deleteLink}'; return false;"
+											class="delete-button"/>
+											
+											-->
 						
 							<input type="button" value="Delete"
-											onclick="if((confirm('Are you sure you want to delete this customer?'))) window.location.href='${deleteLink}'; return false;"
+											onclick="if((confirm('Are you sure you want to delete this user?'))) window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'; return false;"
 											class="delete-button"/>
 						</td>
 					</tr>
