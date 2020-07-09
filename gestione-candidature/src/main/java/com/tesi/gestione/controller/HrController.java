@@ -97,6 +97,7 @@ public class HrController {
 		return "info-candidato";		
 	}
 
+	// save candidato
 	@PostMapping("/processRegistrationCandidatoForm")
 	public String processRegistrationCandidatoForm(
 				@Valid @ModelAttribute("crmCandidato") CrmCandidato CrmCandidato, 
@@ -114,7 +115,7 @@ public class HrController {
 		
 		// form validation
 	 	if (theBindingResult.hasErrors()){
-	 		return "registra-candidato";
+	 		return "registration-candidato-form";
         }
 
 	 	String codFiscale = CrmCandidato.getCodiceFiscale();
@@ -125,7 +126,7 @@ public class HrController {
 			theModel.addAttribute("registrationError", "Candidato already exists.");
 
 			logger.warning("Candidato already exists.");
-        	return "registra-candidato";
+        	return "registration-candidato-form";
         }
 		// create user account   
         
@@ -145,7 +146,7 @@ public class HrController {
 		
 		theModel.addAttribute("crmCandidato", new CrmCandidato());
 		
-		return "registra-candidato";
+		return "registration-candidato-form";
 	}
 	
 }

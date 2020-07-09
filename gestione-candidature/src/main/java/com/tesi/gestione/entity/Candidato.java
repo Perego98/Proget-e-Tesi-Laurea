@@ -2,7 +2,7 @@ package com.tesi.gestione.entity;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
+
 import java.util.Calendar;
 
 import javax.persistence.CascadeType;
@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -63,6 +64,7 @@ public class Candidato {
 	private String note;
 	
 	@Column(name = "curriculum")
+	@Lob
 	private byte[] curriculum;
 
 	@OneToOne(cascade=CascadeType.REFRESH)
@@ -263,8 +265,10 @@ public class Candidato {
 				+ ", cognome=" + cognome + ", telephone=" + telephone + ", email=" + email + ", dataNascita="
 				+ dataNascita + ", tipoContratto=" + tipoContratto + ", ral=" + ral + ", preavviso=" + preavviso
 				+ ", offerta=" + offerta + ", proveninenza=" + proveninenza + ", aspettative=" + aspettative + ", note="
-				+ note + ", curriculum=" + Arrays.toString(curriculum) + "]";
+				+ note + ", curriculum=" + curriculum + ", supervisore=" + supervisore + "]";
 	}
+
+
 
 
 

@@ -7,8 +7,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,13 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tesi.gestione.dao.RoleDao;
 import com.tesi.gestione.dao.SedeDao;
-import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
-import com.tesi.gestione.service.CandidatoService;
 import com.tesi.gestione.service.UserService;
-import com.tesi.gestione.user.CrmCandidato;
 import com.tesi.gestione.user.CrmUser;
 
 @Controller
@@ -109,7 +104,7 @@ public class AdminController {
 		System.out.println(" ********** RegistrationController -> Aggiunti al modello: " + theModel.toString());
 		
 		
-		return "registration-form";
+		return "registration-user-form";
 	}
 
 	@PostMapping("/processRegistrationForm")
@@ -129,7 +124,7 @@ public class AdminController {
 		
 		// form validation
 		 if (theBindingResult.hasErrors()){
-			 return "registration-form";
+			 return "registration-user-form";
 	        }
 
 		// check the database if user already exists
@@ -139,15 +134,40 @@ public class AdminController {
 			theModel.addAttribute("registrationError", "User name already exists.");
 
 			logger.warning("User name already exists.");
-        	return "registration-form";
+        	return "registration-user-form";
         }
      // create user account        						
         userService.save(theCrmUser);
         
         logger.info("Successfully created user: " + userName);
         
-        return "registration-confirmation";		
+        return "registration-user-confirmation";		
 	}
+	
+	@PostMapping("/showFormForUpdate")
+	public String showFormForUpdate(
+				@RequestParam("userUsername") String theUsername,
+				@Valid @ModelAttribute("crmUser") CrmUser theCrmUser, 
+				BindingResult theBindingResult, 
+				Model theModel) {
+		
+		
+		String userName = theCrmUser.getUserName();
+		
+		// form validation
+		 if (theBindingResult.hasErrors()){
+			 return "update-user";
+	       }
+
+		
+		 // update user account        						
+        userService.save(theCrmUser);
+        
+        logger.info("Successfully created user: " + userName);
+        
+        return "list-users";		
+	}
+	
 	
 	
 	
