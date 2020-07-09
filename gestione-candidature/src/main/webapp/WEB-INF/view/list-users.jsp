@@ -97,7 +97,9 @@
 							<input type="button" value="Update"
 											onclick="window.location.href='${updateLink}'; return false;"
 											class="update-button"/>
-											
+						</td>
+						
+						<td>				
 							<input type="button" value="Delete"
 											onclick="if((confirm('Are you sure you want to delete this user?'))) window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'; return false;"
 											class="delete-button"/>

@@ -8,6 +8,7 @@
 	<title>List Users</title>
 	
 	<!-- link css -->
+	<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
 	<link type="text/css"
 		  rel="stylesheet"
 		  href="${pageContext.request.contextPath}/resources/css/style.css"/>
