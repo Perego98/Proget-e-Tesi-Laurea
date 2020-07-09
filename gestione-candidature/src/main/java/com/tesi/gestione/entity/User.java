@@ -51,8 +51,6 @@ public class User {
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="sedeAssegnamento")
 	private Sede sedeAssegnamento;
-	
-	
 
 	public User() {
 	}
@@ -154,6 +152,7 @@ public class User {
 	public void setQualified(boolean qualified) {
 		this.qualified = qualified;
 	}
+
 
 	@Override
 	public String toString() {

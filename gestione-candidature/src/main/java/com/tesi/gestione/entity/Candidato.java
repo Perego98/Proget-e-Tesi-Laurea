@@ -64,7 +64,7 @@ public class Candidato {
 	@Column(name = "curriculum")
 	private byte[] curriculum;
 
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.REFRESH)
 	@JoinColumn(name="supervisore")
 	private User supervisore;
 	

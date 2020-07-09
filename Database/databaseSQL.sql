@@ -41,7 +41,7 @@ CREATE TABLE `candidato` (
   `supervisore` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`codiceFiscale`),
   KEY `fk_Candidato_utente1_idx` (`supervisore`),
-  CONSTRAINT `fk_Candidato_supervisore` FOREIGN KEY (`supervisore`) REFERENCES `user` (`username`) ON UPDATE CASCADE
+  CONSTRAINT `fk_Candidato_supervisore` FOREIGN KEY (`supervisore`) REFERENCES `user` (`username`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,7 +51,7 @@ CREATE TABLE `candidato` (
 
 LOCK TABLES `candidato` WRITE;
 /*!40000 ALTER TABLE `candidato` DISABLE KEYS */;
-INSERT INTO `candidato` VALUES ('BRNLNE10R55F205R','new','ELAINE','BRUNELLI','1254398760','elaine.b@gmail.com','1910-10-15','a_chiamata',0,0,'stage','q',NULL,NULL,'','admin'),('NCLVLI05T65H501O','new','Viola','Nicoletti','1234567890','nicol@gmail.com','1905-12-25','part-time',0,0,'lavoro','Università milano-bicocca','Lavoro tempo pieno','Rispetta consegne, puntuale',_binary 'C:\\Users\\Daniele\\Downloads\\Appelli Laurea 2020.pdf','admin'),('SLRPPL08C23H501Z','new','PIERPAOLO','SALERNO','1234567890','rprppr@gmail.com','1908-03-23','a_chiamata',0,0,'stage','na',NULL,NULL,'','admin');
+INSERT INTO `candidato` VALUES ('BRNLNE10R55F205R','new','ELAINE','BRUNELLI','1254398760','elaine.b@gmail.com','1910-10-15','a_chiamata',0,0,'stage','q',NULL,NULL,'','admin'),('NCLVLI05T65H501O','new','Viola','Nicoletti','1234567890','nicol@gmail.com','1905-12-25','part-time',0,0,'lavoro','Università milano-bicocca','Lavoro tempo pieno','Rispetta consegne, puntuale',_binary 'C:\\Users\\Daniele\\Downloads\\Appelli Laurea 2020.pdf','admin'),('SCCRLD08T53A944I','new','ERALDA','SACCHI','1234567890','eraldasa@gamil.com','1238-02-12','apprendistato',0,0,'candidatura_spontanea','a',NULL,NULL,'',NULL),('SLRPPL08C23H501Z','new','PIERPAOLO','SALERNO','1234567890','rprppr@gmail.com','1908-03-23','a_chiamata',0,0,'stage','na',NULL,NULL,'','admin');
 /*!40000 ALTER TABLE `candidato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +183,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('admin','$2a$10$ZiXoqpmryJ9nnSRG8EIzO.sVTX8Xe3flfore5g9tl5M52qaYa.7Be','daniele','perego','1234567890','peregopr@gmail.com',7,1),('manager','$2a$10$b/dFt5HyRPQ/NEp4WLQ38e.GLTX2Y0zOHvFeecPLbmSk5xOTfgcc.','manager','manager','1234567890','themanager@gmail.com',4,1),('master','$2a$10$o6RprHf658Ww6xgjZmVJ5eRg0G5xMgInCnoeIYEpaUGjMxFqfLsd.','master','master','1234567890','master@gmail.com',6,1),('test','$2a$10$KWqi.1kxzwYogz1ka4WgG.K7HDl9ncDfTc/wkuvx2a7EnjSMAjh2K','manager','test','1234567890','testm@gmail.com',7,1);
+INSERT INTO `user` VALUES ('admin','$2a$10$ZiXoqpmryJ9nnSRG8EIzO.sVTX8Xe3flfore5g9tl5M52qaYa.7Be','daniele','perego','1234567890','peregopr@gmail.com',7,1),('manager','$2a$10$b/dFt5HyRPQ/NEp4WLQ38e.GLTX2Y0zOHvFeecPLbmSk5xOTfgcc.','manager','manager','1234567890','themanager@gmail.com',4,1),('master','$2a$10$o6RprHf658Ww6xgjZmVJ5eRg0G5xMgInCnoeIYEpaUGjMxFqfLsd.','master','master','1234567890','master@gmail.com',6,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,7 +210,7 @@ CREATE TABLE `users_roles` (
 
 LOCK TABLES `users_roles` WRITE;
 /*!40000 ALTER TABLE `users_roles` DISABLE KEYS */;
-INSERT INTO `users_roles` VALUES ('admin',1),('master',1),('master',2),('manager',3),('master',3),('test',3);
+INSERT INTO `users_roles` VALUES ('admin',1),('master',1),('master',2),('manager',3),('master',3);
 /*!40000 ALTER TABLE `users_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,4 +227,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-08 11:26:02
+-- Dump completed on 2020-07-09  9:30:33
