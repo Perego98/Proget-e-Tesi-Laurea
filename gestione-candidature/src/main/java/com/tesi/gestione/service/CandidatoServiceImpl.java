@@ -3,6 +3,7 @@ package com.tesi.gestione.service;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,6 +97,17 @@ public class CandidatoServiceImpl implements CandidatoService {
 		// save user in the database
 		candidatoDao.save(candidato);
 
+	}
+
+	@Override
+	public List<Candidato> getCandidati() {
+		return candidatoDao.getCandidati();
+	}
+
+	@Override
+	@Transactional
+	public void deleteCandidato(String codFiscale) {
+		candidatoDao.deleteCandidato(codFiscale);		
 	}
 
 }

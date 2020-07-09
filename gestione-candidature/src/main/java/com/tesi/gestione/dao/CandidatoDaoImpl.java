@@ -66,4 +66,18 @@ public class CandidatoDaoImpl implements CandidatoDao {
 
 	}
 
+	@Override
+	public void deleteCandidato(String codFiscale) {
+		
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// delete the obj with PK
+		Query theQuery = currentSession.createQuery("delete from Candidato where codiceFiscale=:theCodFiscale");
+		
+		theQuery.setParameter("theCodFiscale", codFiscale);
+		
+		theQuery.executeUpdate();
+	}
+
 }

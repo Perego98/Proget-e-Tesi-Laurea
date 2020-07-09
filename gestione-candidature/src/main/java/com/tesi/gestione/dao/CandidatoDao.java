@@ -13,4 +13,6 @@ public interface CandidatoDao {
 	
 	void save(Candidato candidato);
 	
+	void deleteCandidato(String codFiscale);
+	
 }

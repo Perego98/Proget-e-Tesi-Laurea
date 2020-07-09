@@ -63,33 +63,65 @@
 	<hr>
 	
 	
-	<!-- Add a logout button -->
+
+	<!-- Gestione della creazione / visualizzazione di nuovi utenti -->
+	<security:authorize access="hasRole('ADMIN')">  
+		<tr>
+			<th>
+					<input type="button" 
+						value="Register New User"
+						onclick="window.location.href='${pageContext.request.contextPath}/register/showRegistrationForm'; return false;"
+						class="delete-button" /> 
+						<!-- <a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New User</a> -->
+			</th>
+			<th>
+				<input type="button" 
+						value="Show List of Users"
+						onclick="window.location.href='${pageContext.request.contextPath}/admin/showListUsers'; return false;"
+						class="delete-button" /> 
+					<!--<a href="${pageContext.request.contextPath}/admin/showListUsers" class="btn btn-primary" role="button" aria-pressed="true">Show List of Users</a>  -->
+			</th>
+		</tr>
+		</br>
+	</security:authorize>
+	
+	
+	
+	<!-- Gestione della creazione / visualizzazione di nuovi Candidati -->
+	<security:authorize access="hasRole('HR')">  
+		<c:if test= "${user.qualified}">
+			</br>
+			
+				<tr>
+					<th>
+						<input type="button" 
+							value="Register New Candidato"
+							onclick="window.location.href='${pageContext.request.contextPath}/registerHr/showCandidatoRegistrationForm'; return false;"
+							class="delete-button" /> 
+						 <!--<a href="${pageContext.request.contextPath}/registerHr/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>-->
+					</th>
+					
+					<th>
+						<input type="button" 
+							value="Show List of Candidato"
+							onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
+							class="delete-button" /> 
+						 <!--<a href="${pageContext.request.contextPath}/registerHr/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>-->
+					</th>
+				</tr>
+			</br>
+		</c:if>
+	</security:authorize>
+	
+	</br></br>
+	
+		<!-- Add a logout button -->
 	<form:form action="${pageContext.request.contextPath}/logout" 
 			   method="POST">
 	
 		<input type="submit" value="Logout" />
 	
 	</form:form>
-	
-	<security:authorize access="hasRole('ADMIN')">  
-		<div>
-			<a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New User</a>
-		</div>
-		</br>
-		<div>
-			<a href="${pageContext.request.contextPath}/admin/showListUsers" class="btn btn-primary" role="button" aria-pressed="true">Show List of Users</a>
-		</div>
-	</security:authorize>
-	
-	<security:authorize access="hasRole('HR')">  
-		<c:if test= "${user.qualified}">
-			<div>
-			
-			 <a href="${pageContext.request.contextPath}/registerHr/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>
-	
-			</div>
-		</c:if>
-	</security:authorize>
 	
 </body>
 

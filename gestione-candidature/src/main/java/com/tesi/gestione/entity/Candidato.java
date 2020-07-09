@@ -1,6 +1,7 @@
 package com.tesi.gestione.entity;
 
-import java.sql.Date;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 
@@ -161,8 +162,15 @@ public class Candidato {
 		this.email = email;
 	}
 
-	public Calendar getDataNascita() {
-		return dataNascita;
+//	public Calendar getDataNascita() {
+//		return dataNascita;
+//	}
+	
+	public String getDataNascita() {
+		Date date = (Date) dataNascita.getTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		
+		return sdf.format( date );
 	}
 
 	public void setDataNascita(Calendar dataNascita) {
@@ -238,6 +246,12 @@ public class Candidato {
 	public User getSupervisore() {
 		return supervisore;
 	}
+	
+//	public String getSupervisore() {
+//		if(supervisore != null)
+//			return supervisore.getUserName();
+//		return null;
+//	}
 
 	public void setSupervisore(User supervisore) {
 		this.supervisore = supervisore;
