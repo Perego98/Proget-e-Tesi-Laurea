@@ -45,20 +45,20 @@
 			<table>
 				<tr>
 					<th>Codice Fiscale</th>
-					<th>Stato candidatura</th>
 					<th>Nome</th>
 					<th>Cognome</th>
+					<th>Stato candidatura</th>
 					<th>Telefono</th>
 					<th>Email</th>
 					<th>Data di nascita</th>
 					<th>Tipo di contratto</th>
-					<th>Ral</th>
-					<th>Giorni di preavviso</th>
-					<th>Tipo di Offerta</th>
-					<th>Canale di Proveninenza</th>
-					<th>Aspettative</th>
-					<th>Note</th>
-					<th>Curriculum</th>
+					<!-- <th>Ral</th> -->
+					<!-- <th>Giorni di preavviso</th> -->
+					<!-- <th>Tipo di Offerta</th> -->
+					<!-- <th>Canale di Proveninenza</th> -->
+					<!-- <th>Aspettative</th> -->
+					<!-- <th>Note</th> -->
+					<!-- <th>Curriculum</th> -->
 					<th>Supervisore</th>
 					<th>Action</th>
 				</tr>
@@ -80,20 +80,20 @@
 				
 					<tr>
 						<td> ${tempCandidato.codiceFiscale}</td>
-						<td> ${tempCandidato.statoCandidatura}</td>
 						<td> ${tempCandidato.nome}</td>
 						<td> ${tempCandidato.cognome}</td>
+						<td> ${tempCandidato.statoCandidatura}</td>
 						<td> ${tempCandidato.telephone}</td>
 						<td> ${tempCandidato.email}</td>
 						<td> ${tempCandidato.dataNascita}</td>
 						<td> ${tempCandidato.tipoContratto}</td>
-						<td> ${tempCandidato.ral}</td>
+						<!--  <td> ${tempCandidato.ral}</td>
 						<td> ${tempCandidato.preavviso}</td>
 						<td> ${tempCandidato.offerta}</td>
 						<td> ${tempCandidato.proveninenza}</td>
 						<td> ${tempCandidato.aspettative}</td>
 						<td> ${tempCandidato.note}</td>
-						<td> ${tempCandidato.curriculum}</td>
+						<td> ${tempCandidato.curriculum}</td>-->
 						<td> ${tempCandidato.supervisore.userName}</td>				
 						
 						
@@ -113,6 +113,13 @@
 											onclick="if((confirm('Are you sure you want to delete this candidato'))) window.location.href='${pageContext.request.contextPath}/hr/deleteCandidato?codFiscale=${tempCandidato.codiceFiscale}'; return false;"
 											class="delete-button"/>
 						</td>
+						
+						<td>
+							<input type="button" value="Show more info"
+											onclick="window.location.href='${pageContext.request.contextPath}/hr/showMoreInfoCandidato?codFiscale=${tempCandidato.codiceFiscale}'; return false;"
+											class="delete-button"/>
+						</td>
+					
 					</tr>
 				
 				</c:forEach>

@@ -70,9 +70,9 @@
 			<th>
 					<input type="button" 
 						value="Register New User"
-						onclick="window.location.href='${pageContext.request.contextPath}/register/showRegistrationForm'; return false;"
+						onclick="window.location.href='${pageContext.request.contextPath}/admin/showRegistrationForm'; return false;"
 						class="delete-button" /> 
-						<!-- <a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New User</a> -->
+						<!-- <a href="${pageContext.request.contextPath}/admin/showRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New User</a> -->
 			</th>
 			<th>
 				<input type="button" 
@@ -96,9 +96,9 @@
 					<th>
 						<input type="button" 
 							value="Register New Candidato"
-							onclick="window.location.href='${pageContext.request.contextPath}/registerHr/showCandidatoRegistrationForm'; return false;"
+							onclick="window.location.href='${pageContext.request.contextPath}/hr/showCandidatoRegistrationForm'; return false;"
 							class="delete-button" /> 
-						 <!--<a href="${pageContext.request.contextPath}/registerHr/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>-->
+						 <!--<a href="${pageContext.request.contextPath}/hr/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>-->
 					</th>
 					
 					<th>
@@ -106,7 +106,7 @@
 							value="Show List of Candidato"
 							onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
 							class="delete-button" /> 
-						 <!--<a href="${pageContext.request.contextPath}/registerHr/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>-->
+						 <!--<a href="${pageContext.request.contextPath}/hr/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>-->
 					</th>
 				</tr>
 			</br>

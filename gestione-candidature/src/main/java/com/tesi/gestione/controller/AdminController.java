@@ -72,7 +72,7 @@ public class AdminController {
 		
 		return "list-users";		
 	}
-	
+
 	@GetMapping("/deleteUser")
 	public String deleteUser(@RequestParam("userUsername") String theUsername) {
 		
@@ -83,6 +83,75 @@ public class AdminController {
 		return "redirect:/admin/showListUsers";		
 	}
 
+	@GetMapping("/showRegistrationForm")
+	public String showMyLoginPage(Model theModel) {
+		
+		theModel.addAttribute("crmUser", new CrmUser());
+		
+		System.out.println(" ********** RegistrationController -> Entrato in showMyLoginPage().");
+		
+		// get Role from dao
+		List<Role> theRoles = roleDao.getRoles();
+		
+		// fet Sedi from dao
+		List<Sede> theSedi = sedeDao.getSedi();
+		
+		
+		System.out.println(" ********** RegistrationController -> Recuperati Ruoli: " + theRoles.toString());
+		System.out.println(" ********** RegistrationController -> Recuperati Sedi: " + theSedi.toString());
+		
+		// add the role to the model
+		theModel.addAttribute("roles", theRoles);
+		
+		// add the sedi to the model
+		theModel.addAttribute("sedi", theSedi);
+		
+		System.out.println(" ********** RegistrationController -> Aggiunti al modello: " + theModel.toString());
+		
+		
+		return "registration-form";
+	}
+
+	@PostMapping("/processRegistrationForm")
+	public String processRegistrationForm(
+				@Valid @ModelAttribute("crmUser") CrmUser theCrmUser, 
+				BindingResult theBindingResult, 
+				Model theModel) {
+		
+		List<Role> theRoles = roleDao.getRoles();
+		List<Sede> theSedi = sedeDao.getSedi();
+		
+		theModel.addAttribute("roles", theRoles);
+		theModel.addAttribute("sedi", theSedi);
+	
+		
+		String userName = theCrmUser.getUserName();
+		
+		// form validation
+		 if (theBindingResult.hasErrors()){
+			 return "registration-form";
+	        }
+
+		// check the database if user already exists
+        User existing = userService.findByUserName(userName);
+        if (existing != null){
+        	theModel.addAttribute("crmUser", new CrmUser());
+			theModel.addAttribute("registrationError", "User name already exists.");
+
+			logger.warning("User name already exists.");
+        	return "registration-form";
+        }
+     // create user account        						
+        userService.save(theCrmUser);
+        
+        logger.info("Successfully created user: " + userName);
+        
+        return "registration-confirmation";		
+	}
+	
+	
+	
+	
 	
 	
 }

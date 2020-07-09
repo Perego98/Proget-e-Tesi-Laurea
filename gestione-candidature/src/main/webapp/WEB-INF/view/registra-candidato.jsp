@@ -57,7 +57,7 @@
 					<label>Linkato a: </label>
 					<security:authentication property="principal.username" />
 					<form:form
-						action="${pageContext.request.contextPath}/registerHr/processRegistrationCandidatoForm"
+						action="${pageContext.request.contextPath}/hr/processRegistrationCandidatoForm"
 						modelAttribute="crmCandidato" class="form-horizontal">
 
 						<!-- Place for messages: error, alert etc ... -->

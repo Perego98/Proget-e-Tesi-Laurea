@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "user")
@@ -52,6 +53,7 @@ public class User {
 	@JoinColumn(name="sedeAssegnamento")
 	private Sede sedeAssegnamento;
 
+	
 	public User() {
 	}
 
@@ -118,8 +120,10 @@ public class User {
 	}
 
 	public Collection<Role> getRoles() {
+		
 		return roles;
 	}
+	
 
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
@@ -152,6 +156,8 @@ public class User {
 	public void setQualified(boolean qualified) {
 		this.qualified = qualified;
 	}
+
+
 
 
 	@Override
