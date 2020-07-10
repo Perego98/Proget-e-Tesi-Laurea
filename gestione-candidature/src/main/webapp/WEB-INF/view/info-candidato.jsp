@@ -1,31 +1,97 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 
 <head>
 	<title>List Users</title>
 	
-	<!-- link css -->
-	<link type="text/css"
-		  rel="stylesheet"
-		  href="${pageContext.request.contextPath}/resources/css/style.css"/>
+<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
 </head>
 
 
 <body>
 
-	<div id="wrapper">
-		<div id="header">
-			<h2>List Candidati</h2>
-		</div>
-	</div>
 
-	<div id="container">
+	<!-- Start NAV BAR -->
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/">Gestione
+					Candidature</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a
+					href="${pageContext.request.contextPath}/">Home</a></li>
+
+				<security:authorize access="hasRole('ADMIN')">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Admin<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a
+								href="${pageContext.request.contextPath}/admin/showRegistrationForm">Registra
+									Utente</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/admin/showListUsers">Elenco
+									Utenti</a></li>
+						</ul></li>
+				</security:authorize>
+
+
+				<security:authorize access="hasRole('HR')">
+					<li class="dropdown active"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">HR<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a
+								href="${pageContext.request.contextPath}/hr/showCandidatoRegistrationForm">Registra
+									Candidato</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/hr/showListCandidati">Elenco
+									Candidati</a></li>
+						</ul></li>
+				</security:authorize>
+
+				<security:authorize access="hasRole('MANAGER')">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Manager<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Ruolo 1</a></li>
+							<li><a href="#">Ruolo 2</a></li>
+						</ul></li>
+				</security:authorize>
+
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Azioni<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<form:form action="${pageContext.request.contextPath}/logout"
+							method="POST">
+							<input class="btn btn-danger navbar-btn" type="submit"
+								value="Logout" />
+						</form:form>
+					</ul></li>
+			</ul>
+		</div>
+	</nav>
+	<!-- END NAV BAR -->
 	
-		<div id="content">
+	
+
+	<div class="panel panel-default">
+		<div class="panel-heading"><h2>Info Candidato</h2></div>
+		<div  class="panel-body">
 		
 			
 				<!-- construct an "delete" link with customer id -->
@@ -34,7 +100,7 @@
 					<c:param name="userUsername" value="${candidato.codiceFiscale}" />
 				</c:url>
 
-					<table>
+					<table class="table table-striped">
 						<tr>
 							<th>Codice Fiscale</th>
 							<td>${candidato.codiceFiscale}</td>
@@ -100,12 +166,7 @@
 							<td>Username: ${candidato.supervisore.userName} Ruolo: ${candidato.supervisore.roles}</td>
 						</tr>
 					</table>
-	
-					<div>
-						<input type="button" value="Delete"
-							onclick="if((confirm('Are you sure you want to delete this candidato'))) window.location.href='${pageContext.request.contextPath}/hr/deleteCandidato?codFiscale=${candidato.codiceFiscale}'; return false;"
-							class="delete-button" />
-					</div>
+
 
 
 
@@ -114,11 +175,23 @@
 
 		</div>
 	
-	</div>
+			<div class="panel-footer">
 
-	<div>
-		
-	<a href="${pageContext.request.contextPath}/hr/showListCandidati">Back to List</a>
+				<input type="button" value="Back"
+							onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
+							class="btn btn-primary" />
+							
+				<div class="btn-group pull-right">			
+					<input type="button" value="Delete"
+											onclick="if((confirm('Sei sicuro di voler cancellare questo candidato'))) window.location.href='${pageContext.request.contextPath}/hr/deleteCandidato?codFiscale=${candidato.codiceFiscale}'; return false;"
+											class="btn btn-danger" /> 
+							
+					<input type="button" value="Update"
+								onclick="window.location.href='${updateLink}'; return false;"
+								class="btn btn-success" />
+				</div>
+		</div>
+	
 	</div>
 </body>
 

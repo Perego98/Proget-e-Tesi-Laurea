@@ -1,48 +1,105 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-	<title>List Users</title>
+	<title>Elenco Utenti</title>
 	
-	<!-- link css -->
-	<link type="text/css"
-		  rel="stylesheet"
-		  href="${pageContext.request.contextPath}/resources/css/style.css"/>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
 </head>
 
 
 <body>
+	
+	<!-- Start NAV BAR -->
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/">Gestione
+					Candidature</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a
+					href="${pageContext.request.contextPath}/">Home</a></li>
 
-	<div id="wrapper">
-		<div id="header">
-			<h2>List Users</h2>
+				<security:authorize access="hasRole('ADMIN')">
+					<li class="dropdown active"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Admin<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a
+								href="${pageContext.request.contextPath}/admin/showRegistrationForm">Registra
+									Utente</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/admin/showListUsers">Elenco
+									Utenti</a></li>
+						</ul></li>
+				</security:authorize>
+
+
+				<security:authorize access="hasRole('HR')">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">HR<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a
+								href="${pageContext.request.contextPath}/hr/showCandidatoRegistrationForm">Registra
+									Candidato</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/hr/showListCandidati">Elenco
+									Candidati</a></li>
+						</ul></li>
+				</security:authorize>
+
+				<security:authorize access="hasRole('MANAGER')">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Manager<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Ruolo 1</a></li>
+							<li><a href="#">Ruolo 2</a></li>
+						</ul></li>
+				</security:authorize>
+
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Azioni<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<form:form action="${pageContext.request.contextPath}/logout"
+							method="POST">
+							<input class="btn btn-danger navbar-btn" type="submit"
+								value="Logout" />
+						</form:form>
+					</ul></li>
+			</ul>
 		</div>
-	</div>
+	</nav>
+	<!-- END NAV BAR -->
 
-	<div id="container">
-	
-		<div id="content">
+	<!-- Check for registration success -->
+	<c:if test="${registrationSucces != null}">
+		<div class="alert alert-success">
+				<strong>Successo!</strong> ${registrationSucces}
+		</div>
+	</c:if>
+
+	<div class="panel panel-default">
+		<div class="panel-heading"><h2>Elenco Utenti</h2></div>
+		<div  class="panel-body">
+
 		
-		<!-- Add buttun code 
-	
-		<input type="button" value="Add Customer"
-				onclick="window.location.href='showFormForAdd'; return false;"
-				class="add-button"/> -->
-		
-		<!--  add a search box 
-            <form:form action="search" method="GET">
-                Search customer: <input type="text" name="theSearchName" />
-                
-                <input type="submit" value="Search" class="add-button" />
-            </form:form> -->
-		
-		<!-- add out html table here -->
-		
-			<table>
+			<table class="table table-striped">
 				<tr>
 					<th>Username</th>
 					<th>First Name</th>
@@ -83,26 +140,16 @@
 						
 						
 						<td>
-							<!--  <input type="button" value="Update"
-											onclick="window.location.href='${updateLink}'; return false;"
-											class="update-button"/>		
-											
-											
-											<input type="button" value="Delete"
-											onclick="if((confirm('Are you sure you want to delete this user?'))) window.location.href='${deleteLink}'; return false;"
-											class="delete-button"/>
-											
-											-->
-						
-							<input type="button" value="Update"
-											onclick="window.location.href='${updateLink}'; return false;"
-											class="update-button"/>
-						</td>
-						
-						<td>				
-							<input type="button" value="Delete"
-											onclick="if((confirm('Are you sure you want to delete this user?'))) window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'; return false;"
-											class="delete-button"/>
+							
+							<div class="btn-group-vertical btn-group-sm">
+								<input type="button" value="Update"
+												onclick="window.location.href='${updateLink}'; return false;"
+												class="btn btn-success"/>
+										
+								<input type="button" value="Delete"
+												onclick="if((confirm('Sei sicuro di voler eliminare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'; return false;"
+												class="btn btn-danger"/>
+							</div>						
 						</td>
 					</tr>
 				
@@ -111,13 +158,14 @@
 			</table>
 		
 		</div>
-	
+		
+		<!--<div class="panel-footer">
+			<input type="button" value="Torna alla Home"
+				onclick="window.location.href='${pageContext.request.contextPath}/'; return false;"
+				class="btn btn-primary" />
+		</div>-->
 	</div>
 
-	<div>
-		
-	<a href="${pageContext.request.contextPath}/">Back to Home Page</a>
-	</div>
 </body>
 
 </html>

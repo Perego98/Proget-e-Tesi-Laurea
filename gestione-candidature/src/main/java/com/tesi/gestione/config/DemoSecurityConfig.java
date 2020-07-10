@@ -46,6 +46,8 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 					.permitAll()
 			.and()
 				.logout().permitAll()
+				.invalidateHttpSession(true)
+				.deleteCookies("JSESSIONID")
 			.and()
 				.exceptionHandling().accessDeniedPage("/access-denied");
 		

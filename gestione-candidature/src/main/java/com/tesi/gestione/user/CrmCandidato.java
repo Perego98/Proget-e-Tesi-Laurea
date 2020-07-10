@@ -32,7 +32,7 @@ public class CrmCandidato {
 	private String email;
 	
 	@NotNull(message = "is required")
-	@Size(min = 10, message = "is required")
+	@Size(min = 10, max=10, message = "is required")
 	private String telephone;
 	
 	@NotNull(message = "is required")

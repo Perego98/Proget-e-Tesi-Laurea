@@ -131,7 +131,7 @@ public class AdminController {
         User existing = userService.findByUserName(userName);
         if (existing != null){
         	theModel.addAttribute("crmUser", new CrmUser());
-			theModel.addAttribute("registrationError", "User name already exists.");
+			theModel.addAttribute("registrationError", "Username gia presente.");
 
 			logger.warning("User name already exists.");
         	return "registration-user-form";
@@ -141,7 +141,15 @@ public class AdminController {
         
         logger.info("Successfully created user: " + userName);
         
-        return "registration-user-confirmation";		
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<User> theUsers = userService.getUsers();
+
+		// devo aggiungerli al model
+		theModel.addAttribute("users", theUsers);
+        
+		theModel.addAttribute("registrationSucces", "Utente registrato con successo.");
+		
+        return "list-users";		
 	}
 	
 	@PostMapping("/showFormForUpdate")

@@ -37,7 +37,7 @@ public class CrmUser {
 	private String email;
 	
 	@NotNull(message = "is required")
-	@Size(min = 10, message = "is required")
+	@Size(min = 10, max=10, message = "Devono essere 10 cifre")
 	private String telephone;
 	
 	@NotNull(message = "is required")

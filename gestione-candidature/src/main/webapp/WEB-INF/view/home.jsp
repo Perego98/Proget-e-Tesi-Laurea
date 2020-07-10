@@ -5,122 +5,132 @@
 <html>
 
 <head>
-	<title>Company Home Page</title>
+	<title>Home Page</title>
+	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
 </head>
 
 <body>
-	<h2>Company Home Page</h2>
-	<hr>
 	
-	<p>
-	Welcome to the company home page!
-	</p>
-	
-	<hr>
-	
-	<!-- display user name and role -->
-	
-	<p>
-		User: <security:authentication property="principal.username" />
-		<br><br>
-		Role(s): <security:authentication property="principal.authorities" />
-		<br><br> 
-		First name: ${user.firstName}, Last name: ${user.lastName},
-		Email: ${user.email}, Telephone: ${user.telephone}, 
-		Sede: ${user.sedeAssegnamento}
+	<!-- Start NAV BAR -->
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/">Gestione
+					Candidature</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a
+					href="${pageContext.request.contextPath}/">Home</a></li>
 
-	</p>
-	
-	<security:authorize access="hasRole('MANAGER')">
-	
-		<!-- Add a link to point to /leaders ... this is for the managers -->
-		
-		<p>
-			MANAGER (Only for Manager peeps)
-		</p>
+				<security:authorize access="hasRole('ADMIN')">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Admin<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a
+								href="${pageContext.request.contextPath}/admin/showRegistrationForm">Registra
+									Utente</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/admin/showListUsers">Elenco
+									Utenti</a></li>
+						</ul></li>
+				</security:authorize>
 
-	</security:authorize>	
+
+				<security:authorize access="hasRole('HR')">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">HR<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a
+								href="${pageContext.request.contextPath}/hr/showCandidatoRegistrationForm">Registra
+									Candidato</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/hr/showListCandidati">Elenco
+									Candidati</a></li>
+						</ul></li>
+				</security:authorize>
+
+				<security:authorize access="hasRole('MANAGER')">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Manager<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Ruolo 1</a></li>
+							<li><a href="#">Ruolo 2</a></li>
+						</ul></li>
+				</security:authorize>
+
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Azioni<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<form:form action="${pageContext.request.contextPath}/logout"
+							method="POST">
+							<input class="btn btn-danger navbar-btn" type="submit"
+								value="Logout" />
+						</form:form>
+					</ul></li>
+			</ul>
+		</div>
+	</nav>
+	<!-- END NAV BAR -->
 	
 	
-	<security:authorize access="hasRole('ADMIN')">  
 	
-		Qualified: ${user.qualified}
-		<c:if test= "${user.qualified}">
+	<!-- display Account info -->
+	<div class="panel panel-default">
+	
+		<div class="panel-heading"><h4>Info Account</h4></div>
 		
-			<!-- Add a link to point to /systems ... this is for the admins -->
+		<div  class="panel-body">
 			
-			<p>
-				 ADMIN (Only for Admin peeps)
-			</p>
-		
-		</c:if>
-		
-	
-	</security:authorize>
-	
-	<hr>
-	
-	
+			<table class="table table-striped">
+						<tr>
+							<th>Username</th>
+							<td><security:authentication property="principal.username" /></td>
+						</tr>
+						<tr>
+							<th>Ruolo</th>
+							<td><security:authentication property="principal.authorities" /></td>
+						</tr>
+						<tr>
+							<th>Nome</th>
+							<td>${user.firstName}</td>
+						</tr>
+						<tr>
+							<th>Cognome</th>
+							<td> ${user.lastName}</td>
+						</tr>
+						<tr>
+							<th>Email</th>
+							<td>${user.email}</td>
+						</tr>
+						<tr>
+							<th>Telefono</th>
+							<td>${user.telephone}</td>
+						</tr>
+						<tr>
+							<th>Sede</th>
+							<td>${user.sedeAssegnamento}</td>
+						</tr>
 
-	<!-- Gestione della creazione / visualizzazione di nuovi utenti -->
-	<security:authorize access="hasRole('ADMIN')">  
-		<tr>
-			<th>
-					<input type="button" 
-						value="Register New User"
-						onclick="window.location.href='${pageContext.request.contextPath}/admin/showRegistrationForm'; return false;"
-						class="delete-button" /> 
-						<!-- <a href="${pageContext.request.contextPath}/admin/showRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New User</a> -->
-			</th>
-			<th>
-				<input type="button" 
-						value="Show List of Users"
-						onclick="window.location.href='${pageContext.request.contextPath}/admin/showListUsers'; return false;"
-						class="delete-button" /> 
-					<!--<a href="${pageContext.request.contextPath}/admin/showListUsers" class="btn btn-primary" role="button" aria-pressed="true">Show List of Users</a>  -->
-			</th>
-		</tr>
-		</br>
-	</security:authorize>
-	
-	
-	
-	<!-- Gestione della creazione / visualizzazione di nuovi Candidati -->
-	<security:authorize access="hasRole('HR')">  
-		<c:if test= "${user.qualified}">
-			</br>
-			
-				<tr>
-					<th>
-						<input type="button" 
-							value="Register New Candidato"
-							onclick="window.location.href='${pageContext.request.contextPath}/hr/showCandidatoRegistrationForm'; return false;"
-							class="delete-button" /> 
-						 <!--<a href="${pageContext.request.contextPath}/hr/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>-->
-					</th>
-					
-					<th>
-						<input type="button" 
-							value="Show List of Candidato"
-							onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
-							class="delete-button" /> 
-						 <!--<a href="${pageContext.request.contextPath}/hr/showCandidatoRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New Candidato</a>-->
-					</th>
-				</tr>
-			</br>
-		</c:if>
-	</security:authorize>
-	
-	</br></br>
-	
-		<!-- Add a logout button -->
-	<form:form action="${pageContext.request.contextPath}/logout" 
-			   method="POST">
-	
-		<input type="submit" value="Logout" />
-	
-	</form:form>
-	
+					</table>
+		
+		</div>
+		
+		
+	</div>
+
 </body>
 
 </html>

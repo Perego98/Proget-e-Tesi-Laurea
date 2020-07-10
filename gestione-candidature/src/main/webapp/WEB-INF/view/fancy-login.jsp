@@ -1,5 +1,6 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <!doctype html>
 <html lang="en">
@@ -24,8 +25,11 @@
 <!--  <a href="${pageContext.request.contextPath}/admin/showRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New User</a> -->
 	<div>
 		
-		<div id="loginbox" style="margin-top: 50px;"
-			class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
+		<!--<div id="loginbox" style="margin-top: 50px;"
+			class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">-->
+			<div class="container">
+			<div id="loginbox" style="margin-top: 50px;"
+				class="mainbox col-md-4 col-sm-6">
 			
 			<div class="panel panel-info">
 
@@ -103,7 +107,7 @@
 
 
 		</div>
-
+			</div>
 	</div>
 
 </body>

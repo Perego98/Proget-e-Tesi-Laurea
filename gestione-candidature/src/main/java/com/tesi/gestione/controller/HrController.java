@@ -57,17 +57,7 @@ public class HrController {
 		
 		// devo chiedere a UserService (UserDao) l'elenco degli user
 		List<Candidato> theCandidati = candidatoService.getCandidati();
-		
-		// lista con i candidati elaborati
-//		List<Candidato> finalCandidati = new ArrayList<>();
-		// Modificare i valori dei candidati, in modo da renderli stampabili
-		
-//		for(Candidato tempC : theCandidati) {
-//			
-//		}
-		// cambiare la stampa della data
-		
-		
+
 		
 		// devo aggiungerli al model
 		theModel.addAttribute("candidati", theCandidati);
@@ -134,8 +124,15 @@ public class HrController {
 		
 		logger.info("Successfully created user: " + codFiscale);
 		        
-        
-        return "registration-candidato-confirmation";		
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<Candidato> theCandidati = candidatoService.getCandidati();
+
+		// devo aggiungerli al model
+		theModel.addAttribute("candidati", theCandidati);
+		
+		theModel.addAttribute("registrationSucces", "Candidato registrato con successo.");
+		
+        return "list-candidati";		
 	}
 	
 	
