@@ -1,6 +1,7 @@
 package com.tesi.gestione.entity;
 
 import java.util.Date;
+import java.sql.Blob;
 import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
@@ -65,7 +66,7 @@ public class Candidato {
 	
 	@Column(name = "curriculum")
 	@Lob
-	private byte[] curriculum;
+	private Blob curriculum;
 
 	@OneToOne(cascade=CascadeType.REFRESH)
 	@JoinColumn(name="supervisore")
@@ -76,7 +77,7 @@ public class Candidato {
 
 	public Candidato(String codiceFiscale, String statoCandidatura, String nome, String cognome, String telephone,
 			String email, Calendar dataNascita, String tipoContratto, float ral, int preavviso, String offerta,
-			String proveninenza, byte[] curriculum) {
+			String proveninenza, Blob curriculum) {
 		super();
 		this.codiceFiscale = codiceFiscale;
 		this.statoCandidatura = statoCandidatura;
@@ -97,7 +98,7 @@ public class Candidato {
 
 	public Candidato(String codiceFiscale, String statoCandidatura, String nome, String cognome, String telephone,
 			String email, Calendar dataNascita, String tipoContratto, float ral, int preavviso, String offerta,
-			String proveninenza, String aspettative, String note, byte[] curriculum) {
+			String proveninenza, String aspettative, String note, Blob curriculum) {
 		super();
 		this.codiceFiscale = codiceFiscale;
 		this.statoCandidatura = statoCandidatura;
@@ -235,12 +236,12 @@ public class Candidato {
 		this.note = note;
 	}
 
-	public byte[] getCurriculum() {
+	public Blob getCurriculum() {
 		return curriculum;
 	}
 
-	public void setCurriculum(byte[] curriculum) {
-		this.curriculum = curriculum;
+	public void setCurriculum(Blob blob) {
+		this.curriculum = blob;
 	}
 
 	

@@ -1,5 +1,7 @@
 package com.tesi.gestione.dao;
 
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -79,5 +81,62 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		
 		theQuery.executeUpdate();
 	}
+
+	@Override
+	@Transactional
+	public Blob dowloadCurriculum(String codFiscale) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// now retrieve/read from database using CF
+		Query<Blob> theQuery = currentSession.createQuery("select curriculum from Candidato where codiceFiscale=:codFiscale",
+				Blob.class);
+		theQuery.setParameter("codFiscale", codFiscale);
+
+		Blob theCandidato = null;
+
+		try {
+			theCandidato = theQuery.getSingleResult();
+		} catch (Exception e) {
+			theCandidato = null;
+		}
+		
+		long lunghezza = 0;
+		try {
+			lunghezza = theCandidato.length();
+			System.out.println("Lunghezza: " + lunghezza);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(lunghezza == 0)
+			return null;
+		
+		return theCandidato;
+		
+	}
+	
+//	@Override
+////	@Transactional
+//	public byte[] dowloadCurriculum(String codFiscale) {
+//		// get the current hibernate session
+//		Session currentSession = sessionFactory.getCurrentSession();
+//
+//		// now retrieve/read from database using CF
+//		Query<byte[]> theQuery = currentSession.createQuery("select curriculum from Candidato where codiceFiscale=:codFiscale",
+//				byte[].class);
+//		theQuery.setParameter("codFiscale", codFiscale);
+//
+//		byte[] thCurriculum = null;
+//
+//		try {
+//			thCurriculum = theQuery.getSingleResult();
+//		} catch (Exception e) {
+//			thCurriculum = null;
+//		}
+//
+//		return thCurriculum;
+//		
+//	}
 
 }

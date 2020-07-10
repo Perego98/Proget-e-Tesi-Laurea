@@ -159,7 +159,13 @@
 						</tr>
 						<tr>
 							<th>Curriculum</th>
-							<td>${candidato.curriculum}</td>
+							<td>
+								<c:if test="${candidato.curriculum.length() != 0}">
+									<input type="button" value="Download"
+										onclick="window.location.href='${pageContext.request.contextPath}/hr/downloadCurriculum?codFiscale=${candidato.codiceFiscale}'; return false;"
+										class="btn btn-primary" />
+								</c:if>
+							</td>
 						</tr>
 						<tr>
 							<th>Supervisore</th>

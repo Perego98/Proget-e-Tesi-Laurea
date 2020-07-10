@@ -1,5 +1,6 @@
 package com.tesi.gestione.service;
 
+import java.sql.Blob;
 import java.util.List;
 
 import com.tesi.gestione.entity.Candidato;
@@ -13,6 +14,8 @@ public interface CandidatoService {
     void save(CrmCandidato crmCandidato);
     
     List<Candidato> getCandidati();
+    
+    void dowloadCurriculum(String codFiscale);
     
     void deleteCandidato(String codFiscale);
 }

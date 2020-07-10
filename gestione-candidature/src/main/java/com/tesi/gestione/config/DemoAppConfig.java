@@ -16,6 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -152,7 +153,13 @@ public class DemoAppConfig implements WebMvcConfigurer {
 		
 	}	
 	
-	
+	@Bean(name = "multipartResolver")
+	public CommonsMultipartResolver getCommonsMultipartResolver() {
+	    CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+	    multipartResolver.setMaxUploadSize(20971520);   // 20MB
+	    multipartResolver.setMaxInMemorySize(1048576);  // 1MB
+	    return multipartResolver;
+	}
 	
 //	 public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");

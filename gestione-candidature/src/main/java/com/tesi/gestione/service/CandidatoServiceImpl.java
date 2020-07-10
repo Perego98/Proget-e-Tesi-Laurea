@@ -1,6 +1,19 @@
 package com.tesi.gestione.service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Blob;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -8,6 +21,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.tesi.gestione.dao.CandidatoDao;
 import com.tesi.gestione.dao.UserDao;
@@ -82,7 +96,15 @@ public class CandidatoServiceImpl implements CandidatoService {
 		candidato.setDataNascita(calendar);
 		
 		// salvo curriculum
-		candidato.setCurriculum(crmCandidato.getCurriculum());
+		Blob blob = null;
+		try {
+			blob = new javax.sql.rowset.serial.SerialBlob(crmCandidato.getCurriculum());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (blob != null)
+			candidato.setCurriculum(blob);
 
 		
 		// salvo l'hr che ha creato il candidato
@@ -108,6 +130,78 @@ public class CandidatoServiceImpl implements CandidatoService {
 	@Transactional
 	public void deleteCandidato(String codFiscale) {
 		candidatoDao.deleteCandidato(codFiscale);		
+	}
+
+	@Override
+	@Transactional
+	@CrossOrigin
+	public void dowloadCurriculum(String codFiscale) {
+		
+		// Retrive curriculum from database
+		Blob theBlob = candidatoDao.dowloadCurriculum(codFiscale);	
+		
+		System.out.println("Blob: " + theBlob.toString());
+
+       
+       
+
+//		String fileName = "curriculum_"+codFiscale+".txt";
+//		File file = new File(fileName);
+		
+//		if(!file.exists()) {
+//			
+//			try {
+//				file.createNewFile();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//		
+//			 System.out.println("File created: " + file);
+//		}else {
+//			System.out.println("File gia esistente: " + file);
+//		}
+        
+        
+        
+		
+		// save in download
+		InputStream in = null;
+//		FileOutputStream  out = null;
+		
+		try {
+			in = theBlob.getBinaryStream();
+//			out = new FileOutputStream(fileName);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+//		catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+		
+		
+		
+		byte[] buff = new byte[4096];  // how much of the blob to read/write at a time
+		int len = 0;
+		
+		// scrivo su file
+		try {
+			System.out.println("*********** START READ Blob:"+ in.toString());
+			while ((len = in.read(buff)) != -1) {
+//			    out.write(buff, 0, len);
+				System.out.println(buff);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+//		try {
+//			out.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 }

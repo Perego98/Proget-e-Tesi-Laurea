@@ -76,6 +76,16 @@ public class HrController {
 		return "redirect:/hr/showListCandidati";		
 	}
 	
+//	@GetMapping("/downloadCurriculum")
+//	public String downloadCurriculum(@RequestParam("codFiscale") String codFiscale) {
+//		
+//		System.out.println("!!!!!! *C*C*C*C*C*C*C* Hr Controller Download Curriculum " + codFiscale);
+//		
+//		candidatoService.dowloadCurriculum(codFiscale);
+//		
+//		return "redirect:/hr/showListCandidati";		
+//	}
+	
 	@GetMapping("/showMoreInfoCandidato")
 	public String showMoreInfoCandidato(@RequestParam("codFiscale") String codFiscale, 
 										Model theModel) {
@@ -145,5 +155,22 @@ public class HrController {
 		
 		return "registration-candidato-form";
 	}
+	
+	
+	@GetMapping("/downloadCurriculum")
+	public String downloadCurriculum(@RequestParam("codFiscale") String codFiscale,
+									Model theModel) {
+		
+		// call serivce
+		
+		candidatoService.dowloadCurriculum(codFiscale);
+		
+		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
+		theModel.addAttribute("candidato", theCandidato);
+		
+		return "info-candidato";
+	}
+	
+	
 	
 }
