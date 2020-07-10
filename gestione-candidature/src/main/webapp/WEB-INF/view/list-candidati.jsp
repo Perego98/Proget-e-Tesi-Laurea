@@ -153,7 +153,7 @@
 						
 						<td>
 							
-							<div class="btn-group-vertical btn-group-sm">
+							<div class="btn-group-vertical btn-group-xs">
 								<input type="button" value="Update"
 												onclick="window.location.href='${updateLink}'; return false;"
 												class="btn btn-success"/>
