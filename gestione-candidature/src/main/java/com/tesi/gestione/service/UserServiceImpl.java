@@ -6,6 +6,7 @@ import com.tesi.gestione.dao.UserDao;
 import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
+import com.tesi.gestione.user.CrmRole;
 import com.tesi.gestione.user.CrmSede;
 import com.tesi.gestione.user.CrmUser;
 import com.tesi.gestione.user.CrmUserUpdate;
@@ -137,6 +138,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void changeSede(CrmSede crmSede, User theUser) {
 		theUser.setSedeAssegnamento(sedeDao.findSedeByCityID(crmSede.getSedeid()));
 		userDao.save(theUser);
@@ -144,14 +146,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void changeRuolo(Role newRole, String username) {
-		Collection<Role> temp = new ArrayList<>();
-		temp.add(newRole);
+	@Transactional
+	public void changeRuolo(CrmRole newRole,  User theUser) {
+		// recupero il ruolo
+		if(newRole.getIdRole() != null) {
+			Collection<Role> temp = new ArrayList<>();
+			temp.add(roleDao.findRoleByName(newRole.getIdRole()));
+			
+			
+			theUser.setRoles(temp);
+		}		
 		
-		User user = new User();
-		user = userDao.findByUserName(username);
-		user.setRoles(temp);
-		userDao.save(user);
+		userDao.save(theUser);
 		
 	}
 }

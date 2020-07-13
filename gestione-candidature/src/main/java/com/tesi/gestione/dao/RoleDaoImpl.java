@@ -58,4 +58,24 @@ public class RoleDaoImpl implements RoleDao {
 		// return the result
 		return roles;
 	}
+
+	@Override
+	public Role findRoleById(String theRoleId) {
+		// get the current hibernate session
+				Session currentSession = sessionFactory.getCurrentSession();
+
+				// now retrieve/read from database using name
+				Query<Role> theQuery = currentSession.createQuery("from Role where id=:theRoleId", Role.class);
+				theQuery.setParameter("theRoleId", theRoleId);
+				
+				Role theRole = null;
+				
+				try {
+					theRole = theQuery.getSingleResult();
+				} catch (Exception e) {
+					theRole = null;
+				}
+				
+				return theRole;
+	}
 }

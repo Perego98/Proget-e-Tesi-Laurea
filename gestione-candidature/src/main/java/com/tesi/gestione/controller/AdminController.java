@@ -24,6 +24,7 @@ import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.service.UserService;
+import com.tesi.gestione.user.CrmRole;
 import com.tesi.gestione.user.CrmSede;
 import com.tesi.gestione.user.CrmUser;
 import com.tesi.gestione.user.CrmUserUpdate;
@@ -233,19 +234,21 @@ public class AdminController {
 		return "redirect:/admin/showListUsers";	
 	}
 	
+	// mostra la pagina per aggiornare la sede
 	@GetMapping("/showFormForUpdateUserSede")
 	public String showFormForUpdateUserSede(
 				@RequestParam("userUsername") String theUsername,
 				Model theModel) {
 		
 		
-//		List<Role> theRoles = roleDao.getRoles();
 		List<Sede> theSedi = sedeDao.getSedi();
 //		
-//		theModel.addAttribute("roles", theRoles);
 		theModel.addAttribute("sedi", theSedi);
 		
-		theModel.addAttribute("crmUser", new CrmSede());		
+		// recupero la sede attuale
+		theModel.addAttribute("sedeAttuale", userService.findByUserName(theUsername).getSedeAssegnamento());
+		
+		theModel.addAttribute("crmSede", new CrmSede());		
 		
 		theModel.addAttribute("userUsername", theUsername);
 		
@@ -256,10 +259,11 @@ public class AdminController {
         return "update-user-sede";		
 	}
 	
+	// processa la pagina per salvare la nuova sede
 	@PostMapping("/processUpdateUserSedeForm")
 	public String processUpdateUserSedeForm(
 				@RequestParam("userUsername") String theUsername,
-				@Valid @ModelAttribute("crmUser") CrmSede theCrmUser, 
+				@Valid @ModelAttribute("crmUser") CrmSede theSede, 
 				BindingResult theBindingResult, 
 				Model theModel) {
 		
@@ -270,16 +274,72 @@ public class AdminController {
 		// create user account
 		User theUser = userService.findByUserName(theUsername);
 		
-		userService.changeSede(theCrmUser, theUser);
+		userService.changeSede(theSede, theUser);
 		
+		
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<User> theUsers = userService.getUsers();
+				
 		// devo aggiungerli al model
-		theModel.addAttribute("users", theUser);
+		theModel.addAttribute("users", theUsers);
 		
 		theModel.addAttribute("registrationSucces", "Sede aggiornata con successo.");
 		
 		return "list-users";	
 	}
 		
+	
+	@GetMapping("/showFormForUpdateUserRole")
+	public String showFormForUpdateUserRole(
+				@RequestParam("userUsername") String theUsername,
+				Model theModel) {
+		
+		
+		List<Role> theRoles = roleDao.getRoles();
+//		
+		theModel.addAttribute("roles", theRoles);
+		
+		// recupero la sede attuale
+		theModel.addAttribute("ruoloAttuale", userService.findByUserName(theUsername).getRoles());
+		
+		theModel.addAttribute("crmRole", new CrmRole());		
+		
+		theModel.addAttribute("userUsername", theUsername);
+		
+//		User theUser = userService.findByUserName(theUsername);
+//		
+//		theModel.addAttribute("user", theUser);
+        
+        return "update-user-role";		
+	}
+	
+	@PostMapping("/processUpdateUserRoleForm")
+	public String processUpdateUserRoleForm(
+				@RequestParam("userUsername") String theUsername,
+				@Valid @ModelAttribute("crmUser") CrmRole theRole, 
+				BindingResult theBindingResult, 
+				Model theModel) {
+		
+		List<Role> theSedi = roleDao.getRoles();
+		
+		theModel.addAttribute("roles", theSedi);
+	
+		// create user account
+		User theUser = userService.findByUserName(theUsername);
+		
+		userService.changeRuolo(theRole, theUser);
+		
+		
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<User> theUsers = userService.getUsers();
+				
+		// devo aggiungerli al model
+		theModel.addAttribute("users", theUsers);
+		
+		theModel.addAttribute("registrationSucces", "Ruolo aggiornato con successo.");
+		
+		return "list-users";	
+	}
 	
 	
 	

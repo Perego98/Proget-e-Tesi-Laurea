@@ -99,7 +99,7 @@
 	<div  class="panel-body">
 		
 					<!-- Registration Form -->
-					<form:form action="${pageContext.request.contextPath}/admin/processUpdateUserForm" 
+					<form:form action="${pageContext.request.contextPath}/admin/processRegistrationForm" 
 						  	   modelAttribute="crmUser"
 						  	   class="form-horizontal">
 

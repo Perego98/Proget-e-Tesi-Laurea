@@ -162,6 +162,24 @@
 						<td>
 							
 							<div class="btn-group-vertical btn-group-xs">
+
+								<div class="dropdown">
+									<button class="btn btn-primary dropdown-toggle" type="button"
+										data-toggle="dropdown">
+										Update/Delete <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li class="dropdown-header">Update</li>
+										<li><a href="${pageContext.request.contextPath}/admin/showFormForUpdateUser?userUsername=${tempUser.userName}">Aggiorna Info</a></li>
+										<li><a href="${pageContext.request.contextPath}/admin/showFormForUpdateUserSede?userUsername=${tempUser.userName}">Aggiorna Sede</a></li>
+										<li><a href="${pageContext.request.contextPath}/admin/showFormForUpdateUserRole?userUsername=${tempUser.userName}">Aggiorna Ruolo</a></li>
+										<li class="divider"></li>
+										<li class="dropdown-header">Delete</li>
+										<li><a onclick="if((confirm('Sei sicuro di voler eliminare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'" >Delete</a></li>
+									</ul>
+								</div>
+
+								<!--  
 								<input type="button" value="Aggiorna Info"
 												onclick="window.location.href='${pageContext.request.contextPath}/admin/showFormForUpdateUser?userUsername=${tempUser.userName}'; return false;"
 												class="btn btn-success"/>
@@ -177,6 +195,8 @@
 								<input type="button" value="Delete"
 												onclick="if((confirm('Sei sicuro di voler eliminare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'; return false;"
 												class="btn btn-danger"/>
+												
+								-->
 							</div>						
 						</td>
 					</tr>

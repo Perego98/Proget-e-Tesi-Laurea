@@ -145,39 +145,39 @@ public class CandidatoServiceImpl implements CandidatoService {
        
        
 
-//		String fileName = "curriculum_"+codFiscale+".txt";
-//		File file = new File(fileName);
+		String fileName = "curriculum_"+codFiscale+".txt";
+		File file = new File(fileName);
 		
-//		if(!file.exists()) {
-//			
-//			try {
-//				file.createNewFile();
-//			} catch (IOException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//		
-//			 System.out.println("File created: " + file);
-//		}else {
-//			System.out.println("File gia esistente: " + file);
-//		}
+		if(!file.exists()) {
+			
+			try {
+				file.createNewFile();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+			 System.out.println("File created: " + file);
+		}else {
+			System.out.println("File gia esistente: " + file);
+		}
         
         
         
 		
 		// save in download
 		InputStream in = null;
-//		FileOutputStream  out = null;
+		FileOutputStream  out = null;
 		
 		try {
 			in = theBlob.getBinaryStream();
-//			out = new FileOutputStream(fileName);
+			out = new FileOutputStream(fileName);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
-//		catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 		
 		
@@ -188,20 +188,20 @@ public class CandidatoServiceImpl implements CandidatoService {
 		try {
 			System.out.println("*********** START READ Blob:"+ in.toString());
 			while ((len = in.read(buff)) != -1) {
-//			    out.write(buff, 0, len);
-				System.out.println(buff);
+			    out.write(buff, 0, len);
+//				System.out.println(buff);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-//		try {
-//			out.close();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

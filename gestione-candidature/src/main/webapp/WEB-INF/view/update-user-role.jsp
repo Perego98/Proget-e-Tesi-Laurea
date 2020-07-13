@@ -102,24 +102,27 @@
 <div class="panel panel-default">
 		<div class="panel-heading">
 		<h2>Aggiorna dati <b>${userUsername}</b></h2>
-		<p>Sede Attuale: ${sedeAttuale}</p>
+		<p>Ruolo Attuale: ${ruoloAttualeale}</p>
 		</div>
 		<div  class="panel-body">
 
 		
-		<form:form action="${pageContext.request.contextPath}/admin/processUpdateUserSedeForm?userUsername=${userUsername}"  modelAttribute="crmSede" method="POST">
+		<form:form action="${pageContext.request.contextPath}/admin/processUpdateUserRoleForm?userUsername=${userUsername}"  modelAttribute="crmRole" method="POST">
 				
 			
-			<!-- Sede -->
-			<div style="margin-bottom: 25px" class="input-group">
-				<label for="sede">Sede:</label>
-				</br>
-				<!-- Print the radiobutton sedi -->
-				<c:forEach var="tempSedi" items="${sedi}">
-					<form:radiobutton path="Sedeid" value="${tempSedi.id}"/> ${tempSedi.nameCity}, ${tempSedi.via},  ${tempSedi.civicNumber}, ${tempSedi.cap}.
-					</br>																
-				</c:forEach>
+			<!-- Role -->
+			<form:errors path="idRole" cssClass="error" />
+			<div style="margin-bottom: 25px" class="input-group col-xs-5">
+				<!-- <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> -->
 				
+				<label for="ruolo">Ruolo:</label>
+				</br>
+				
+					<!-- Print the radiobutton role -->
+					<c:forEach var="tempRole" items="${roles}">
+							<form:radiobutton path="idRole" value="${tempRole.name}"/> ${tempRole.name}		
+							<br>											
+					</c:forEach>							
 			</div>
 
 				<!-- Update Button -->
