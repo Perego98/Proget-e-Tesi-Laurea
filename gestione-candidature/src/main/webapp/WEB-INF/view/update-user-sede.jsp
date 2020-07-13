@@ -100,54 +100,25 @@
 </c:if>
 	
 <div class="panel panel-default">
-		<div class="panel-heading"><h2>Aggiorna dati <b>${user.userName}</b></h2></div>
+		<div class="panel-heading"><h2>Aggiorna dati <b>${userUsername}</b></h2></div>
 		<div  class="panel-body">
 
 		
-		<form:form action="${pageContext.request.contextPath}/admin/processUpdateUserForm?userUsername=${user.userName}"  modelAttribute="user" method="POST">
-		
-			<!-- need to associate this data with user username-->
-			<form:hidden path="userName"/>
-		
+		<form:form action="${pageContext.request.contextPath}/admin/processUpdateUserSedeForm?userUsername=${userUsername}"  modelAttribute="sedi" method="POST">
+				
 			
-					
-
-
-		    <!-- First name -->
-			<form:errors path="firstName" cssClass="error" />
-			<label for="sede">Nome:</label>
-			<div style="margin-bottom: 5px" class="input-group col-xs-5">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-				<form:input path="firstName" placeholder="first name (*)" class="form-control" />
+			<!-- Sede -->
+			<form:errors path="Sedeid" cssClass="error" />
+			<div style="margin-bottom: 25px" class="input-group">
+				<label for="sede">Sede:</label>
+				</br>
+				<!-- Print the radiobutton sedi -->
+				<c:forEach var="tempSedi" items="${sedi}">
+					<form:radiobutton path="Sedeid" value="${tempSedi.id}"/> ${tempSedi.nameCity}, ${tempSedi.via},  ${tempSedi.civicNumber}, ${tempSedi.cap}.
+					</br>																
+				</c:forEach>
+				
 			</div>
-			
-			<!-- Last name -->
-			<form:errors path="lastName" cssClass="error" />
-			<label for="sede">Cognome:</label>
-			<div style="margin-bottom: 5px" class="input-group col-xs-5">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-				<form:input path="lastName" placeholder="last name (*)" class="form-control" />
-			</div>
-			
-			<!-- Email -->
-			<form:errors path="email" cssClass="error" />
-			<label for="sede">Email:</label>
-			<div style="margin-bottom: 5px" class="input-group col-xs-5">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span> 
-				<form:input path="email" placeholder="email (*)" class="form-control" />
-			</div>
-			
-			
-			<!-- Telephone -->
-			<form:errors path="telephone" cssClass="error" />
-			<label for="sede">Telefono:</label>
-			<div style="margin-bottom: 5px" class="input-group col-xs-5">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
-				<form:input path="telephone" placeholder="telephone number (*)" class="form-control" />
-			</div>
-
-
-
 
 				<!-- Update Button -->
 			<div style="margin-top: 10px" class="form-group">						

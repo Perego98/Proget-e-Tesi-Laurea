@@ -51,11 +51,11 @@ public class RoleDaoImpl implements RoleDao {
 				currentSession.createQuery("from Role", Role.class);
 		
 		// execute query and get result list
-		List<Role> customers = theQuery.getResultList();
+		List<Role> roles = theQuery.getResultList();
 		
-		System.out.println(" ********** RoelDaoImpl -> Customers: " + customers.toString());
+		System.out.println(" ********** RoelDaoImpl -> roles: " + roles.toString());
 		
 		// return the result
-		return customers;
+		return roles;
 	}
 }

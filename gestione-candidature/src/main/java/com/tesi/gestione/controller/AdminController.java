@@ -24,6 +24,7 @@ import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.service.UserService;
+import com.tesi.gestione.user.CrmSede;
 import com.tesi.gestione.user.CrmUser;
 import com.tesi.gestione.user.CrmUserUpdate;
 
@@ -157,18 +158,16 @@ public class AdminController {
 	public String showFormForUpdateUser(
 				@RequestParam("userUsername") String theUsername,
 				Model theModel) {
-		
-		
-//		List<Role> theRoles = roleDao.getRoles();
-//		List<Sede> theSedi = sedeDao.getSedi();
-//		
-//		theModel.addAttribute("roles", theRoles);
-//		theModel.addAttribute("sedi", theSedi);
-		
+
+		System.out.println("********* AdminController --------- Dentro showFormForUpdateUser ->  Start");
 		theModel.addAttribute("crmUser", new CrmUserUpdate());
 		
 		User theUser = userService.findByUserName(theUsername);
+		List<Role> theRoles = roleDao.getRoles();
+		List<Sede> theSedi = sedeDao.getSedi();
 		
+		theModel.addAttribute("roles", theRoles);
+		theModel.addAttribute("sedi", theSedi);
 		theModel.addAttribute("user", theUser);
         
         return "update-user";		
@@ -181,32 +180,106 @@ public class AdminController {
 				BindingResult theBindingResult, 
 				Model theModel) {
 		
-//		List<Role> theRoles = roleDao.getRoles();
-//		List<Sede> theSedi = sedeDao.getSedi();
-//		
-//		theModel.addAttribute("roles", theRoles);
-//		theModel.addAttribute("sedi", theSedi);
-	
+		List<Role> theRoles = roleDao.getRoles();
+		List<Sede> theSedi = sedeDao.getSedi();
 		
+		theModel.addAttribute("roles", theRoles);
+		theModel.addAttribute("sedi", theSedi);
+	
+		System.out.println("********* AdminController --------- Dentro processUpdateUserForm ->  Start");
 		
 		// form validation
-		 if (theBindingResult.hasErrors()){
-			 return "registration-user-form";
-	        }
-
-
-     // create user account        						
-        userService.update(theUsername, theCrmUser);
-        
-
-
+		if (theBindingResult.hasErrors()) {
+			System.out.println("********* AdminController --------- Dentro processUpdateUserForm ->  theBindingResult.hasErrors()");
+			
+			User theUser = userService.findByUserName(theUsername);
+			
+			theModel.addAttribute("user", theUser);
+			
+			theModel.addAttribute("registrationError", "Uno o più parametri non sono corretti!");
+			
+			return "update-user";
+		}
+		
+		// create user account
+		userService.update(theUsername, theCrmUser);
+		
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<User> theUsers = userService.getUsers();
+		
+		// devo aggiungerli al model
+		theModel.addAttribute("users", theUsers);
+		
 		theModel.addAttribute("registrationSucces", "Utente aggiornato con successo.");
 		
-        return "list-users";		
+		System.out.println("********* AdminController --------- Dentro processUpdateUserForm ->  list-users");
+		
+		return "list-users";	
 	}
 	
+	@GetMapping("/activateUser")
+	public String activateUser(@RequestParam("userUsername") String theUsername) {
+		
+		userService.activateUser(theUsername);
+		
+		return "redirect:/admin/showListUsers";	
+	}
 	
+	@GetMapping("/deactivateUser")
+	public String deactivateUser(@RequestParam("userUsername") String theUsername) {
+		
+		userService.deactivateUser(theUsername);
+		
+		return "redirect:/admin/showListUsers";	
+	}
 	
+	@GetMapping("/showFormForUpdateUserSede")
+	public String showFormForUpdateUserSede(
+				@RequestParam("userUsername") String theUsername,
+				Model theModel) {
+		
+		
+//		List<Role> theRoles = roleDao.getRoles();
+		List<Sede> theSedi = sedeDao.getSedi();
+//		
+//		theModel.addAttribute("roles", theRoles);
+		theModel.addAttribute("sedi", theSedi);
+		
+		theModel.addAttribute("crmUser", new CrmSede());		
+		
+		theModel.addAttribute("userUsername", theUsername);
+		
+//		User theUser = userService.findByUserName(theUsername);
+//		
+//		theModel.addAttribute("user", theUser);
+        
+        return "update-user-sede";		
+	}
+	
+	@PostMapping("/processUpdateUserSedeForm")
+	public String processUpdateUserSedeForm(
+				@RequestParam("userUsername") String theUsername,
+				@Valid @ModelAttribute("crmUser") CrmSede theCrmUser, 
+				BindingResult theBindingResult, 
+				Model theModel) {
+		
+		List<Sede> theSedi = sedeDao.getSedi();
+		
+		theModel.addAttribute("sedi", theSedi);
+	
+		// create user account
+		User theUser = userService.findByUserName(theUsername);
+		
+		userService.changeSede(theCrmUser, theUser);
+		
+		// devo aggiungerli al model
+		theModel.addAttribute("users", theUser);
+		
+		theModel.addAttribute("registrationSucces", "Sede aggiornata con successo.");
+		
+		return "list-users";	
+	}
+		
 	
 	
 	

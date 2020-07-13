@@ -85,4 +85,19 @@ public class UserDaoImpl implements UserDao {
 		
 	}
 
+	@Override
+	public void changeState(boolean newState, String username) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// delete the obj with PK
+		Query theQuery = currentSession.createQuery("update User set qualified=:newState where username=:theUsername");
+		
+		theQuery.setParameter("newState", newState);
+		theQuery.setParameter("theUsername", username);
+		
+		theQuery.executeUpdate();
+		
+	}
+
 }

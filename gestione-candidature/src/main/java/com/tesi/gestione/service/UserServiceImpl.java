@@ -6,6 +6,7 @@ import com.tesi.gestione.dao.UserDao;
 import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
+import com.tesi.gestione.user.CrmSede;
 import com.tesi.gestione.user.CrmUser;
 import com.tesi.gestione.user.CrmUserUpdate;
 
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -110,12 +112,45 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void update(String userUsername, CrmUserUpdate crmUser) {
 		User user = new User();
+		user = userDao.findByUserName(userUsername);
 		user.setUserName(userUsername);
 		user.setEmail(crmUser.getEmail());
 		user.setFirstName(crmUser.getFirstName());
 		user.setLastName(crmUser.getLastName());
 		user.setTelephone(crmUser.getTelephone());
 		
+		userDao.save(user);
+		
+	}
+
+	@Override
+	@Transactional
+	public void activateUser(String username) {
+		userDao.changeState(true, username);
+		
+	}
+
+	@Override
+	@Transactional
+	public void deactivateUser(String username) {
+		userDao.changeState(false, username);		
+	}
+
+	@Override
+	public void changeSede(CrmSede crmSede, User theUser) {
+		theUser.setSedeAssegnamento(sedeDao.findSedeByCityID(crmSede.getSedeid()));
+		userDao.save(theUser);
+			
+	}
+
+	@Override
+	public void changeRuolo(Role newRole, String username) {
+		Collection<Role> temp = new ArrayList<>();
+		temp.add(newRole);
+		
+		User user = new User();
+		user = userDao.findByUserName(username);
+		user.setRoles(temp);
 		userDao.save(user);
 		
 	}

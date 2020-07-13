@@ -51,10 +51,10 @@ public class Role {
 	@Override
 	public String toString() {
 		
-//		String temp = name;
-//		temp = temp.replace("ROLE_", "");
+		String temp = name;
+		temp = temp.replace("ROLE_", "");
 		
-//		return temp;
-		return name;
+		return temp;
+//		return name;
 	}
 }

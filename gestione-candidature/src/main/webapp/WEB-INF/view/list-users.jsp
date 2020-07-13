@@ -108,14 +108,14 @@
 			<table class="table table-striped">
 				<tr>
 					<th>Username</th>
-					<th>First Name</th>
-					<th>Last Name</th>
+					<th>Nome</th>
+					<th>Cognome</th>
 					<th>Email</th>
-					<th>telephone</th>
-					<th>qualified</th>
-					<th>roles</th>
-					<th>sede Assegnamento</th>
-					<th>Action</th>
+					<th>Telefono</th>
+					<th>Stato</th>
+					<th>Ruolo</th>
+					<th>Sede Assegnamento</th>
+					<th>Azioni</th>
 				</tr>
 			
 				<!-- loop over and print our customers -->
@@ -143,12 +143,14 @@
 						<td> 
 							<c:if test="${tempUser.qualified == false}">
 								<!-- Account disattivato -->
-								<span data-toggle="tooltip" title="Questo account è stato disattivato" class="label label-warning">Disattivato</span>
+								<span data-toggle="tooltip" title="Questo account è stato disattivato, clicca per attivare" class="label label-warning" 
+								onclick="if((confirm('Sei sicuro di voler attivare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/activateUser?userUsername=${tempUser.userName}'" >Disattivato</span>
 							</c:if>
 							
 							<c:if test="${tempUser.qualified == true}">
 								<!-- Account attivato -->
-								<span data-toggle="tooltip" title="Questo account è attivo" class="label label-success">Attivo</span>
+								<span data-toggle="tooltip" title="Questo account è attivo, clicca per disattivare" class="label label-success" 
+								onclick="if((confirm('Sei sicuro di voler disattivare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deactivateUser?userUsername=${tempUser.userName}'">Attivo</span>
 							</c:if>
 						
 						</td>
@@ -159,11 +161,19 @@
 						
 						<td>
 							
-							<div class="btn-group-vertical btn-group-sm">
-								<input type="button" value="Update"
+							<div class="btn-group-vertical btn-group-xs">
+								<input type="button" value="Aggiorna Info"
 												onclick="window.location.href='${pageContext.request.contextPath}/admin/showFormForUpdateUser?userUsername=${tempUser.userName}'; return false;"
 												class="btn btn-success"/>
-										
+												
+								<input type="button" value="Aggiorna Sede"
+												onclick="window.location.href='${pageContext.request.contextPath}/admin/showFormForUpdateUserSede?userUsername=${tempUser.userName}'; return false;"
+												class="btn btn-primary"/>
+																						
+								<input type="button" value="Aggiorna Ruolo"
+												onclick="window.location.href='${pageContext.request.contextPath}/admin/showFormForUpdateUserRole?userUsername=${tempUser.userName}'; return false;"
+												class="btn btn-warning"/>
+												
 								<input type="button" value="Delete"
 												onclick="if((confirm('Sei sicuro di voler eliminare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'; return false;"
 												class="btn btn-danger"/>

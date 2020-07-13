@@ -2,6 +2,8 @@ package com.tesi.gestione.dao;
 
 import java.util.List;
 
+import com.tesi.gestione.entity.Role;
+import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 
 public interface UserDao {
@@ -13,5 +15,8 @@ public interface UserDao {
     void save(User user);
     
     void deleteUser(String username);
+    
+    void changeState(boolean newState, String username);
+
     
 }
