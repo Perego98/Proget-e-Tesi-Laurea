@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.User;
 
 @Repository
@@ -55,7 +54,14 @@ public class UserDaoImpl implements UserDao {
 		
 		// create a query
 		Query<User> theQuery = 
-				currentSession.createQuery("from User", User.class);
+				currentSession.createQuery("from User order by username", User.class);
+		
+//		Query<User> theQuery = 
+//				currentSession.createQuery("from User join Users_roles on User.username=Users_roles.user_username join Role on Users_roles.role_id=Role.id order by  Role.id, username ", User.class);
+
+
+
+		
 		
 		// execute query and get result list
 		List<User> users = theQuery.getResultList();

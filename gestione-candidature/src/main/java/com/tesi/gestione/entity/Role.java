@@ -47,12 +47,14 @@ public class Role {
 //		return "Role{" + "id=" + id + ", name='" + name + '\'' + '}';
 //	}
 	
+	
 	@Override
 	public String toString() {
 		
-		String temp = name;
-		temp = temp.replace("ROLE_", "");
+//		String temp = name;
+//		temp = temp.replace("ROLE_", "");
 		
-		return temp;
+//		return temp;
+		return name;
 	}
 }

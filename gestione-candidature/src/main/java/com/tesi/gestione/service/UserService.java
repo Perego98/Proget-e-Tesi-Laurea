@@ -2,6 +2,7 @@ package com.tesi.gestione.service;
 
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.user.CrmUser;
+import com.tesi.gestione.user.CrmUserUpdate;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ public interface UserService extends UserDetailsService {
     
     void deleteUser(String username);
 
+    void update(String userUsername, CrmUserUpdate crmUser);
+    
     void save(CrmUser crmUser);
 }

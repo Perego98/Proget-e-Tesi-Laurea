@@ -17,6 +17,12 @@
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
+	<script>
+		$(document).ready(function() {
+			$('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
+	
 </head>
 
 
@@ -117,7 +123,7 @@
 				<c:forEach var="tempUser" items="${users}">
 				
 					<!-- construct an "update" link with customer id -->
-					<c:url var="updateLink" value="${pageContext.request.contextPath}/admin/showFormforUpdateUser">
+					<c:url var="updateLink" value="${pageContext.request.contextPath}/admin/showFormForUpdateUser">
 						<c:param name="userUsername" value="${tempUser.userName}"/>
 					</c:url> 
 					
@@ -133,7 +139,19 @@
 						<td> ${tempUser.lastName}</td>
 						<td> ${tempUser.email}</td>
 						<td> ${tempUser.telephone}</td>
-						<td> ${tempUser.qualified}</td>
+						<!-- <td> ${tempUser.qualified}</td> -->
+						<td> 
+							<c:if test="${tempUser.qualified == false}">
+								<!-- Account disattivato -->
+								<span data-toggle="tooltip" title="Questo account è stato disattivato" class="label label-warning">Disattivato</span>
+							</c:if>
+							
+							<c:if test="${tempUser.qualified == true}">
+								<!-- Account attivato -->
+								<span data-toggle="tooltip" title="Questo account è attivo" class="label label-success">Attivo</span>
+							</c:if>
+						
+						</td>
 						<td> ${tempUser.roles}</td>
 						<td> ${tempUser.sedeAssegnamento}</td>
 						
@@ -143,7 +161,7 @@
 							
 							<div class="btn-group-vertical btn-group-sm">
 								<input type="button" value="Update"
-												onclick="window.location.href='${updateLink}'; return false;"
+												onclick="window.location.href='${pageContext.request.contextPath}/admin/showFormForUpdateUser?userUsername=${tempUser.userName}'; return false;"
 												class="btn btn-success"/>
 										
 								<input type="button" value="Delete"

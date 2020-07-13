@@ -7,6 +7,8 @@ import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.user.CrmUser;
+import com.tesi.gestione.user.CrmUserUpdate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -101,6 +103,20 @@ public class UserServiceImpl implements UserService {
 	public void deleteUser(String username) {
 		
 		userDao.deleteUser(username);
+		
+	}
+
+	@Override
+	@Transactional
+	public void update(String userUsername, CrmUserUpdate crmUser) {
+		User user = new User();
+		user.setUserName(userUsername);
+		user.setEmail(crmUser.getEmail());
+		user.setFirstName(crmUser.getFirstName());
+		user.setLastName(crmUser.getLastName());
+		user.setTelephone(crmUser.getTelephone());
+		
+		userDao.save(user);
 		
 	}
 }

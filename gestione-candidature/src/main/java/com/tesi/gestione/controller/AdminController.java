@@ -25,6 +25,7 @@ import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.service.UserService;
 import com.tesi.gestione.user.CrmUser;
+import com.tesi.gestione.user.CrmUserUpdate;
 
 @Controller
 @RequestMapping("/admin")
@@ -79,7 +80,7 @@ public class AdminController {
 	}
 
 	@GetMapping("/showRegistrationForm")
-	public String showMyLoginPage(Model theModel) {
+	public String showRegistrationForm(Model theModel) {
 		
 		theModel.addAttribute("crmUser", new CrmUser());
 		
@@ -152,27 +153,55 @@ public class AdminController {
         return "list-users";		
 	}
 	
-	@PostMapping("/showFormForUpdate")
-	public String showFormForUpdate(
+	@GetMapping("/showFormForUpdateUser")
+	public String showFormForUpdateUser(
 				@RequestParam("userUsername") String theUsername,
-				@Valid @ModelAttribute("crmUser") CrmUser theCrmUser, 
-				BindingResult theBindingResult, 
 				Model theModel) {
 		
 		
-		String userName = theCrmUser.getUserName();
+//		List<Role> theRoles = roleDao.getRoles();
+//		List<Sede> theSedi = sedeDao.getSedi();
+//		
+//		theModel.addAttribute("roles", theRoles);
+//		theModel.addAttribute("sedi", theSedi);
+		
+		theModel.addAttribute("crmUser", new CrmUserUpdate());
+		
+		User theUser = userService.findByUserName(theUsername);
+		
+		theModel.addAttribute("user", theUser);
+        
+        return "update-user";		
+	}
+	
+	@PostMapping("/processUpdateUserForm")
+	public String processUpdateUserForm(
+				@RequestParam("userUsername") String theUsername,
+				@Valid @ModelAttribute("crmUser") CrmUserUpdate theCrmUser, 
+				BindingResult theBindingResult, 
+				Model theModel) {
+		
+//		List<Role> theRoles = roleDao.getRoles();
+//		List<Sede> theSedi = sedeDao.getSedi();
+//		
+//		theModel.addAttribute("roles", theRoles);
+//		theModel.addAttribute("sedi", theSedi);
+	
+		
 		
 		// form validation
 		 if (theBindingResult.hasErrors()){
-			 return "update-user";
-	       }
+			 return "registration-user-form";
+	        }
 
+
+     // create user account        						
+        userService.update(theUsername, theCrmUser);
+        
+
+
+		theModel.addAttribute("registrationSucces", "Utente aggiornato con successo.");
 		
-		 // update user account        						
-        userService.save(theCrmUser);
-        
-        logger.info("Successfully created user: " + userName);
-        
         return "list-users";		
 	}
 	

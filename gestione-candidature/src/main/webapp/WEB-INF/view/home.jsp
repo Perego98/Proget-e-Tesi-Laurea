@@ -99,6 +99,7 @@
 							<th>Username</th>
 							<td><security:authentication property="principal.username" /></td>
 						</tr>
+						  
 						<tr>
 							<th>Ruolo</th>
 							<td><security:authentication property="principal.authorities" /></td>
@@ -123,6 +124,7 @@
 							<th>Sede</th>
 							<td>${user.sedeAssegnamento}</td>
 						</tr>
+
 
 					</table>
 		

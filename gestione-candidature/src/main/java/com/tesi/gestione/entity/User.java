@@ -157,9 +157,8 @@ public class User {
 		this.qualified = qualified;
 	}
 
-
-
-
+	
+	
 	@Override
 	public String toString() {
 		return "User [userName=" + userName + ", password=" + password + ", firstName=" + firstName + ", lastName="
@@ -168,6 +167,23 @@ public class User {
 	}
 
 
+//	public String getRoleStyleFormat() {
+//		String tempRole = "";
+//		
+//		for(Role theRole : roles) {
+//			String temp = theRole.toString();
+//			temp.replace("ROLE_", "");
+//			tempRole += format(temp) + "  ";
+//		}		
+//		
+//		return tempRole;
+//	}
+//
+//	private String format(String stringToFormat) {
+//
+//		return stringToFormat.substring(0, 1).toUpperCase() + 
+//				stringToFormat.substring(2, stringToFormat.length()).toLowerCase();
+//	}
 
 
 	
