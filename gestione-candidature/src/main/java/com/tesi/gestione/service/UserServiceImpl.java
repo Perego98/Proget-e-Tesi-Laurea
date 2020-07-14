@@ -1,5 +1,6 @@
 package com.tesi.gestione.service;
 
+import com.tesi.gestione.dao.CandidatoDao;
 import com.tesi.gestione.dao.RoleDao;
 import com.tesi.gestione.dao.SedeDao;
 import com.tesi.gestione.dao.UserDao;
@@ -32,6 +33,9 @@ public class UserServiceImpl implements UserService {
 	// need to inject user dao
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private CandidatoDao candidatoDao;
 
 	@Autowired
 	private RoleDao roleDao;
@@ -104,7 +108,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void deleteUser(String username) {
+		// devo cercare tutti i candidati a lui assegnati
+		// poi devo settare per tutti loro lo stato a new
+		candidatoDao.triggerActionOnDeleteUser(username);
 		
+		// poi cancello l'username
 		userDao.deleteUser(username);
 		
 	}

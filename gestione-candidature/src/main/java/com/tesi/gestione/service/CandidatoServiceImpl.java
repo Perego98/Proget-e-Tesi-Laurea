@@ -29,6 +29,8 @@ import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.user.CrmCandidato;
 import com.tesi.gestione.user.CrmCandidatoUpdate;
+import com.tesi.gestione.user.CrmStato;
+import com.tesi.gestione.user.CrmSupervisore;
 
 @Service
 public class CandidatoServiceImpl implements CandidatoService {
@@ -68,7 +70,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 		candidato.setNote(crmCandidato.getNote());
 		
 		// set default statoCandidatura
-		candidato.setStatoCandidatura("new");
+		candidato.setStatoCandidatura("assegnato_manager");
 		
 		// recupero la data in forma String
 		
@@ -293,6 +295,24 @@ public class CandidatoServiceImpl implements CandidatoService {
 		// save user in the database
 		candidatoDao.save(candidato);
 
+	}
+
+	@Override
+	@Transactional
+	public void changeStato(CrmStato crmStato, Candidato theCandidato) {
+		
+		if(crmStato.getStatoCandidatura() != null) {
+			theCandidato.setStatoCandidatura(crmStato.getStatoCandidatura());
+			candidatoDao.save(theCandidato);
+		}
+		
+	}
+
+	@Override
+	@Transactional
+	public void changeSupervisore(CrmSupervisore crmSupervisore, Candidato theCandidato) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

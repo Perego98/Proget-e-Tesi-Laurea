@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tesi.gestione.entity.Candidato;
+import com.tesi.gestione.entity.User;
+import com.tesi.gestione.service.UserService;
 
 @Repository
 public class CandidatoDaoImpl implements CandidatoDao {
@@ -19,6 +21,9 @@ public class CandidatoDaoImpl implements CandidatoDao {
 	// need to inject the session factory
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Override
 	public Candidato findCandidatoByCF(String codFiscale) {
@@ -113,6 +118,25 @@ public class CandidatoDaoImpl implements CandidatoDao {
 			return null;
 		
 		return theCandidato;
+		
+	}
+
+	@Override
+	public void triggerActionOnDeleteUser(String username) {
+		
+		// devo trovare tutti i candidati associati all'utente con username username
+		// devo fare un update del campo stato_candidatura, in new
+		
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// delete the obj with PK
+		Query theQuery = currentSession.createQuery("update Candidato set stato_candidatura='new' where supervisore=:theUser");
+		
+		User theUser = userService.findByUserName(username); 
+		theQuery.setParameter("theUser", theUser);
+		
+		theQuery.executeUpdate();
 		
 	}
 	

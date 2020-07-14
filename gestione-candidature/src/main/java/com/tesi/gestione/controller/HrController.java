@@ -33,6 +33,7 @@ import com.tesi.gestione.service.CandidatoService;
 import com.tesi.gestione.service.UserService;
 import com.tesi.gestione.user.CrmCandidato;
 import com.tesi.gestione.user.CrmCandidatoUpdate;
+import com.tesi.gestione.user.CrmStato;
 import com.tesi.gestione.user.CrmUser;
 
 @Controller
@@ -240,7 +241,39 @@ public class HrController {
 	
 	
 	
+	@GetMapping("/showCandidatoUpdateStatoForm")
+	public String showMyCandidatoUpdateStatoPage(@RequestParam("codFiscale") String codFiscale, 
+											Model theModel) {
+
+		theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
+		return "update-stato-candidato";
+	}
 	
+	// update candidato
+	@PostMapping("/processUpdateStatoCandidatoForm")
+	public String processUpdateStatoCandidatoForm(
+				@RequestParam("codFiscale") String codFiscale, 
+				@Valid @ModelAttribute("crmCandidato") CrmStato CrmStato, 
+				BindingResult theBindingResult, 
+				Model theModel) {
+		
+		
+		// chiamo serviceCAndidato
+		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
+		
+		candidatoService.changeStato(CrmStato, theCandidato);
+
+		        
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<Candidato> theCandidati = candidatoService.getCandidati();
+
+		// devo aggiungerli al model
+		theModel.addAttribute("candidati", theCandidati);
+		
+		theModel.addAttribute("registrationSucces", "Candidato registrato con successo.");
+		
+        return "list-candidati";		
+	}
 	
 	
 	

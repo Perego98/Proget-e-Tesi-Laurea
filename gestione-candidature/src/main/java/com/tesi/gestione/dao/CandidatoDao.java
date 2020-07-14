@@ -17,6 +17,8 @@ public interface CandidatoDao {
 	void deleteCandidato(String codFiscale);
 	
 	Blob dowloadCurriculum(String codFiscale);
+
+	void triggerActionOnDeleteUser(String username);
 	
 //	byte[] dowloadCurriculum(String codFiscale);
 	
