@@ -34,6 +34,7 @@ import com.tesi.gestione.service.UserService;
 import com.tesi.gestione.user.CrmCandidato;
 import com.tesi.gestione.user.CrmCandidatoUpdate;
 import com.tesi.gestione.user.CrmStato;
+import com.tesi.gestione.user.CrmSupervisore;
 import com.tesi.gestione.user.CrmUser;
 
 @Controller
@@ -44,6 +45,9 @@ public class HrController {
 	
     @Autowired
     private CandidatoService candidatoService;
+    
+    @Autowired
+    private UserService userService;
     
     private Logger logger = Logger.getLogger(getClass().getName());
     
@@ -276,7 +280,39 @@ public class HrController {
 	}
 	
 	
+	@GetMapping("/showCandidatoSetManagerForm")
+	public String showMyCandidatoSetManagerPage(@RequestParam("codFiscale") String codFiscale, 
+											Model theModel) {
+
+		theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
+		theModel.addAttribute("managers", userService.getManager());
+		return "update-set-manager";
+	}
 	
+	// update Supervisore
+	@GetMapping("/processUpdateSupervisoreCandidatoForm")
+	public String processUpdateSupervisoreCandidatoForm(
+				@RequestParam("codFiscale") String codFiscale,
+				@RequestParam("userUsername") String userUsername,
+				Model theModel) {
+		
+		
+		// chiamo serviceCAndidato
+		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
+		
+		candidatoService.changeSupervisore(userUsername, theCandidato);
+
+		        
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<Candidato> theCandidati = candidatoService.getCandidati();
+
+		// devo aggiungerli al model
+		theModel.addAttribute("candidati", theCandidati);
+		
+		theModel.addAttribute("registrationSucces", "Supervisore " + userUsername + " assegnato con successo a " + theCandidato.getNome() + " CF: " + theCandidato.getCodiceFiscale());
+		
+        return "list-candidati";		
+	}
 	
 	
 	

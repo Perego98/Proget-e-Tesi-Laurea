@@ -310,9 +310,10 @@ public class CandidatoServiceImpl implements CandidatoService {
 
 	@Override
 	@Transactional
-	public void changeSupervisore(CrmSupervisore crmSupervisore, Candidato theCandidato) {
-		// TODO Auto-generated method stub
+	public void changeSupervisore(String userUsername, Candidato theCandidato) {
+		theCandidato.setSupervisore(userDao.findByUserName(userUsername));	
 		
+		candidatoDao.save(theCandidato);
 	}
 
 }

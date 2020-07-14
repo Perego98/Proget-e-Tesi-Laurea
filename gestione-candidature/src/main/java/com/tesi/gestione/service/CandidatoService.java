@@ -29,5 +29,5 @@ public interface CandidatoService {
     
     void changeStato(CrmStato crmStato, Candidato theCandidato);
     
-    void changeSupervisore(CrmSupervisore crmSupervisore,  Candidato theCandidato);
+    void changeSupervisore(String userUsername,  Candidato theCandidato);
 }

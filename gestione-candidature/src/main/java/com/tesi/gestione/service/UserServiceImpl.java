@@ -168,4 +168,9 @@ public class UserServiceImpl implements UserService {
 		userDao.save(theUser);
 		
 	}
+
+	@Override
+	public List<User> getManager() {
+		return userDao.getManager();
+	}
 }

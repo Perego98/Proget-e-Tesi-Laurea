@@ -18,6 +18,8 @@ public interface UserService extends UserDetailsService {
     
     List<User> getUsers();
     
+    List<User> getManager();
+    
     void deleteUser(String username);
 
     void update(String userUsername, CrmUserUpdate crmUser);

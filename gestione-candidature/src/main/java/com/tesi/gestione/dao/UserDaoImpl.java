@@ -1,5 +1,6 @@
 package com.tesi.gestione.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.User;
 
 @Repository
@@ -99,5 +101,46 @@ public class UserDaoImpl implements UserDao {
 		theQuery.executeUpdate();
 		
 	}
+
+//	@Override
+//	@Transactional
+//	public List<User> getManager() {
+//		// get the current hibernate session
+//		Session currentSession = sessionFactory.getCurrentSession();
+//		
+//		// create a query
+//		Query<User> theQuery = 
+//				currentSession.createQuery("from User join Users_roles join Role where name = 'ROLE_MANAGER' group by username", User.class);
+//		
+//
+//		// execute query and get result list
+//		List<User> users = theQuery.getResultList();
+//
+//		// return the result
+//		return users;
+//	}
+	
+	@Override
+	@Transactional
+	public List<User> getManager() {
+		
+		List<User> users = getUsers();
+		
+
+		// execute query and get result list
+		List<User> managers = new ArrayList<>();
+		
+		for(User tempUser : users) {
+			for(Role tempRole : tempUser.getRoles()) {
+				if(tempRole.getName().contains("MANAGER")) {
+					managers.add(tempUser);
+				}
+			}			
+		}
+
+		// return the result
+		return managers;
+	}
+
 
 }

@@ -122,6 +122,7 @@ public class CandidatoDaoImpl implements CandidatoDao {
 	}
 
 	@Override
+	@Transactional
 	public void triggerActionOnDeleteUser(String username) {
 		
 		// devo trovare tutti i candidati associati all'utente con username username

@@ -12,6 +12,8 @@ public interface UserDao {
     
     List<User> getUsers();
     
+    List<User> getManager();
+    
     void save(User user);
     
     void deleteUser(String username);
