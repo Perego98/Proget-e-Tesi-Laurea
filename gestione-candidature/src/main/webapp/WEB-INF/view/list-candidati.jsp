@@ -113,7 +113,6 @@
 					<th>Stato candidatura</th>
 					<th>Telefono</th>
 					<th>Email</th>
-					<th>Data di nascita</th>
 					<th>Tipo di contratto</th>
 					<th>Supervisore</th>
 					<th>Action</th>
@@ -141,7 +140,6 @@
 						<td> ${tempCandidato.statoCandidatura}</td>
 						<td> ${tempCandidato.telephone}</td>
 						<td> ${tempCandidato.email}</td>
-						<td> ${tempCandidato.dataNascita}</td>
 						<td> ${tempCandidato.tipoContratto}</td>
 						<c:if test="${tempCandidato.supervisore.userName != null}">
 							<td> ${tempCandidato.supervisore.userName}</td>		
@@ -160,7 +158,7 @@
 									</button>
 									<ul class="dropdown-menu">
 										<li class="dropdown-header">Update</li>
-										<li><a href="#">Aggiorna Info</a></li>
+										<li><a href="${pageContext.request.contextPath}/hr/showCandidatoUpdateForm?codFiscale=${tempCandidato.codiceFiscale}">Aggiorna Info</a></li>
 										<li class="divider"></li>
 										<li class="dropdown-header">Info</li>
 										<li><a href="${pageContext.request.contextPath}/hr/showMoreInfoCandidato?codFiscale=${tempCandidato.codiceFiscale}">Mostra più Info</a></li>

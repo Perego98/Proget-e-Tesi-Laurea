@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.user.CrmCandidato;
+import com.tesi.gestione.user.CrmCandidatoUpdate;
 
 
 public interface CandidatoService {
@@ -18,4 +19,6 @@ public interface CandidatoService {
     void dowloadCurriculum(String codFiscale);
     
     void deleteCandidato(String codFiscale);
+    
+    void update(String codFiscale, CrmCandidatoUpdate crmCandidatoUpdate);
 }

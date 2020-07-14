@@ -155,6 +155,7 @@ public class AdminController {
         return "list-users";		
 	}
 	
+	// mostra la pagina per inserire i dati da aggiornare
 	@GetMapping("/showFormForUpdateUser")
 	public String showFormForUpdateUser(
 				@RequestParam("userUsername") String theUsername,
@@ -174,6 +175,7 @@ public class AdminController {
         return "update-user";		
 	}
 	
+	// processa i dati da aggiornare
 	@PostMapping("/processUpdateUserForm")
 	public String processUpdateUserForm(
 				@RequestParam("userUsername") String theUsername,

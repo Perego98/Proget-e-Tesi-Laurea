@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.xml.crypto.Data;
 
-public class DataValidator implements ConstraintValidator<ValidData, String> {
+public class DataValidator implements ConstraintValidator<ValidData, Date> {
 
 	private Pattern pattern;
 	private Matcher matcher;
@@ -16,14 +16,23 @@ public class DataValidator implements ConstraintValidator<ValidData, String> {
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	@Override
-	public boolean isValid(final String data, final ConstraintValidatorContext context) {
+	public boolean isValid(final Date dataD, final ConstraintValidatorContext context) {
 		
-		System.out.println(" ********** DataValidator -> Entrato in isValid().");
-		
-		
-		if (data == null) {
+		if (dataD == null) {
 			return false;
 		}
+		
+		System.out.println(" ********** DataValidator -> Entrato in isValid().");
+		String data = "";
+		String temp = dataD.toString();
+		
+		System.out.println(" ********** DataValidator -> TEMP: " + temp);
+		// split
+		for(int i=0; i<temp.length(); i++) {
+			data += temp.charAt(temp.length()-i-1);
+		}
+		System.out.println(" ********** DataValidator -> DATA: " + data);
+
 
 		
 		if(data.contains("/")) {

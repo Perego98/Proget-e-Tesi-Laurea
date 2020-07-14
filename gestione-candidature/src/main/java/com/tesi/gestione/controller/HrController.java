@@ -1,6 +1,8 @@
 package com.tesi.gestione.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -30,6 +32,7 @@ import com.tesi.gestione.entity.User;
 import com.tesi.gestione.service.CandidatoService;
 import com.tesi.gestione.service.UserService;
 import com.tesi.gestione.user.CrmCandidato;
+import com.tesi.gestione.user.CrmCandidatoUpdate;
 import com.tesi.gestione.user.CrmUser;
 
 @Controller
@@ -94,6 +97,12 @@ public class HrController {
 		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
 		theModel.addAttribute("candidato", theCandidato);
 		
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		
+
+		String formatted = format1.format(theCandidato.getDataNascita().getTime());
+		theModel.addAttribute("dataN", formatted);
+		
 		return "info-candidato";		
 	}
 
@@ -155,6 +164,90 @@ public class HrController {
 		
 		return "registration-candidato-form";
 	}
+	
+	
+	@GetMapping("/showCandidatoUpdateForm")
+	public String showMyCandidatoUpdatePage(@RequestParam("codFiscale") String codFiscale, 
+											Model theModel) {
+		
+		System.out.println(" ********** RegistrationController -> dentro showMyCandidatoRegistrationPage()");
+		
+		
+
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
+		theModel.addAttribute("crmCandidato", new CrmCandidatoUpdate());
+	
+		
+
+
+		String formatted = format1.format(theCandidato.getDataNascita().getTime());
+		theModel.addAttribute("dataDiNascita", formatted);
+		theCandidato.setDataNascita(null);
+		theModel.addAttribute("candidato", theCandidato);
+		
+		return "update-candidato";
+	}
+	
+	
+	// update candidato
+	@PostMapping("/processUpdateCandidatoForm")
+	public String processUpdateCandidatoForm(
+				@RequestParam("codFiscale") String codFiscale, 
+				@Valid @ModelAttribute("crmCandidato") CrmCandidatoUpdate CrmCandidato, 
+				BindingResult theBindingResult, 
+				Model theModel) {
+		
+
+		
+		
+		// form validation
+	 	if (theBindingResult.hasErrors()){
+	 		
+	 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+			
+			Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
+			theModel.addAttribute("crmCandidato", new CrmCandidatoUpdate());
+		
+			String formatted = format1.format(theCandidato.getDataNascita().getTime());
+			theModel.addAttribute("dataDiNascita", formatted);
+			theCandidato.setDataNascita(null);
+			theModel.addAttribute("candidato", theCandidato);
+	 		return "update-candidato";
+        }
+
+	 	
+		// check the database if user already exists
+        Candidato existing = candidatoService.findByCodiceFiscale(codFiscale);
+        
+        
+        
+		candidatoService.update(codFiscale, CrmCandidato);
+		
+		logger.info("Successfully created user: " + codFiscale);
+		        
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<Candidato> theCandidati = candidatoService.getCandidati();
+
+		// devo aggiungerli al model
+		theModel.addAttribute("candidati", theCandidati);
+		
+		theModel.addAttribute("registrationSucces", "Candidato registrato con successo.");
+		
+        return "list-candidati";		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	@GetMapping("/downloadCurriculum")

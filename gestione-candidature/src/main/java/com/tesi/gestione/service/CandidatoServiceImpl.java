@@ -28,6 +28,7 @@ import com.tesi.gestione.dao.UserDao;
 import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.user.CrmCandidato;
+import com.tesi.gestione.user.CrmCandidatoUpdate;
 
 @Service
 public class CandidatoServiceImpl implements CandidatoService {
@@ -70,10 +71,11 @@ public class CandidatoServiceImpl implements CandidatoService {
 		candidato.setStatoCandidatura("new");
 		
 		// recupero la data in forma String
+		
 		String data = crmCandidato.getDataNascita();
 		
 		//Estraggo i giorni
-		String giorno, mese, anno;
+		String giorno = data, mese, anno;
 		giorno = data.substring(0, data.indexOf("/"));
 		mese = data.substring(data.indexOf("/")+1, data.lastIndexOf("/"));
 		anno = data.substring(data.lastIndexOf("/")+1, data.length());	
@@ -81,6 +83,8 @@ public class CandidatoServiceImpl implements CandidatoService {
 		int d = Integer.parseInt(giorno);
 		int m = Integer.parseInt(mese);
 		int a = Integer.parseInt(anno);
+		
+		
 		 
 		// creo la data
 		Calendar calendar = GregorianCalendar.getInstance();
@@ -91,8 +95,11 @@ public class CandidatoServiceImpl implements CandidatoService {
 	    calendar.set(Calendar.SECOND, 0);
 	    calendar.set(Calendar.MINUTE, 0);
 	    calendar.set(Calendar.HOUR_OF_DAY, 0);    
-
+//		calendar.setTime(data);
+	    
 		// salvo la data
+//		candidato.setDataNascita(calendar.getTime());
+		
 		candidato.setDataNascita(calendar);
 		
 		// salvo curriculum
@@ -202,6 +209,90 @@ public class CandidatoServiceImpl implements CandidatoService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	// Update
+	
+	@Override
+	@Transactional
+	public void update(String codFiscale, CrmCandidatoUpdate crmCandidatoUpdate) {
+		
+		Candidato candidato = candidatoDao.findCandidatoByCF(codFiscale);
+		
+		// set the value
+		candidato.setNome(crmCandidatoUpdate.getNome());
+		candidato.setCognome(crmCandidatoUpdate.getCognome());
+		candidato.setTelephone(crmCandidatoUpdate.getTelephone());
+		candidato.setEmail(crmCandidatoUpdate.getEmail());
+		candidato.setRal(crmCandidatoUpdate.getRal());
+		candidato.setPreavviso(crmCandidatoUpdate.getPreavviso());
+		candidato.setProveninenza(crmCandidatoUpdate.getProveninenza());
+		candidato.setAspettative(crmCandidatoUpdate.getAspettative());
+		candidato.setNote(crmCandidatoUpdate.getNote());
+
+		if(crmCandidatoUpdate.getTipoContratto() != null) {
+			candidato.setTipoContratto(crmCandidatoUpdate.getTipoContratto());
+		}
+		
+		if(crmCandidatoUpdate.getOfferta() != null) {
+			candidato.setOfferta(crmCandidatoUpdate.getOfferta());
+		}
+		
+		// recupero la data in forma String
+		if(crmCandidatoUpdate.getDataNascita() != null) {
+			String data = crmCandidatoUpdate.getDataNascita();
+			
+			//Estraggo i giorni
+			String giorno = data, mese, anno;
+			giorno = data.substring(0, data.indexOf("/"));
+			mese = data.substring(data.indexOf("/")+1, data.lastIndexOf("/"));
+			anno = data.substring(data.lastIndexOf("/")+1, data.length());	
+			
+			int d = Integer.parseInt(giorno);
+			int m = Integer.parseInt(mese);
+			int a = Integer.parseInt(anno);
+			
+			
+			 
+			// creo la data
+			Calendar calendar = GregorianCalendar.getInstance();
+		    calendar.set(Calendar.DAY_OF_MONTH, d);
+		    calendar.set(Calendar.MONTH, m-1);
+		    calendar.set(Calendar.YEAR, a);
+		    calendar.set(Calendar.MILLISECOND, 0);
+		    calendar.set(Calendar.SECOND, 0);
+		    calendar.set(Calendar.MINUTE, 0);
+		    calendar.set(Calendar.HOUR_OF_DAY, 0);    
+//			calendar.setTime(data);
+		    
+			// salvo la data
+//			candidato.setDataNascita(calendar.getTime());
+
+			candidato.setDataNascita(calendar);
+			
+		}
+			
+		
+		
+//		if(crmCandidatoUpdate.getCurriculum() != null) {
+//			// salvo curriculum
+//			Blob blob = null;
+//			try {
+//				blob = new javax.sql.rowset.serial.SerialBlob(crmCandidatoUpdate.getCurriculum());
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			if (blob != null)
+//				candidato.setCurriculum(blob);
+//		}
+//		
+
+		
+		// save user in the database
+		candidatoDao.save(candidato);
+
 	}
 
 }

@@ -165,16 +165,16 @@ public class Candidato {
 		this.email = email;
 	}
 
-//	public Calendar getDataNascita() {
-//		return dataNascita;
-//	}
-	
-	public String getDataNascita() {
-		Date date = (Date) dataNascita.getTime();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-		
-		return sdf.format( date );
+	public Calendar getDataNascita() {
+		return dataNascita;
 	}
+	
+//	public String getDataNascita() {
+//		Date date = (Date) dataNascita.getTime();
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+//		
+//		return sdf.format( date );
+//	}
 
 	public void setDataNascita(Calendar dataNascita) {
 		this.dataNascita = dataNascita;

@@ -127,7 +127,7 @@
 						</tr>
 						<tr>
 							<th>Data di nascita</th>
-							<td>${candidato.dataNascita}</td>
+							<td>${dataN}</td>
 						</tr>
 						<tr>
 							<th>Tipo di contratto</th>
