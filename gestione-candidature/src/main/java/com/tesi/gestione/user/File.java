@@ -2,11 +2,11 @@ package com.tesi.gestione.user;
 
 import java.sql.Blob;
 
-public class Curriculum {
+public class File {
 	
 	private Blob file;
 
-	public Curriculum() {
+	public File() {
 		super();
 	}
 
@@ -18,6 +18,6 @@ public class Curriculum {
 		this.file = file;
 	}
 	
-	
+	 
 
 }

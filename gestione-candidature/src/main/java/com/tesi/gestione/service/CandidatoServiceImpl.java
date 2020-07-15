@@ -18,6 +18,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.sql.rowset.serial.SerialException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,14 +109,22 @@ public class CandidatoServiceImpl implements CandidatoService {
 		
 		// salvo curriculum
 		Blob blob = null;
-		try {
-			blob = new javax.sql.rowset.serial.SerialBlob(crmCandidato.getCurriculum());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+//			blob = new javax.sql.rowset.serial.SerialBlob(crmCandidato.getCurriculum().getBytes());
+			try {
+				blob = new javax.sql.rowset.serial.SerialBlob(crmCandidato.getCurriculum());
+			} catch (SerialException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		if (blob != null)
 			candidato.setCurriculum(blob);
+		
+
 
 		
 		// salvo l'hr che ha creato il candidato

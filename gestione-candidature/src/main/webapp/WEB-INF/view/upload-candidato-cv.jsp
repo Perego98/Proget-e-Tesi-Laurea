@@ -104,13 +104,16 @@
 		<div  class="panel-body">
 
 		
-		<form:form action="${pageContext.request.contextPath}/hr/processUpdateUploadCVForm?codFiscale=${candidato.codiceFiscale}"  method="post" enctype="multipart/form-data">
+		<form:form action="${pageContext.request.contextPath}/hr/processUpdateUploadCVForm?codFiscale=${candidato.codiceFiscale}"  method="POST" modelAttribute="fileBucket" enctype="multipart/form-data">
 		
 
 		
 			<!-- Update -->
 			<label >Document</label>
-			<input type="file" name="file" id="file"></input>
+			<form:input type="file" path="file" id="file" class="form-control input-sm"/>
+			<br>
+			<form:input type="text" path="description" id="description" class="form-control input-sm"/>
+                           
 
 				<!-- Update Button -->
 			<div style="margin-top: 10px" class="form-group">						

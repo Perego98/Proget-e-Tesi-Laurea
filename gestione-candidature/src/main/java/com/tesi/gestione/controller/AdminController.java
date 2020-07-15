@@ -322,7 +322,7 @@ public class AdminController {
         return "update-user-role";		
 	}
 	
-	@PostMapping("/processUpdateUserRoleForm")
+	@GetMapping("/processUpdateUserRoleForm")
 	public String processUpdateUserRoleForm(
 				@RequestParam("userUsername") String theUsername,
 				@Valid @ModelAttribute("crmUser") CrmRole theRole, 

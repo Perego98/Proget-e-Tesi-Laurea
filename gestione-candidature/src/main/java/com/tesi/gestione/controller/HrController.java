@@ -32,6 +32,7 @@ import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
+import com.tesi.gestione.model.FileBucket;
 import com.tesi.gestione.service.CandidatoService;
 import com.tesi.gestione.service.UserService;
 import com.tesi.gestione.user.CrmCandidato;
@@ -39,7 +40,7 @@ import com.tesi.gestione.user.CrmCandidatoUpdate;
 import com.tesi.gestione.user.CrmStato;
 import com.tesi.gestione.user.CrmSupervisore;
 import com.tesi.gestione.user.CrmUser;
-import com.tesi.gestione.user.Curriculum;
+import com.tesi.gestione.user.File;
 
 // other
 import org.apache.commons.io.IOUtils;
@@ -135,56 +136,8 @@ public class HrController {
 	}
 
 	// save candidato
-//	@PostMapping("/processRegistrationCandidatoForm")
-//	public String processRegistrationCandidatoForm(
-//				@Valid @ModelAttribute("crmCandidato") CrmCandidato CrmCandidato, 
-//				BindingResult theBindingResult, 
-//				Model theModel) {
-//		
-//		System.out.println(" ********** RegistrationController -> dentro processRegistrationCandidatoForm()");
-//		
-//		
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		String currentPrincipalName = authentication.getName();
-//		CrmCandidato.setHrId(currentPrincipalName);
-//		
-//		System.out.println(" ********** RegistrationController -> dentro processRegistrationCandidatoForm -> hrId: " + CrmCandidato.getHrId());
-//		
-//		// form validation
-//	 	if (theBindingResult.hasErrors()){
-//	 		return "registration-candidato-form";
-//        }
-//
-//	 	String codFiscale = CrmCandidato.getCodiceFiscale();
-//		// check the database if user already exists
-//        Candidato existing = candidatoService.findByCodiceFiscale(codFiscale);
-//        if (existing != null){
-//        	theModel.addAttribute("crmCandidato", new CrmCandidato());
-//			theModel.addAttribute("registrationError", "Candidato already exists.");
-//
-//			logger.warning("Candidato already exists.");
-//        	return "registration-candidato-form";
-//        }
-//		// create user account   
-//        
-//		candidatoService.save(CrmCandidato);
-//		
-//		logger.info("Successfully created user: " + codFiscale);
-//		        
-//		// devo chiedere a UserService (UserDao) l'elenco degli user
-//		List<Candidato> theCandidati = candidatoService.getCandidati();
-//
-//		// devo aggiungerli al model
-//		theModel.addAttribute("candidati", theCandidati);
-//		
-//		theModel.addAttribute("registrationSucces", "Candidato registrato con successo.");
-//		
-//        return "list-candidati";		
-//	}
-	
 	@PostMapping("/processRegistrationCandidatoForm")
 	public String processRegistrationCandidatoForm(
-				@RequestParam("file") MultipartFile file,
 				@Valid @ModelAttribute("crmCandidato") CrmCandidato CrmCandidato, 
 				BindingResult theBindingResult, 
 				Model theModel) {
@@ -215,13 +168,6 @@ public class HrController {
         }
 		// create user account   
         
-        try {
-			CrmCandidato.setCurriculum(file.getBytes());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
 		candidatoService.save(CrmCandidato);
 		
 		logger.info("Successfully created user: " + codFiscale);
@@ -236,6 +182,8 @@ public class HrController {
 		
         return "list-candidati";		
 	}
+	
+
 	
 	
 	@GetMapping("/showCandidatoRegistrationForm")
@@ -424,7 +372,7 @@ public class HrController {
 		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
 		theModel.addAttribute("candidato", theCandidato);
 		
-//		theModel.addAttribute("curriculum", new Curriculum());
+		theModel.addAttribute("file", new File());
 		
 		return "upload-candidato-cv";
 	}
@@ -433,7 +381,7 @@ public class HrController {
 		@PostMapping("/processUpdateUploadCVForm")
 		public String processUpdateUploadCVForm(
 					@RequestParam("codFiscale") String codFiscale,
-					@RequestParam("file") MultipartFile file,
+					@Valid FileBucket fileBucket,
 					Model theModel) {
 			
 			
