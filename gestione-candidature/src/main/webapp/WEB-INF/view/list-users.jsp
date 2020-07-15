@@ -158,7 +158,7 @@
 						<td> ${tempUser.sedeAssegnamento}</td>
 						
 						
-						
+						<!-- class="disabled" -->
 						<td>
 							
 							<div class="btn-group-vertical btn-group-xs">
@@ -172,7 +172,13 @@
 										<li class="dropdown-header">Update</li>
 										<li><a href="${pageContext.request.contextPath}/admin/showFormForUpdateUser?userUsername=${tempUser.userName}">Aggiorna Info</a></li>
 										<li><a href="${pageContext.request.contextPath}/admin/showFormForUpdateUserSede?userUsername=${tempUser.userName}">Aggiorna Sede</a></li>
-										<li><a href="${pageContext.request.contextPath}/admin/showFormForUpdateUserRole?userUsername=${tempUser.userName}">Aggiorna Ruolo</a></li>
+										<c:if test="${tempUser.userName == adminUsername}">
+											<li class="disabled"><a href="#">Aggiorna Ruolo</a></li>
+										</c:if>
+										<c:if test="${tempUser.userName != adminUsername}">
+											<li><a href="${pageContext.request.contextPath}/admin/showFormForUpdateUserRole?userUsername=${tempUser.userName}">Aggiorna Ruolo</a></li>
+										</c:if>
+										
 										<li class="divider"></li>
 										<li class="dropdown-header">Delete</li>
 										<li><a onclick="if((confirm('Sei sicuro di voler eliminare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'" >Delete</a></li>

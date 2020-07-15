@@ -64,8 +64,8 @@ public class Candidato {
 	@Column(name = "note", columnDefinition="TEXT")
 	private String note;
 	
-	@Column(name = "curriculum")
 	@Lob
+	@Column(name = "curriculum")
 	private Blob curriculum;
 
 	@OneToOne(cascade=CascadeType.REFRESH)

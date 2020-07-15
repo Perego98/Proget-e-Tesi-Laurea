@@ -104,6 +104,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 		
 		candidato.setDataNascita(calendar);
 		
+		
 		// salvo curriculum
 		Blob blob = null;
 		try {

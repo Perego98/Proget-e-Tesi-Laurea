@@ -1,5 +1,6 @@
 package com.tesi.gestione.controller;
 
+import java.sql.Blob;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,6 +9,7 @@ import java.util.logging.Logger;
 
 import javax.validation.Valid;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tesi.gestione.dao.RoleDao;
 import com.tesi.gestione.dao.SedeDao;
@@ -36,6 +39,26 @@ import com.tesi.gestione.user.CrmCandidatoUpdate;
 import com.tesi.gestione.user.CrmStato;
 import com.tesi.gestione.user.CrmSupervisore;
 import com.tesi.gestione.user.CrmUser;
+import com.tesi.gestione.user.Curriculum;
+
+// other
+import org.apache.commons.io.IOUtils;
+import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/hr")
@@ -112,8 +135,56 @@ public class HrController {
 	}
 
 	// save candidato
+//	@PostMapping("/processRegistrationCandidatoForm")
+//	public String processRegistrationCandidatoForm(
+//				@Valid @ModelAttribute("crmCandidato") CrmCandidato CrmCandidato, 
+//				BindingResult theBindingResult, 
+//				Model theModel) {
+//		
+//		System.out.println(" ********** RegistrationController -> dentro processRegistrationCandidatoForm()");
+//		
+//		
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		String currentPrincipalName = authentication.getName();
+//		CrmCandidato.setHrId(currentPrincipalName);
+//		
+//		System.out.println(" ********** RegistrationController -> dentro processRegistrationCandidatoForm -> hrId: " + CrmCandidato.getHrId());
+//		
+//		// form validation
+//	 	if (theBindingResult.hasErrors()){
+//	 		return "registration-candidato-form";
+//        }
+//
+//	 	String codFiscale = CrmCandidato.getCodiceFiscale();
+//		// check the database if user already exists
+//        Candidato existing = candidatoService.findByCodiceFiscale(codFiscale);
+//        if (existing != null){
+//        	theModel.addAttribute("crmCandidato", new CrmCandidato());
+//			theModel.addAttribute("registrationError", "Candidato already exists.");
+//
+//			logger.warning("Candidato already exists.");
+//        	return "registration-candidato-form";
+//        }
+//		// create user account   
+//        
+//		candidatoService.save(CrmCandidato);
+//		
+//		logger.info("Successfully created user: " + codFiscale);
+//		        
+//		// devo chiedere a UserService (UserDao) l'elenco degli user
+//		List<Candidato> theCandidati = candidatoService.getCandidati();
+//
+//		// devo aggiungerli al model
+//		theModel.addAttribute("candidati", theCandidati);
+//		
+//		theModel.addAttribute("registrationSucces", "Candidato registrato con successo.");
+//		
+//        return "list-candidati";		
+//	}
+	
 	@PostMapping("/processRegistrationCandidatoForm")
 	public String processRegistrationCandidatoForm(
+				@RequestParam("file") MultipartFile file,
 				@Valid @ModelAttribute("crmCandidato") CrmCandidato CrmCandidato, 
 				BindingResult theBindingResult, 
 				Model theModel) {
@@ -143,6 +214,13 @@ public class HrController {
         	return "registration-candidato-form";
         }
 		// create user account   
+        
+        try {
+			CrmCandidato.setCurriculum(file.getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
 		candidatoService.save(CrmCandidato);
 		
@@ -245,6 +323,8 @@ public class HrController {
 	
 	
 	
+	
+	
 	@GetMapping("/showCandidatoUpdateStatoForm")
 	public String showMyCandidatoUpdateStatoPage(@RequestParam("codFiscale") String codFiscale, 
 											Model theModel) {
@@ -334,5 +414,41 @@ public class HrController {
 	}
 	
 	
+	// UPLOAD CV TEST
+	@GetMapping("/showCandidatoUploadCVForm")
+	public String showMyCandidatoUploadCVFormPage(@RequestParam("codFiscale") String codFiscale, 
+											Model theModel) {
+		
+
+		
+		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
+		theModel.addAttribute("candidato", theCandidato);
+		
+//		theModel.addAttribute("curriculum", new Curriculum());
+		
+		return "upload-candidato-cv";
+	}
+	
+	// update Supervisore
+		@PostMapping("/processUpdateUploadCVForm")
+		public String processUpdateUploadCVForm(
+					@RequestParam("codFiscale") String codFiscale,
+					@RequestParam("file") MultipartFile file,
+					Model theModel) {
+			
+			
+			System.out.println("DO SOMETHING UPLOAD CV");
+
+			        
+			// devo chiedere a UserService (UserDao) l'elenco degli user
+			List<Candidato> theCandidati = candidatoService.getCandidati();
+
+			// devo aggiungerli al model
+			theModel.addAttribute("candidati", theCandidati);
+			
+//			theModel.addAttribute("registrationSucces", "Supervisore " + userUsername + " assegnato con successo a " + theCandidato.getNome() + " CF: " + theCandidato.getCodiceFiscale());
+			
+	        return "list-candidati";		
+		}
 	
 }
