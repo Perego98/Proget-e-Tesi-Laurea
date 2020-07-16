@@ -8,15 +8,19 @@ import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -30,7 +34,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @EnableTransactionManagement
 @ComponentScan(basePackages="com.tesi.gestione")
 @PropertySource("classpath:persistence-mysql.properties")
-public class DemoAppConfig implements WebMvcConfigurer {
+public class DemoAppConfig implements WebMvcConfigurer{
 
 	// set up variable to hold the properties
 	@Autowired
@@ -51,6 +55,28 @@ public class DemoAppConfig implements WebMvcConfigurer {
 		
 		return viewResolver;
 	}
+	
+	@Bean
+    public MultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
+    }
+	
+	//FILE
+//	 @Bean(name="multipartResolver")
+//	    public StandardServletMultipartResolver resolver(){
+//	        return new StandardServletMultipartResolver();
+//	    }
+//	 /**
+//	     * Configure MessageSource to lookup any validation/error message in internationalized property files
+//	     */
+	 // FILE
+//	    @Bean
+//	    public MessageSource messageSource() {
+//	        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+//	        messageSource.setBasename("messages");
+//	        return messageSource;
+//	    }
+	 
 	
 	// define a bean for our security datasource
 	

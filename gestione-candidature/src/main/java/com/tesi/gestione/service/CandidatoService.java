@@ -3,8 +3,11 @@ package com.tesi.gestione.service;
 import java.sql.Blob;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.User;
+import com.tesi.gestione.model.FileBucket;
 import com.tesi.gestione.user.CrmCandidato;
 import com.tesi.gestione.user.CrmCandidatoUpdate;
 import com.tesi.gestione.user.CrmRole;
@@ -20,6 +23,8 @@ public interface CandidatoService {
     void save(CrmCandidato crmCandidato);
     
     List<Candidato> getCandidati();
+    
+    void uploadCV(MultipartFile multipartFile, Candidato candidato);
     
     void dowloadCurriculum(String codFiscale);
     

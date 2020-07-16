@@ -32,10 +32,12 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
+		http.csrf().disable();
+		
 		http.authorizeRequests()
 				//.antMatchers("/").hasRole("EMPLOYEE")
 				.antMatchers("/").hasAnyRole("MANAGER", "HR", "ADMIN")
-				.antMatchers("/registerHr/**").hasRole("HR")
+				.antMatchers("/hr/**").hasRole("HR")
 				.antMatchers("/register/**").hasRole("ADMIN")
 				.antMatchers("/admin/**").hasRole("ADMIN")
 			.and()
@@ -46,8 +48,8 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 					.permitAll()
 			.and()
 				.logout().permitAll()
-				.invalidateHttpSession(true)
-				.deleteCookies("JSESSIONID")
+//				.invalidateHttpSession(true)
+//				.deleteCookies("JSESSIONID")
 			.and()
 				.exceptionHandling().accessDeniedPage("/access-denied");
 		
@@ -77,15 +79,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
         	.antMatchers("/resources/**");
 	}
 
-//	@Override
-//	public void configure(WebSecurity web) throws Exception {
-//		// TODO Auto-generated method stub
-////		super.configure(web);
-//
-//		System.out.println("********* ---------> Spring security ignore resource !!!");
-//		web.ignoring().antMatchers("/resources/**");
-//	}
-//	  
+ 
 }
 
 
