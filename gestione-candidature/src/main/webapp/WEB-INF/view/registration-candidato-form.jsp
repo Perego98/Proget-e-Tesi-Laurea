@@ -276,7 +276,7 @@
 						</div>
 
 						<!-- TODO: Caricamento del curriculum  glyphicon glyphicon-folder-open -->
-						<!-- Curriculum -->
+						<!-- Curriculum 
 						<form:errors path="curriculum" cssClass="error" />
 						<label> Curriculum: </label>
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
@@ -284,7 +284,7 @@
 								class="glyphicon glyphicon-folder-open"></i></span>
 							<form:input path="curriculum" type="file"
 								placeholder="Curriculum" class="form-control" />
-						</div>
+						</div> -->
 
 
 

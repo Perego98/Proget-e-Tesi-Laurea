@@ -16,6 +16,12 @@
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
+	<script>
+		$(document).ready(function() {
+			$('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
+	
 </head>
 
 
@@ -169,7 +175,14 @@
 						</tr>
 						<tr>
 							<th>Supervisore</th>
-							<td>Username: ${candidato.supervisore.userName} Ruolo: ${candidato.supervisore.roles}</td>
+								<c:if test="${candidato.supervisore != null}">
+									<td>Username: ${candidato.supervisore.userName} - Ruolo: ${candidato.supervisore.roles}</td>
+								</c:if>
+								
+								<c:if test="${candidato.supervisore == null}">
+									<td><h4><span data-toggle="tooltip" title="Nessun Supervisore Associato" class="label label-warning">Attenzione</span></h4></td>
+								</c:if>
+									
 						</tr>
 					</table>
 
@@ -187,15 +200,6 @@
 							onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
 							class="btn btn-primary" />
 							
-				<div class="btn-group pull-right">			
-					<input type="button" value="Delete"
-											onclick="if((confirm('Sei sicuro di voler cancellare questo candidato'))) window.location.href='${pageContext.request.contextPath}/hr/deleteCandidato?codFiscale=${candidato.codiceFiscale}'; return false;"
-											class="btn btn-danger" /> 
-							
-					<input type="button" value="Update"
-								onclick="window.location.href='${updateLink}'; return false;"
-								class="btn btn-success" />
-				</div>
 		</div>
 	
 	</div>

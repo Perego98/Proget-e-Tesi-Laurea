@@ -30,11 +30,9 @@ import com.tesi.gestione.dao.CandidatoDao;
 import com.tesi.gestione.dao.UserDao;
 import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.User;
-import com.tesi.gestione.model.FileBucket;
 import com.tesi.gestione.user.CrmCandidato;
 import com.tesi.gestione.user.CrmCandidatoUpdate;
 import com.tesi.gestione.user.CrmStato;
-import com.tesi.gestione.user.CrmSupervisore;
 
 @Service
 public class CandidatoServiceImpl implements CandidatoService {
@@ -74,7 +72,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 		candidato.setNote(crmCandidato.getNote());
 
 		// set default statoCandidatura
-		candidato.setStatoCandidatura("assegnato_manager");
+		candidato.setStatoCandidatura("assegnato_hr");
 
 		// recupero la data in forma String
 
@@ -107,15 +105,15 @@ public class CandidatoServiceImpl implements CandidatoService {
 		candidato.setDataNascita(calendar);
 
 		// salvo curriculum
-		Blob blob = null;
-		try {
-			blob = new javax.sql.rowset.serial.SerialBlob(crmCandidato.getCurriculum());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (blob != null)
-			candidato.setCurriculum(blob);
+//		Blob blob = null;
+//		try {
+//			blob = new javax.sql.rowset.serial.SerialBlob(crmCandidato.getCurriculum());
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		if (blob != null)
+//			candidato.setCurriculum(blob);
 
 		// salvo l'hr che ha creato il candidato
 		// di default viene assegnato a lui
@@ -298,7 +296,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 	@Transactional
 	public void changeSupervisore(String userUsername, Candidato theCandidato) {
 		theCandidato.setSupervisore(userDao.findByUserName(userUsername));
-
+		theCandidato.setStatoCandidatura("assegnato_manager");
 		candidatoDao.save(theCandidato);
 	}
 

@@ -38,7 +38,6 @@ import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
-import com.tesi.gestione.model.FileBucket;
 import com.tesi.gestione.service.CandidatoService;
 import com.tesi.gestione.service.UserService;
 import com.tesi.gestione.user.CrmCandidato;
