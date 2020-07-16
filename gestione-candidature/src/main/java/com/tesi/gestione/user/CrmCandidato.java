@@ -8,8 +8,6 @@ import java.util.Calendar;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.tesi.gestione.validation.FieldMatch;
 import com.tesi.gestione.validation.ValidData;
 import com.tesi.gestione.validation.ValidEmail;
@@ -69,7 +67,6 @@ public class CrmCandidato {
 	
 	//@NotNull(message = "is required")
 	private byte[] curriculum;
-//	private MultipartFile curriculum;
 
 	// idHr
 	private String hrId;
@@ -190,21 +187,13 @@ public class CrmCandidato {
 		this.note = note;
 	}
 
-//	public MultipartFile getCurriculum() {
-//		return curriculum;
-//	}
-//
-//	public void setCurriculum(MultipartFile curriculum) {
-//		this.curriculum = curriculum;
-//	}
-	
 	public byte[] getCurriculum() {
-	return curriculum;
-}
+		return curriculum;
+	}
 
-public void setCurriculum(byte[] curriculum) {
-	this.curriculum = curriculum;
-}
+	public void setCurriculum(byte[] curriculum) {
+		this.curriculum = curriculum;
+	}
 
 	public String getHrId() {
 		return hrId;

@@ -186,8 +186,7 @@
 				<input type="button" value="Back"
 							onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
 							class="btn btn-primary" />
-				
-				<!--  			
+							
 				<div class="btn-group pull-right">			
 					<input type="button" value="Delete"
 											onclick="if((confirm('Sei sicuro di voler cancellare questo candidato'))) window.location.href='${pageContext.request.contextPath}/hr/deleteCandidato?codFiscale=${candidato.codiceFiscale}'; return false;"
@@ -197,7 +196,6 @@
 								onclick="window.location.href='${updateLink}'; return false;"
 								class="btn btn-success" />
 				</div>
-				-->
 		</div>
 	
 	</div>

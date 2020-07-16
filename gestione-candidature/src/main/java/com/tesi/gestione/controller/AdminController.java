@@ -69,10 +69,10 @@ public class AdminController {
 		// devo aggiungerli al model
 		theModel.addAttribute("users", theUsers);
 		
-		// prendo l'username dell'admin attuale e lo passo al model
+		// aggiungo le info di chi è loggato
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		theModel.addAttribute("adminUsername", currentPrincipalName);
+		theModel.addAttribute("adminAccount", currentPrincipalName);
 		
 		
 		return "list-users";		
@@ -159,6 +159,11 @@ public class AdminController {
         
 		theModel.addAttribute("registrationSucces", "Utente registrato con successo.");
 		
+		// aggiungo le info di chi è loggato
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		theModel.addAttribute("adminAccount", currentPrincipalName);
+		
         return "list-users";		
 	}
 	
@@ -223,6 +228,11 @@ public class AdminController {
 		theModel.addAttribute("registrationSucces", "Utente aggiornato con successo.");
 		
 		System.out.println("********* AdminController --------- Dentro processUpdateUserForm ->  list-users");
+		
+		// aggiungo le info di chi è loggato
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		theModel.addAttribute("adminAccount", currentPrincipalName);
 		
 		return "list-users";	
 	}
@@ -294,6 +304,11 @@ public class AdminController {
 		
 		theModel.addAttribute("registrationSucces", "Sede aggiornata con successo.");
 		
+		// aggiungo le info di chi è loggato
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		theModel.addAttribute("adminAccount", currentPrincipalName);
+		
 		return "list-users";	
 	}
 		
@@ -322,7 +337,7 @@ public class AdminController {
         return "update-user-role";		
 	}
 	
-	@GetMapping("/processUpdateUserRoleForm")
+	@PostMapping("/processUpdateUserRoleForm")
 	public String processUpdateUserRoleForm(
 				@RequestParam("userUsername") String theUsername,
 				@Valid @ModelAttribute("crmUser") CrmRole theRole, 
@@ -346,6 +361,11 @@ public class AdminController {
 		theModel.addAttribute("users", theUsers);
 		
 		theModel.addAttribute("registrationSucces", "Ruolo aggiornato con successo.");
+		
+		// aggiungo le info di chi è loggato
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		theModel.addAttribute("adminAccount", currentPrincipalName);
 		
 		return "list-users";	
 	}

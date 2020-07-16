@@ -1,6 +1,5 @@
 package com.tesi.gestione.controller;
 
-import java.sql.Blob;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,7 +8,6 @@ import java.util.logging.Logger;
 
 import javax.validation.Valid;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.tesi.gestione.dao.RoleDao;
 import com.tesi.gestione.dao.SedeDao;
@@ -32,7 +29,6 @@ import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
-import com.tesi.gestione.model.FileBucket;
 import com.tesi.gestione.service.CandidatoService;
 import com.tesi.gestione.service.UserService;
 import com.tesi.gestione.user.CrmCandidato;
@@ -40,26 +36,6 @@ import com.tesi.gestione.user.CrmCandidatoUpdate;
 import com.tesi.gestione.user.CrmStato;
 import com.tesi.gestione.user.CrmSupervisore;
 import com.tesi.gestione.user.CrmUser;
-import com.tesi.gestione.user.File;
-
-// other
-import org.apache.commons.io.IOUtils;
-import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.Blob;
-import java.sql.SQLException;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/hr")
@@ -183,8 +159,6 @@ public class HrController {
         return "list-candidati";		
 	}
 	
-
-	
 	
 	@GetMapping("/showCandidatoRegistrationForm")
 	public String showMyCandidatoRegistrationPage(Model theModel) {
@@ -268,8 +242,6 @@ public class HrController {
 		
         return "list-candidati";		
 	}
-	
-	
 	
 	
 	
@@ -362,41 +334,5 @@ public class HrController {
 	}
 	
 	
-	// UPLOAD CV TEST
-	@GetMapping("/showCandidatoUploadCVForm")
-	public String showMyCandidatoUploadCVFormPage(@RequestParam("codFiscale") String codFiscale, 
-											Model theModel) {
-		
-
-		
-		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
-		theModel.addAttribute("candidato", theCandidato);
-		
-		theModel.addAttribute("file", new File());
-		
-		return "upload-candidato-cv";
-	}
-	
-	// update Supervisore
-		@PostMapping("/processUpdateUploadCVForm")
-		public String processUpdateUploadCVForm(
-					@RequestParam("codFiscale") String codFiscale,
-					@Valid FileBucket fileBucket,
-					Model theModel) {
-			
-			
-			System.out.println("DO SOMETHING UPLOAD CV");
-
-			        
-			// devo chiedere a UserService (UserDao) l'elenco degli user
-			List<Candidato> theCandidati = candidatoService.getCandidati();
-
-			// devo aggiungerli al model
-			theModel.addAttribute("candidati", theCandidati);
-			
-//			theModel.addAttribute("registrationSucces", "Supervisore " + userUsername + " assegnato con successo a " + theCandidato.getNome() + " CF: " + theCandidato.getCodiceFiscale());
-			
-	        return "list-candidati";		
-		}
 	
 }

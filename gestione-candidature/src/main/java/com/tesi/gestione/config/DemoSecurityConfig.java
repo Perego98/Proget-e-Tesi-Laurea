@@ -1,10 +1,8 @@
 package com.tesi.gestione.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -79,15 +77,6 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
         	.antMatchers("/resources/**");
 	}
 
-	// Message to Upload/Dowload file
-	@Bean
-    public MessageSource messageSource() {
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("messages");
-        return messageSource;
-    }
-     
-	
 //	@Override
 //	public void configure(WebSecurity web) throws Exception {
 //		// TODO Auto-generated method stub

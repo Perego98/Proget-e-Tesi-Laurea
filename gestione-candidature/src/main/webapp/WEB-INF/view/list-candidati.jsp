@@ -161,7 +161,7 @@
 										<li><a href="${pageContext.request.contextPath}/hr/showCandidatoUpdateForm?codFiscale=${tempCandidato.codiceFiscale}">Aggiorna Info</a></li>
 										<li><a href="${pageContext.request.contextPath}/hr/showCandidatoUpdateStatoForm?codFiscale=${tempCandidato.codiceFiscale}">Aggiorna Stato</a></li>
 										<li><a href="${pageContext.request.contextPath}/hr/showCandidatoSetManagerForm?codFiscale=${tempCandidato.codiceFiscale}">Assegna a Manager</a></li>
-										<li><a href="${pageContext.request.contextPath}/hr/showCandidatoUploadCVForm?codFiscale=${tempCandidato.codiceFiscale}">Upload CV</a></li>										
+										
 										<li class="divider"></li>
 										<li class="dropdown-header">Info</li>
 										<li><a href="${pageContext.request.contextPath}/hr/showMoreInfoCandidato?codFiscale=${tempCandidato.codiceFiscale}">Mostra più Info</a></li>
