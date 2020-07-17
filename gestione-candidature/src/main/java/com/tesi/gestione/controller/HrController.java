@@ -113,6 +113,7 @@ public class HrController {
 		
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		
+		
 
 		String formatted = format1.format(theCandidato.getDataNascita().getTime());
 		theModel.addAttribute("dataN", formatted);

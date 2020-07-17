@@ -102,7 +102,7 @@
 <div class="panel panel-default">
 		<div class="panel-heading">
 		<h2>Aggiorna dati <b>${userUsername}</b></h2>
-		<p>Ruolo Attuale: ${ruoloAttualeale}</p>
+		<p>Ruolo Attuale: ${ruoloAttuale}</p>
 		</div>
 		<div  class="panel-body">
 

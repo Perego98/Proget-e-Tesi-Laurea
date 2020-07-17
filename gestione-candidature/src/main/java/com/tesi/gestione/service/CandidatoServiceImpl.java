@@ -77,47 +77,39 @@ public class CandidatoServiceImpl implements CandidatoService {
 		// recupero la data in forma String
 
 		String data = crmCandidato.getDataNascita();
+		
+		String giorno = null , mese = null, anno = null;
+		if(data.contains("/")) {
+			// Estraggo i giorni
+			giorno = data.substring(0, data.indexOf("/"));
+			mese = data.substring(data.indexOf("/") + 1, data.lastIndexOf("/"));
+			anno = data.substring(data.lastIndexOf("/") + 1, data.length());
+		}
+		else if(data.contains("-")){
+			anno = data.substring(0, data.indexOf("-"));
+			mese = data.substring(data.indexOf("-") + 1, data.lastIndexOf("-"));
+			giorno = data.substring(data.lastIndexOf("-") + 1, data.length());
+		}
+		
+		if(giorno != null && mese != null && anno != null) {
+			int d = Integer.parseInt(giorno);
+			int m = Integer.parseInt(mese);
+			int a = Integer.parseInt(anno);
 
-		// Estraggo i giorni
-		String giorno = data, mese, anno;
-		giorno = data.substring(0, data.indexOf("/"));
-		mese = data.substring(data.indexOf("/") + 1, data.lastIndexOf("/"));
-		anno = data.substring(data.lastIndexOf("/") + 1, data.length());
+			// creo la data
+			Calendar calendar = GregorianCalendar.getInstance();
+			calendar.set(Calendar.DAY_OF_MONTH, d);
+			calendar.set(Calendar.MONTH, m - 1);
+			calendar.set(Calendar.YEAR, a);
+			calendar.set(Calendar.MILLISECOND, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
 
-		int d = Integer.parseInt(giorno);
-		int m = Integer.parseInt(mese);
-		int a = Integer.parseInt(anno);
+			candidato.setDataNascita(calendar);
+		}
+		
 
-		// creo la data
-		Calendar calendar = GregorianCalendar.getInstance();
-		calendar.set(Calendar.DAY_OF_MONTH, d);
-		calendar.set(Calendar.MONTH, m - 1);
-		calendar.set(Calendar.YEAR, a);
-		calendar.set(Calendar.MILLISECOND, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-//		calendar.setTime(data);
-
-		// salvo la data
-//		candidato.setDataNascita(calendar.getTime());
-
-		candidato.setDataNascita(calendar);
-
-		// salvo curriculum
-//		Blob blob = null;
-//		try {
-//			blob = new javax.sql.rowset.serial.SerialBlob(crmCandidato.getCurriculum());
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		if (blob != null)
-//			candidato.setCurriculum(blob);
-
-		// salvo l'hr che ha creato il candidato
-		// di default viene assegnato a lui
-		// Recupero l'username
 		User theHr = userDao.findByUserName(crmCandidato.getHrId());
 
 		// se esiste lo collego

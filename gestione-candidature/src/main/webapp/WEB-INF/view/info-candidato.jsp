@@ -166,11 +166,16 @@
 						<tr>
 							<th>Curriculum</th>
 							<td>
-								<c:if test="${candidato.curriculum.length() != 0}">
+								<c:if test="${candidato.curriculum != null}">
 									<input type="button" value="Download"
 										onclick="window.location.href='${pageContext.request.contextPath}/hr/downloadCurriculum?codFiscale=${candidato.codiceFiscale}'; return false;"
 										class="btn btn-primary" />
 								</c:if>
+								
+								<c:if test="${candidato.curriculum == null}">
+									<h4><span data-toggle="tooltip" title="Non è stato caricato nessun curriculum" class="label label-info">Nessun Curriculum</span></h4>
+								</c:if>
+								
 							</td>
 						</tr>
 						<tr>

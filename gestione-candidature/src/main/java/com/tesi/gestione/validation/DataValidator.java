@@ -27,23 +27,38 @@ public class DataValidator implements ConstraintValidator<ValidData, Date> {
 		String temp = dataD.toString();
 		
 		System.out.println(" ********** DataValidator -> TEMP: " + temp);
-		// split
-		for(int i=0; i<temp.length(); i++) {
-			data += temp.charAt(temp.length()-i-1);
-		}
+		
 		System.out.println(" ********** DataValidator -> DATA: " + data);
 
 
 		
-		if(data.contains("/")) {
+		if(data.contains("/") || data.contains("-")) {
+			
+//			// se così devo girarla e sostituire - con /
+//			if(data.contains("-")) {
+//				// split
+//				for(int i=0; i<temp.length(); i++) {
+//					data += temp.charAt(temp.length()-i-1);
+//				}
+//			}
 			
 			// controlo anche nel caso l'inserimento fosse non solo gg/mm/aaaa ma anche g/mm/aaaa o g/m/aaaa o gg/m/aaaa
 			if(data.length() == 10 || data.length() == 9 || data.length() == 8) {
  
-				String giorno, mese, anno;
-				giorno = data.substring(0, data.indexOf("/"));
-				mese = data.substring(data.indexOf("/")+1, data.lastIndexOf("/"));
-				anno = data.substring(data.lastIndexOf("/")+1, data.length());		
+				String giorno = null, mese = null, anno = null;
+				if(data.contains("/")) {
+					giorno = data.substring(0, data.indexOf("/"));
+					mese = data.substring(data.indexOf("/")+1, data.lastIndexOf("/"));
+					anno = data.substring(data.lastIndexOf("/")+1, data.length());		
+				} else if(data.contains("-")) {
+					anno = data.substring(0, data.indexOf("-"));
+					mese = data.substring(data.indexOf("-")+1, data.lastIndexOf("-"));
+					giorno = data.substring(data.lastIndexOf("-")+1, data.length());		
+				}
+				
+				// se uno di questi è a null ritorno false
+				if(anno == null || mese == null || giorno == null)
+					return false;
 				
 				// controllo a parte la lunghezza dell'anno, perchè può essere superata dal controllo precedente
 				if(anno.length() != 4)
