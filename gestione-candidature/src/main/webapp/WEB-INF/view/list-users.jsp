@@ -181,7 +181,7 @@
 						</div>
 						
 						<!-- Deactivate Modal -->
-						<div id="myModalDeactivate" class="modal fade" role="dialog">
+						<div id="myModalDeactivate${tempUser.userName}" class="modal fade" role="dialog">
 						  <div class="modal-dialog">
 						
 						    <!-- Modal content-->
@@ -210,7 +210,7 @@
 						</div>
 						
 						<!-- Activate Modal -->
-						<div id="myModalActivate" class="modal fade" role="dialog">
+						<div id="myModalActivate${tempUser.userName}" class="modal fade" role="dialog">
 						  <div class="modal-dialog">
 						
 						    <!-- Modal content-->
@@ -269,7 +269,7 @@
 								
 
 								<!-- Trigger the modal with a button -->
-								<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModalDeactivate">
+								<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModalDeactivate${tempUser.userName}">
 									<span data-toggle="tooltip"
 									title="Questo account è stato disattivato, clicca per attivare"
 									class="label">Disattivato</span>
@@ -286,7 +286,7 @@
 								onclick="if((confirm('Sei sicuro di voler disattivare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deactivateUser?userUsername=${tempUser.userName}'">Attivo</span>
 							-->
 								<!-- Trigger the modal with a button -->
-								<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModalActivate">
+								<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModalActivate${tempUser.userName}">
 									<span data-toggle="tooltip"
 									title="Questo account è stato disattivato, clicca per attivare"
 									class="label">Attivo</span>
