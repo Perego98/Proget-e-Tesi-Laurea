@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tesi.gestione.crm.CrmCandidato;
+import com.tesi.gestione.crm.CrmCandidatoUpdate;
+import com.tesi.gestione.crm.CrmStato;
 import com.tesi.gestione.entity.Candidato;
-import com.tesi.gestione.user.CrmCandidato;
-import com.tesi.gestione.user.CrmCandidatoUpdate;
-import com.tesi.gestione.user.CrmStato;
 
 
 public interface CandidatoService {

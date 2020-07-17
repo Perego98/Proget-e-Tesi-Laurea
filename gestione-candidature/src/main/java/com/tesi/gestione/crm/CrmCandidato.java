@@ -1,6 +1,7 @@
-package com.tesi.gestione.user;
+package com.tesi.gestione.crm;
 
 
+import java.sql.Blob;
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -11,9 +12,11 @@ import com.tesi.gestione.validation.FieldMatch;
 import com.tesi.gestione.validation.ValidData;
 import com.tesi.gestione.validation.ValidEmail;
 
-public class CrmCandidatoUpdate {
+public class CrmCandidato {
 
-//	private String codiceFiscale;
+	@NotNull(message = "is required")
+	@Size(min = 16, max = 16, message = "must be 16 digits")
+	private String codiceFiscale;
 
 	//@NotNull(message = "is required")
 	private String statoCandidatura;
@@ -36,8 +39,8 @@ public class CrmCandidatoUpdate {
 	@Size(min = 10, max=10, message = "is required")
 	private String telephone;
 	
-//	@NotNull(message = "is required")
-//	@ValidData
+	@NotNull(message = "is required")
+	@ValidData
 	private String dataNascita;
 	
 	@NotNull(message = "is required")
@@ -62,23 +65,23 @@ public class CrmCandidatoUpdate {
 	@Size(max = 65535, message = "Maximum length 65535 characters")
 	private String note;
 	
-//	@NotNull(message = "is required")
-//	private byte[] curriculum;
+	//@NotNull(message = "is required")
+	private byte[] curriculum;
 
 	// idHr
-//	private String hrId;
+	private String hrId;
 	
-	public CrmCandidatoUpdate() {
+	public CrmCandidato() {
 		
 	}
 
-//	public String getCodiceFiscale() {
-//		return codiceFiscale;
-//	}
-//
-//	public void setCodiceFiscale(String codiceFiscale) {
-//		this.codiceFiscale = codiceFiscale;
-//	}
+	public String getCodiceFiscale() {
+		return codiceFiscale;
+	}
+
+	public void setCodiceFiscale(String codiceFiscale) {
+		this.codiceFiscale = codiceFiscale;
+	}
 
 	public String getStatoCandidatura() {
 		return statoCandidatura;
@@ -184,23 +187,23 @@ public class CrmCandidatoUpdate {
 		this.note = note;
 	}
 
-//	public byte[] getCurriculum() {
-//		return curriculum;
-//	}
-//
-//	public void setCurriculum(byte[] curriculum) {
-//		this.curriculum = curriculum;
-//	}
+	public byte[] getCurriculum() {
+		return curriculum;
+	}
 
-//	public String getHrId() {
-//		return hrId;
-//	}
-//
-//	public void setHrId(String hrId) {
-//		this.hrId = hrId;
-//	}
-//	
-//	
+	public void setCurriculum(byte[] curriculum) {
+		this.curriculum = curriculum;
+	}
+
+	public String getHrId() {
+		return hrId;
+	}
+
+	public void setHrId(String hrId) {
+		this.hrId = hrId;
+	}
+	
+	
 	
 	
 	

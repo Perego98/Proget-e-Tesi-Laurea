@@ -1,5 +1,9 @@
 package com.tesi.gestione.service;
 
+import com.tesi.gestione.crm.CrmRole;
+import com.tesi.gestione.crm.CrmSede;
+import com.tesi.gestione.crm.CrmUser;
+import com.tesi.gestione.crm.CrmUserUpdate;
 import com.tesi.gestione.dao.CandidatoDao;
 import com.tesi.gestione.dao.RoleDao;
 import com.tesi.gestione.dao.SedeDao;
@@ -7,10 +11,6 @@ import com.tesi.gestione.dao.UserDao;
 import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
-import com.tesi.gestione.user.CrmRole;
-import com.tesi.gestione.user.CrmSede;
-import com.tesi.gestione.user.CrmUser;
-import com.tesi.gestione.user.CrmUserUpdate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

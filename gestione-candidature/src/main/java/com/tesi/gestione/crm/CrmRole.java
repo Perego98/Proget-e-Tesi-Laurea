@@ -1,4 +1,4 @@
-package com.tesi.gestione.user;
+package com.tesi.gestione.crm;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

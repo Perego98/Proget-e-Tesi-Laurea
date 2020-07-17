@@ -26,13 +26,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tesi.gestione.crm.CrmCandidato;
+import com.tesi.gestione.crm.CrmCandidatoUpdate;
+import com.tesi.gestione.crm.CrmStato;
 import com.tesi.gestione.dao.CandidatoDao;
 import com.tesi.gestione.dao.UserDao;
 import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.User;
-import com.tesi.gestione.user.CrmCandidato;
-import com.tesi.gestione.user.CrmCandidatoUpdate;
-import com.tesi.gestione.user.CrmStato;
 
 @Service
 public class CandidatoServiceImpl implements CandidatoService {

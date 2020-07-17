@@ -32,6 +32,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tesi.gestione.crm.CrmCandidato;
+import com.tesi.gestione.crm.CrmCandidatoUpdate;
+import com.tesi.gestione.crm.CrmStato;
+import com.tesi.gestione.crm.CrmSupervisore;
+import com.tesi.gestione.crm.CrmUser;
 import com.tesi.gestione.dao.RoleDao;
 import com.tesi.gestione.dao.SedeDao;
 import com.tesi.gestione.entity.Candidato;
@@ -40,11 +45,6 @@ import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.service.CandidatoService;
 import com.tesi.gestione.service.UserService;
-import com.tesi.gestione.user.CrmCandidato;
-import com.tesi.gestione.user.CrmCandidatoUpdate;
-import com.tesi.gestione.user.CrmStato;
-import com.tesi.gestione.user.CrmSupervisore;
-import com.tesi.gestione.user.CrmUser;
 
 @Controller
 @RequestMapping("/hr")

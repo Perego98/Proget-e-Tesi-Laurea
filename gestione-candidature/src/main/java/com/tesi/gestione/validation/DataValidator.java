@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.xml.crypto.Data;
 
-public class DataValidator implements ConstraintValidator<ValidData, Date> {
+public class DataValidator implements ConstraintValidator<ValidData, String> {
 
 	private Pattern pattern;
 	private Matcher matcher;
@@ -16,31 +16,16 @@ public class DataValidator implements ConstraintValidator<ValidData, Date> {
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	@Override
-	public boolean isValid(final Date dataD, final ConstraintValidatorContext context) {
+	public boolean isValid(final String data, final ConstraintValidatorContext context) {
 		
-		if (dataD == null) {
+		if (data == null) {
 			return false;
 		}
-		
-		System.out.println(" ********** DataValidator -> Entrato in isValid().");
-		String data = "";
-		String temp = dataD.toString();
-		
-		System.out.println(" ********** DataValidator -> TEMP: " + temp);
-		
-		System.out.println(" ********** DataValidator -> DATA: " + data);
 
 
 		
 		if(data.contains("/") || data.contains("-")) {
 			
-//			// se così devo girarla e sostituire - con /
-//			if(data.contains("-")) {
-//				// split
-//				for(int i=0; i<temp.length(); i++) {
-//					data += temp.charAt(temp.length()-i-1);
-//				}
-//			}
 			
 			// controlo anche nel caso l'inserimento fosse non solo gg/mm/aaaa ma anche g/mm/aaaa o g/m/aaaa o gg/m/aaaa
 			if(data.length() == 10 || data.length() == 9 || data.length() == 8) {
