@@ -19,6 +19,8 @@ public interface UserDao {
     void deleteUser(String username);
     
     void changeState(boolean newState, String username);
+    
+    List<User> search(String theSearchName);
 
     
 }

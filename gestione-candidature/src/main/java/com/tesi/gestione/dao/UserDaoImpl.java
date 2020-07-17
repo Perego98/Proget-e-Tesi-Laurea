@@ -142,5 +142,35 @@ public class UserDaoImpl implements UserDao {
 		return managers;
 	}
 
+	 @Override
+	 public List<User> search(String theSearchName) {
+
+        // get the current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
+        
+        Query theQuery = null;
+        
+
+        if (theSearchName != null && theSearchName.trim().length() > 0) {
+
+            // search for firstName or lastName ... case insensitive
+            theQuery =currentSession.createQuery("from User where lower(first_name) " + 
+            			"like :theName or lower(last_name) like :theName "
+            			+ "or lower(userName) like :theName", User.class);
+            theQuery.setParameter("theName", "%" + theSearchName.toLowerCase() + "%");
+
+        }
+        else {
+            // theSearchName is empty ... so just get all users
+            theQuery =currentSession.createQuery("from User", User.class);            
+        }
+        
+        // execute query and get result list
+        List<User> customers = theQuery.getResultList();
+                
+        // return the results        
+        return customers;
+        
+    	}
 
 }

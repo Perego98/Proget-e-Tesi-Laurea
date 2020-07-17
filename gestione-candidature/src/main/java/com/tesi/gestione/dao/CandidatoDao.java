@@ -20,6 +20,6 @@ public interface CandidatoDao {
 
 	void triggerActionOnDeleteUser(String username);
 	
-//	byte[] dowloadCurriculum(String codFiscale);
+	List<Candidato> search(String theSearchName);
 	
 }

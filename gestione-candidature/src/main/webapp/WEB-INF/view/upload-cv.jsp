@@ -85,12 +85,30 @@
 	</nav>
 	<!-- END NAV BAR -->
 
-	<h1>Spring MVC file upload example</h1>
 
- <form method="POST" action="${pageContext.request.contextPath}/hr/uploadCV?codFiscale=${candidato.codiceFiscale}" enctype="multipart/form-data">
-    <input type="file" name="file" /><br/>
-    <input type="submit" value="Submit" />
-</form>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2>Caricamento Curriculum</h2>
+		</div>
+		<div class="panel-body">
+
+
+			<label> Curriculum: </label>
+			<div class="input-group">
+				<form method="POST"
+					action="${pageContext.request.contextPath}/hr/uploadCV?codFiscale=${candidato.codiceFiscale}"
+					enctype="multipart/form-data">
+					<input type="file" name="file" /><br /> 
+					<input type="submit"
+						value="Submit" 
+						class="btn btn-primary"/>
+				</form>
+			</div>
+
+		</div>
+	</div>
+
 
 </body>
 </html>

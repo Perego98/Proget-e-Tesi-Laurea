@@ -370,6 +370,17 @@ public class AdminController {
 		return "list-users";	
 	}
 	
+	@GetMapping("/search")
+	public String searchCustomers(@RequestParam("theSearchName") String theSearchName, Model theModel) {
+
+		// search customers from the service
+		List<User> theUsers = userService.search(theSearchName);
+
+		// add the customers to the model
+		theModel.addAttribute("users", theUsers);
+
+		return "list-users";
+	}
 	
 	
 	

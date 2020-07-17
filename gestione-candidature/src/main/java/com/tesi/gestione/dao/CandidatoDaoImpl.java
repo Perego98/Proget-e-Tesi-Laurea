@@ -141,27 +141,33 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		
 	}
 	
-//	@Override
-////	@Transactional
-//	public byte[] dowloadCurriculum(String codFiscale) {
-//		// get the current hibernate session
-//		Session currentSession = sessionFactory.getCurrentSession();
-//
-//		// now retrieve/read from database using CF
-//		Query<byte[]> theQuery = currentSession.createQuery("select curriculum from Candidato where codiceFiscale=:codFiscale",
-//				byte[].class);
-//		theQuery.setParameter("codFiscale", codFiscale);
-//
-//		byte[] thCurriculum = null;
-//
-//		try {
-//			thCurriculum = theQuery.getSingleResult();
-//		} catch (Exception e) {
-//			thCurriculum = null;
-//		}
-//
-//		return thCurriculum;
-//		
-//	}
+	@Override
+	public List<Candidato> search(String theSearchName) {
+
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		Query theQuery = null;
+
+		if (theSearchName != null && theSearchName.trim().length() > 0) {
+
+			// search for firstName or lastName ... case insensitive
+			theQuery = currentSession.createQuery("from Candidato where lower(codiceFiscale) "
+					+ "like :theName or lower(nome) like :theName " + "or lower(cognome) like :theName",
+					Candidato.class);
+			theQuery.setParameter("theName", "%" + theSearchName.toLowerCase() + "%");
+
+		} else {
+			// theSearchName is empty ... so just get all users
+			theQuery = currentSession.createQuery("from Candidato", Candidato.class);
+		}
+
+		// execute query and get result list
+		List<Candidato> candidati = theQuery.getResultList();
+
+		// return the results
+		return candidati;
+
+	}
 
 }

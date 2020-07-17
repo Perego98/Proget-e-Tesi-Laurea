@@ -296,7 +296,6 @@ public class CandidatoServiceImpl implements CandidatoService {
 	@Transactional
 	public void uploadCV(MultipartFile multipartFile, Candidato candidato) {
 
-
 		byte[] bytes;
 		Blob blob = null;
 		try {
@@ -309,14 +308,21 @@ public class CandidatoServiceImpl implements CandidatoService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		if(blob != null) {
+
+		if (blob != null) {
 			candidato.setCurriculum(blob);
-		
+
 			// save candidato
 			candidatoDao.save(candidato);
 		}
 
 	}
+	
+	@Override
+    @Transactional
+    public List<Candidato> search(String theSearchName) {
+
+        return candidatoDao.search(theSearchName);
+    }
 
 }

@@ -33,4 +33,6 @@ public interface UserService extends UserDetailsService {
     void changeSede(CrmSede crmSede, User theUser);
     
     void changeRuolo(CrmRole newRole,  User theUser);
+    
+    List<User> search(String theSearchName);
 }

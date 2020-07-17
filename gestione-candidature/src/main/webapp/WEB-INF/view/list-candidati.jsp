@@ -78,6 +78,17 @@
 
 			</ul>
 
+			<!-- Aggiunta barra di ricerca -->
+			<security:authorize access="hasRole('HR')">
+				<form class="navbar-form navbar-left" action="search">
+					<div class="form-group">
+						<input type="text" class="form-control" name="theSearchName"
+							placeholder="Cerca Candidati">
+					</div>
+					<button type="submit" class="btn btn-default">Cerca</button>
+				</form>
+			</security:authorize>
+
 			<ul class="nav navbar-nav navbar-right">
 
 				<li class="dropdown"><a class="dropdown-toggle"
@@ -122,15 +133,38 @@
 				
 				<c:forEach var="tempCandidato" items="${candidati}">
 				
-					<!-- construct an "update" link with customer id 
-					<c:url var="updateLink" value="/customer/showFormForUpdate">
-						<c:param name="customerId" value="${tempCustomer.id}"/>
-					</c:url> -->
+				
+					<!-- Delete Modal -->
+						<div id="Delete${tempCandidato.codiceFiscale}" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+
+
+
+							<!-- Modal content-->
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">Eliminazione Account</h4>
+						      </div>
+						      <div class="modal-body">
+						        <p>Attenzione! Cliccando Elimina questo account verrà Eliminato</p>
+						        <br>
+						        <p>Una volta eliminato non sarà più possibile recuperare i dati</p>
+						      </div>
+						      <div class="modal-footer">
+						      	<button type="button" class="btn btn-danger" data-dismiss="modal"
+						      	onclick="window.location.href='${pageContext.request.contextPath}/hr/deleteCandidato?codFiscale=${tempCandidato.codiceFiscale}'"
+						      	>Elimina</button>
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+						      </div>
+						    </div>
+						
+						  </div>
+						</div>
+				
+	
 					
-					<!-- construct an "delete" link with customer id -->
-					<c:url var="deleteLink" value="${pageContext.request.contextPath}/admin/deleteUser">
-						<c:param name="userUsername" value="${tempCandidato.codiceFiscale}"/>
-					</c:url> 
+
 						
 				
 					<tr>
@@ -168,7 +202,8 @@
 										<li><a href="${pageContext.request.contextPath}/hr/showMoreInfoCandidato?codFiscale=${tempCandidato.codiceFiscale}">Mostra più Info</a></li>
 										<li class="divider"></li>
 										<li class="dropdown-header">Delete</li>
-										<li><a onclick="if((confirm('Sei sicuro di voler cancellare questo candidato?'))) window.location.href='${pageContext.request.contextPath}/hr/deleteCandidato?codFiscale=${tempCandidato.codiceFiscale}'; return false;" >Delete</a></li>
+										<!--  <li><a onclick="if((confirm('Sei sicuro di voler cancellare questo candidato?'))) window.location.href='${pageContext.request.contextPath}/hr/deleteCandidato?codFiscale=${tempCandidato.codiceFiscale}'; return false;" >Delete</a></li>-->
+										<li><a onclick="#Delete${tempCandidato.codiceFiscale}" data-toggle="modal" data-target="#Delete${tempCandidato.codiceFiscale}">Delete</a></li>
 									</ul>
 								</div>
 							<!-- 

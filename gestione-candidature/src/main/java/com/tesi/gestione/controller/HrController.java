@@ -478,6 +478,18 @@ public class HrController {
 
 	        return "redirect:/hr/showListCandidati";
 	    }
+	 
+		@GetMapping("/search")
+		public String searchCustomers(@RequestParam("theSearchName") String theSearchName, Model theModel) {
+
+			// search customers from the service
+			List<Candidato> theCandidati = candidatoService.search(theSearchName);
+
+			// aggiungo al model
+			theModel.addAttribute("candidati", theCandidati);
+
+			return "list-candidati";
+		}
 	
 	
 	

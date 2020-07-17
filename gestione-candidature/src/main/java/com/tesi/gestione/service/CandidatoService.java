@@ -30,4 +30,6 @@ public interface CandidatoService {
     void changeStato(CrmStato crmStato, Candidato theCandidato);
     
     void changeSupervisore(String userUsername,  Candidato theCandidato);
+    
+    List<Candidato> search(String theSearchName);
 }

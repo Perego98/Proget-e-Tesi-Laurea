@@ -76,7 +76,17 @@
 				</security:authorize>
 
 			</ul>
-
+			
+			<!-- Aggiunta barra di ricerca -->
+			<security:authorize access="hasRole('ADMIN')">
+				<form class="navbar-form navbar-left" action="search">
+					<div class="form-group">
+						<input type="text" class="form-control" name="theSearchName" placeholder="Cerca Utenti">
+					</div>
+					<button type="submit" class="btn btn-default">Cerca</button>
+				</form>
+			</security:authorize>
+			
 			<ul class="nav navbar-nav navbar-right">
 
 				<li class="dropdown"><a class="dropdown-toggle"
@@ -93,6 +103,8 @@
 	</nav>
 	<!-- END NAV BAR -->
 
+
+
 	<!-- Check for registration success -->
 	<c:if test="${registrationSucces != null}">
 		<div class="alert alert-success">
@@ -103,7 +115,25 @@
 	<div class="panel panel-default">
 		<div class="panel-heading"><h2>Elenco Utenti</h2></div>
 		<div  class="panel-body">
-
+		
+		
+		
+		
+		
+		
+			<!--  add a search box 
+            <form:form action="search" method="GET">
+                Search user: <input type="text" name="theSearchName" />
+                
+                <input type="submit" value="Search" class="add-button" />
+            </form:form>
+            -->
+            
+            
+            
+            
+            
+            
 		
 			<table class="table table-striped">
 				<tr>
@@ -121,6 +151,95 @@
 				<!-- loop over and print our customers -->
 				
 				<c:forEach var="tempUser" items="${users}">
+				
+						<!-- MOdal group -->
+	
+						<!-- Delete Modal -->
+						<div id="Delete${tempUser.userName}" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+						
+						    <!-- Modal content-->
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">Eliminazione Account</h4>
+						      </div>
+						      <div class="modal-body">
+						        <p>Attenzione! Cliccando Elimina questo account verrà Eliminato</p>
+						        <br>
+						        <p>Una volta eliminato non sarà più possibile recuperare i dati</p>
+						      </div>
+						      <div class="modal-footer">
+						      	<button type="button" class="btn btn-danger" data-dismiss="modal"
+						      	onclick="window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'"
+						      	>Elimina</button>
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+						      </div>
+						    </div>
+						
+						  </div>
+						</div>
+						
+						<!-- Deactivate Modal -->
+						<div id="myModalDeactivate" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+						
+						    <!-- Modal content-->
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">Attivazione Account</h4>
+						      </div>
+						      <div class="modal-body">
+						        <p>Attenzione! Cliccando conferma questo account verrà attivato</p>
+						        <br>
+						        <p>L'utente che verrà attivato avrà nuovamente accesso alle operazioni consentite <br> in base al ruolo che ricopre</p>
+						        <br>
+						        <p>Ruolo: ${tempUser.roles}</p>
+						        
+						      </div>
+						      <div class="modal-footer">
+						      	<button type="button" class="btn btn-default" data-dismiss="modal"
+						      	onclick="window.location.href='${pageContext.request.contextPath}/admin/activateUser?userUsername=${tempUser.userName}'"
+						      	>Conferma</button>
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+						      </div>
+						    </div>
+						
+						  </div>
+						</div>
+						
+						<!-- Activate Modal -->
+						<div id="myModalActivate" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+						
+						    <!-- Modal content-->
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">Disattivazione Account</h4>
+						      </div>
+						      <div class="modal-body">
+						        <p>Attenzione! Cliccando conferma questo account verrà disattivato</p>
+						        <br>
+						        <p>L'utente che verrà disattivato non potrà più svolgere alcuna azione</p>
+						      </div>
+						      <div class="modal-footer">
+						      	<button type="button" class="btn btn-default" data-dismiss="modal"
+						      	onclick="window.location.href='${pageContext.request.contextPath}/admin/deactivateUser?userUsername=${tempUser.userName}'"
+						      	>Conferma</button>
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+						      </div>
+						    </div>
+						
+						  </div>
+						</div>
+								
+				
+				
+				
+
+				
 				
 					<!-- construct an "update" link with customer id -->
 					<c:url var="updateLink" value="${pageContext.request.contextPath}/admin/showFormForUpdateUser">
@@ -142,15 +261,41 @@
 						<!-- <td> ${tempUser.qualified}</td> -->
 						<td> 
 							<c:if test="${tempUser.qualified == false}">
-								<!-- Account disattivato -->
+								<!-- Account disattivato 
 								<span data-toggle="tooltip" title="Questo account è stato disattivato, clicca per attivare" class="label label-warning" 
 								onclick="if((confirm('Sei sicuro di voler attivare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/activateUser?userUsername=${tempUser.userName}'" >Disattivato</span>
+								-->
+
+								
+
+								<!-- Trigger the modal with a button -->
+								<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModalDeactivate">
+									<span data-toggle="tooltip"
+									title="Questo account è stato disattivato, clicca per attivare"
+									class="label">Disattivato</span>
+								</button>
+								
+								
+								
+							
 							</c:if>
 							
 							<c:if test="${tempUser.qualified == true}">
-								<!-- Account attivato -->
+								<!-- Account attivato 
 								<span data-toggle="tooltip" title="Questo account è attivo, clicca per disattivare" class="label label-success" 
 								onclick="if((confirm('Sei sicuro di voler disattivare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deactivateUser?userUsername=${tempUser.userName}'">Attivo</span>
+							-->
+								<!-- Trigger the modal with a button -->
+								<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModalActivate">
+									<span data-toggle="tooltip"
+									title="Questo account è stato disattivato, clicca per attivare"
+									class="label">Attivo</span>
+								</button>
+								
+								
+								
+							
+							
 							</c:if>
 						
 						</td>
@@ -182,7 +327,20 @@
 										
 										<li class="divider"></li>
 										<li class="dropdown-header">Delete</li>
-										<li><a onclick="if((confirm('Sei sicuro di voler eliminare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'" >Delete</a></li>
+										<!--  <li><a onclick="if((confirm('Sei sicuro di voler eliminare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'" >Delete</a></li> -->
+										<li>
+										
+											<a onclick="#Delete${tempUser.userName}" data-toggle="modal" data-target="#Delete${tempUser.userName}">Delete</a>
+											<!-- Trigger the modal with a button 
+											<button type="button" class="btn" data-toggle="modal" data-target="#myModal">
+												<span data-toggle="tooltip"
+												title="Questo account è stato disattivato, clicca per attivare"
+												class="label">Delete</span>
+											</button>-->
+											
+											
+
+										</li>
 									</ul>
 								</div>
 

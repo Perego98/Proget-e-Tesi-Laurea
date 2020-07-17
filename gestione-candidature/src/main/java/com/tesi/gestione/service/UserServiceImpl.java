@@ -173,4 +173,12 @@ public class UserServiceImpl implements UserService {
 	public List<User> getManager() {
 		return userDao.getManager();
 	}
+	
+	@Override
+    @Transactional
+    public List<User> search(String theSearchName) {
+
+        return userDao.search(theSearchName);
+    }
+	
 }
