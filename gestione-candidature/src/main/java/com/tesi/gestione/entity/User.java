@@ -1,6 +1,7 @@
 package com.tesi.gestione.entity;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -53,6 +55,8 @@ public class User {
 	@JoinColumn(name="sedeAssegnamento")
 	private Sede sedeAssegnamento;
 
+	@OneToMany(mappedBy="utenteRelatore", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	private List<SchedaDiValutazione> schedeValutazione;
 	
 	public User() {
 	}
@@ -157,33 +161,26 @@ public class User {
 		this.qualified = qualified;
 	}
 
-	
-	
+	public List<SchedaDiValutazione> getSchedeValutazione() {
+		return schedeValutazione;
+	}
+
+	public void setSchedeValutazione(List<SchedaDiValutazione> schedeValutazione) {
+		this.schedeValutazione = schedeValutazione;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userName=" + userName + ", password=" + password + ", firstName=" + firstName + ", lastName="
 				+ lastName + ", email=" + email + ", telephone=" + telephone + ", qualified=" + qualified + ", roles="
-				+ roles + ", sedeAssegnamento=" + sedeAssegnamento + "]";
+				+ roles + ", sedeAssegnamento=" + sedeAssegnamento + ", schedeValutazione=" + schedeValutazione + "]";
 	}
 
+	
+	
 
-//	public String getRoleStyleFormat() {
-//		String tempRole = "";
-//		
-//		for(Role theRole : roles) {
-//			String temp = theRole.toString();
-//			temp.replace("ROLE_", "");
-//			tempRole += format(temp) + "  ";
-//		}		
-//		
-//		return tempRole;
-//	}
-//
-//	private String format(String stringToFormat) {
-//
-//		return stringToFormat.substring(0, 1).toUpperCase() + 
-//				stringToFormat.substring(2, stringToFormat.length()).toLowerCase();
-//	}
+
+
 
 
 	

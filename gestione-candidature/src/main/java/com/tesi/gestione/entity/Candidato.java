@@ -1,6 +1,7 @@
 package com.tesi.gestione.entity;
 
 import java.util.Date;
+import java.util.List;
 import java.sql.Blob;
 import java.text.SimpleDateFormat;
 
@@ -12,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -71,6 +73,11 @@ public class Candidato {
 	@OneToOne(cascade=CascadeType.REFRESH)
 	@JoinColumn(name="supervisore")
 	private User supervisore;
+	
+//	cascade=CascadeType.PERSIST, CascadeType.MERGE
+//	CascadeType.DETACH, CascadeType.REFRESH}
+	@OneToMany(mappedBy="candidatoRelativo", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	private List<SchedaDiValutazione> schedeValutazione;
 	
 	public Candidato() {
 	}
@@ -250,14 +257,18 @@ public class Candidato {
 		return supervisore;
 	}
 	
-//	public String getSupervisore() {
-//		if(supervisore != null)
-//			return supervisore.getUserName();
-//		return null;
-//	}
 
 	public void setSupervisore(User supervisore) {
 		this.supervisore = supervisore;
+	}
+
+	
+	public List<SchedaDiValutazione> getSchedeValutazione() {
+		return schedeValutazione;
+	}
+
+	public void setSchedeValutazione(List<SchedaDiValutazione> schedeValutazione) {
+		this.schedeValutazione = schedeValutazione;
 	}
 
 	@Override
