@@ -188,7 +188,7 @@
 							<div class="dropdown">
 									<button class="btn btn-primary dropdown-toggle" type="button"
 										data-toggle="dropdown">
-										Update/Info/Delete <span class="caret"></span>
+										Update / Info / Delete <span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu">
 										<li class="dropdown-header">Update</li>
@@ -196,10 +196,12 @@
 										<li><a href="${pageContext.request.contextPath}/hr/showCandidatoUpdateStatoForm?codFiscale=${tempCandidato.codiceFiscale}">Aggiorna Stato</a></li>
 										<li><a href="${pageContext.request.contextPath}/hr/showCandidatoSetManagerForm?codFiscale=${tempCandidato.codiceFiscale}">Assegna a Manager</a></li>
 										<li><a href="${pageContext.request.contextPath}/hr/showUploadCV?codFiscale=${tempCandidato.codiceFiscale}">Upload CV</a></li>
+										<li class="disabled"><a href="#">Compila Scheda Val.</a></li>
 										
 										<li class="divider"></li>
 										<li class="dropdown-header">Info</li>
 										<li><a href="${pageContext.request.contextPath}/hr/showMoreInfoCandidato?codFiscale=${tempCandidato.codiceFiscale}">Mostra più Info</a></li>
+										<li class="disabled"><a href="#">Mostra Scheda Val.</a></li>
 										<li class="divider"></li>
 										<li class="dropdown-header">Delete</li>
 										<!--  <li><a onclick="if((confirm('Sei sicuro di voler cancellare questo candidato?'))) window.location.href='${pageContext.request.contextPath}/hr/deleteCandidato?codFiscale=${tempCandidato.codiceFiscale}'; return false;" >Delete</a></li>-->

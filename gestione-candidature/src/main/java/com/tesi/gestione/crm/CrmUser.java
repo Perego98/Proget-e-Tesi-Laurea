@@ -5,6 +5,7 @@ import javax.validation.constraints.Size;
 
 import com.tesi.gestione.validation.FieldMatch;
 import com.tesi.gestione.validation.ValidEmail;
+import com.tesi.gestione.validation.ValidUsername;
 
 @FieldMatch.List({
     @FieldMatch(first = "password", second = "matchingPassword", message = "The password fields must match")
@@ -13,6 +14,7 @@ public class CrmUser {
 
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
+	@ValidUsername
 	private String userName;
 
 	@NotNull(message = "is required")

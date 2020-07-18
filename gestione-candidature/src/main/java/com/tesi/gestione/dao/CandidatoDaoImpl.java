@@ -132,7 +132,8 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		Session currentSession = sessionFactory.getCurrentSession();
 		
 		// delete the obj with PK
-		Query theQuery = currentSession.createQuery("update Candidato set stato_candidatura='new' where supervisore=:theUser");
+		Query theQuery = currentSession.createQuery("update Candidato set stato_candidatura='new' where "
+				+ "supervisore=:theUser and (stato_candidatura='assegnato_hr' or stato_candidatura='assegnato_manager')");
 		
 		User theUser = userService.findByUserName(username); 
 		theQuery.setParameter("theUser", theUser);

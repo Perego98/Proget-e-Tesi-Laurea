@@ -32,39 +32,45 @@
 					href="${pageContext.request.contextPath}/">Home</a></li>
 
 				<security:authorize access="hasRole('ADMIN')">
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Admin<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a
-								href="${pageContext.request.contextPath}/admin/showRegistrationForm">Registra
-									Utente</a></li>
-							<li><a
-								href="${pageContext.request.contextPath}/admin/showListUsers">Elenco
-									Utenti</a></li>
-						</ul></li>
+					<c:if test="${user.qualified == true}">
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Admin<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a
+									href="${pageContext.request.contextPath}/admin/showRegistrationForm">Registra
+										Utente</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/admin/showListUsers">Elenco
+										Utenti</a></li>
+							</ul></li>
+					</c:if>
 				</security:authorize>
 
 
 				<security:authorize access="hasRole('HR')">
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">HR<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a
-								href="${pageContext.request.contextPath}/hr/showCandidatoRegistrationForm">Registra
-									Candidato</a></li>
-							<li><a
-								href="${pageContext.request.contextPath}/hr/showListCandidati">Elenco
-									Candidati</a></li>
-						</ul></li>
+					<c:if test="${user.qualified == true}">
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">HR<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a
+									href="${pageContext.request.contextPath}/hr/showCandidatoRegistrationForm">Registra
+										Candidato</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/hr/showListCandidati">Elenco
+										Candidati</a></li>
+							</ul></li>
+					</c:if>
 				</security:authorize>
 
 				<security:authorize access="hasRole('MANAGER')">
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Manager<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Ruolo 1</a></li>
-							<li><a href="#">Ruolo 2</a></li>
-						</ul></li>
+					<c:if test="${user.qualified == true}">
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Manager<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Ruolo 1</a></li>
+								<li><a href="#">Ruolo 2</a></li>
+							</ul></li>
+					</c:if>
 				</security:authorize>
 
 			</ul>
@@ -86,6 +92,12 @@
 	<!-- END NAV BAR -->
 	
 	
+	<!-- Avviso account disattivato -->
+	<c:if test="${user.qualified == false}">
+		<div class="alert alert-warning">
+				<strong>Attenzione!</strong> Questo account è stato disattivato. Contatta l'amministratore per riattivarlo
+		</div>
+	</c:if>
 	
 	<!-- display Account info -->
 	<div class="panel panel-default">

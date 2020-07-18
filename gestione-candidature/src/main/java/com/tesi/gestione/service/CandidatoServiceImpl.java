@@ -288,7 +288,14 @@ public class CandidatoServiceImpl implements CandidatoService {
 	@Transactional
 	public void changeSupervisore(String userUsername, Candidato theCandidato) {
 		theCandidato.setSupervisore(userDao.findByUserName(userUsername));
-		theCandidato.setStatoCandidatura("assegnato_manager");
+		
+		// solo se il candidato era a new lo cambio con assegnato_manager
+		// in caso contrario o ha già un manager/ hr o è in uno stato che non va cambiato in questo modo
+		// perchè è assunto, in valutazione o rigettato
+		if(theCandidato.getStatoCandidatura().contains("new")) {
+			theCandidato.setStatoCandidatura("assegnato_manager");
+		}
+			
 		candidatoDao.save(theCandidato);
 	}
 
