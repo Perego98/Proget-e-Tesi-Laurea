@@ -27,14 +27,19 @@ public class CrmSchedaValutazione {
 	private String idCandidatoRelativo;
 	
 	
+	// Radio button
 	private String idSedePreferita;
 	
+	// radio button (si, no)
 	private String dispSpostamentiTrasferimenti;
 	
+	// ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo')
 	private String dinamicita;
 	
+	// ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo')
 	private String comunicativita;
 	
+	// ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo')
 	private String presenza;
 	
 	@Size(max = 245, message = "Maximum length 245 characters")
@@ -73,6 +78,7 @@ public class CrmSchedaValutazione {
 	
 	private int periodoPreavviso;
 	
+	// radio button (si, no)
 	private String CVAllegato;
 	
 	@ValidData

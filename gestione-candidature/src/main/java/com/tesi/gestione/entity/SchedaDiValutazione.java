@@ -5,6 +5,7 @@ import java.util.Calendar;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 @Entity
 @Table(name = "schedavalutazione")
@@ -23,12 +25,12 @@ public class SchedaDiValutazione {
 	@Column(name="id")
 	private int id;	
 	
-	@ManyToOne
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
 	@JoinColumn(name="utente_relatore")
 	private User utenteRelatore;
 	
 
-	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
 	@JoinColumn(name="candidato_relativo")
 	private Candidato candidatoRelativo;
 	

@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tesi.gestione.crm.CrmCandidato;
 import com.tesi.gestione.crm.CrmCandidatoUpdate;
+import com.tesi.gestione.crm.CrmSchedaValutazione;
 import com.tesi.gestione.crm.CrmStato;
 import com.tesi.gestione.crm.CrmSupervisore;
 import com.tesi.gestione.crm.CrmUser;
@@ -491,6 +492,23 @@ public class HrController {
 			return "list-candidati";
 		}
 	
+		
+		@GetMapping("/showCompilazioneSchedaValutazioneForm")
+		public String showMyCompilazioneSchedaValutazionePage(
+								@RequestParam("codFiscale") String codFiscale, 
+												Model theModel) {
+
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String currentPrincipalName = authentication.getName();
+			
+			theModel.addAttribute("crmSchedaValutazione", new CrmSchedaValutazione());
+			theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
+			theModel.addAttribute("user", userService.findByUserName(currentPrincipalName));
+//			theModel.addAttribute("sedi", candidatoService.getSedi());
+			
+			return "compilazione-scheda-valutazione";
+		}
+		
 	
 	
 }

@@ -10,6 +10,7 @@ import java.util.Calendar;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -74,8 +75,7 @@ public class Candidato {
 	@JoinColumn(name="supervisore")
 	private User supervisore;
 	
-//	cascade=CascadeType.PERSIST, CascadeType.MERGE
-//	CascadeType.DETACH, CascadeType.REFRESH}
+	
 	@OneToMany(mappedBy="candidatoRelativo", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	private List<SchedaDiValutazione> schedeValutazione;
 	

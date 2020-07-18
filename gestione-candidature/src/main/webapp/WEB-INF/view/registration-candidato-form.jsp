@@ -174,7 +174,6 @@
 						</div>
 
 						<!-- Data di nascita -->
-						<!--  TODO: mettere calendario-->
 						<form:errors path="dataNascita" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
 							<span class="input-group-addon"><i

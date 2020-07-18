@@ -30,8 +30,10 @@ import com.tesi.gestione.crm.CrmCandidato;
 import com.tesi.gestione.crm.CrmCandidatoUpdate;
 import com.tesi.gestione.crm.CrmStato;
 import com.tesi.gestione.dao.CandidatoDao;
+import com.tesi.gestione.dao.SedeDao;
 import com.tesi.gestione.dao.UserDao;
 import com.tesi.gestione.entity.Candidato;
+import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 
 @Service
@@ -42,6 +44,9 @@ public class CandidatoServiceImpl implements CandidatoService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private SedeDao sedeDao;
 
 	@Override
 	@Transactional
@@ -331,5 +336,13 @@ public class CandidatoServiceImpl implements CandidatoService {
 
         return candidatoDao.search(theSearchName);
     }
+	
+	@Override
+    @Transactional
+    public List<Sede> getSedi() {
+
+        return sedeDao.getSedi();
+    }
+	
 
 }

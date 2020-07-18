@@ -9,6 +9,7 @@ import com.tesi.gestione.crm.CrmCandidato;
 import com.tesi.gestione.crm.CrmCandidatoUpdate;
 import com.tesi.gestione.crm.CrmStato;
 import com.tesi.gestione.entity.Candidato;
+import com.tesi.gestione.entity.Sede;
 
 
 public interface CandidatoService {
@@ -32,4 +33,6 @@ public interface CandidatoService {
     void changeSupervisore(String userUsername,  Candidato theCandidato);
     
     List<Candidato> search(String theSearchName);
+    
+    List<Sede> getSedi();
 }
