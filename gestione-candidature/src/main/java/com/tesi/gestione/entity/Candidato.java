@@ -76,7 +76,8 @@ public class Candidato {
 	private User supervisore;
 	
 	
-	@OneToMany(mappedBy="candidatoRelativo", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	@OneToMany(mappedBy="candidatoRelativo", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}
+						, fetch = FetchType.LAZY)
 	private List<SchedaDiValutazione> schedeValutazione;
 	
 	public Candidato() {

@@ -55,7 +55,8 @@ public class User {
 	@JoinColumn(name="sedeAssegnamento")
 	private Sede sedeAssegnamento;
 
-	@OneToMany(mappedBy="utenteRelatore", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	@OneToMany(mappedBy="utenteRelatore", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}
+					, fetch = FetchType.LAZY)
 	private List<SchedaDiValutazione> schedeValutazione;
 	
 	public User() {
@@ -169,12 +170,12 @@ public class User {
 		this.schedeValutazione = schedeValutazione;
 	}
 
-	@Override
-	public String toString() {
-		return "User [userName=" + userName + ", password=" + password + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", email=" + email + ", telephone=" + telephone + ", qualified=" + qualified + ", roles="
-				+ roles + ", sedeAssegnamento=" + sedeAssegnamento + ", schedeValutazione=" + schedeValutazione + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "User [userName=" + userName + ", password=" + password + ", firstName=" + firstName + ", lastName="
+//				+ lastName + ", email=" + email + ", telephone=" + telephone + ", qualified=" + qualified + ", roles="
+//				+ roles + ", sedeAssegnamento=" + sedeAssegnamento + ", schedeValutazione=" + schedeValutazione + "]";
+//	}
 
 	
 	

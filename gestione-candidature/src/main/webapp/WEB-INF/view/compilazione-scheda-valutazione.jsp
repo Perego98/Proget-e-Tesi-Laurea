@@ -110,7 +110,7 @@
 
 					<!-- Registration Form -->
 					<h4><span class="label label-default">Supervisore <security:authentication property="principal.username" /></span></h4>
-					<h4><span class="label label-default">Candidato ${candidato}</span></h4>
+					<h4><span class="label label-default">Candidato ${candidato.codiceFiscale} - ${candidato.nome} - ${candidato.cognome}</span></h4>
 					
 					<!-- Elenco di dati del candidato
 					
@@ -144,7 +144,7 @@
 						<div style="margin-bottom: 25px" class="input-group">
 							<label for="sede">Sede:</label>
 							</br>
-							<!-- Print the radiobutton sedi -->
+							
 							<c:forEach var="tempSedi" items="${sedi}">
 								<form:radiobutton path="idSedePreferita" value="${tempSedi.id}"/> ${tempSedi.nameCity}, ${tempSedi.via},  ${tempSedi.civicNumber}, ${tempSedi.cap}.
 								</br>																
@@ -156,7 +156,7 @@
 						<!-- Disponibilità a trasferimenti e Spostamenti -->
 						<form:errors path="dispSpostamentiTrasferimenti" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
-							<label> Tipo di contratto: </label> </br>
+							<label> Disponibilità a Spostamenti e Trasferimenti: </label> </br>
 							<div>
 								<!-- ENUM(si, no) -->
 								<form:radiobutton path="dispSpostamentiTrasferimenti" value="si" />
@@ -169,7 +169,7 @@
 						<!-- Dinamicità -->
 						<form:errors path="dinamicita" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
-							<label> Tipo di contratto: </label> </br>
+							<label> Dinamicità: </label> </br>
 							<div>
 								<!-- ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo') -->
 								<form:radiobutton path="dinamicita" value="insuff" />
@@ -188,7 +188,7 @@
 						<!-- comunicativita -->
 						<form:errors path="comunicativita" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
-							<label> Tipo di contratto: </label> </br>
+							<label> Comunicatività: </label> </br>
 							<div>
 								<!-- ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo') -->
 								<form:radiobutton path="comunicativita" value="insuff" />
@@ -208,7 +208,7 @@
 						<!-- presenza -->
 						<form:errors path="presenza" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
-							<label> Tipo di contratto: </label> </br>
+							<label> Presenza: </label> </br>
 							<div>
 								<!-- ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo') -->
 								<form:radiobutton path="presenza" value="insuff" />
@@ -308,6 +308,7 @@
 						
 						<!-- retribuzioneAttuale -->
 						<form:errors path="retribuzioneAttuale" cssClass="error" />
+						<label> Retribuzione attuale: </label>
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-usd"></i></span>
@@ -315,6 +316,7 @@
 						</div>
 						
 						<!-- retribuzioneRichiesta -->
+						<label> Retribuzione richiesta: </label>
 						<form:errors path="retribuzioneRichiesta" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
 							<span class="input-group-addon"><i
@@ -344,6 +346,7 @@
 						
 						<!-- Data colloquio -->	
 						<form:errors path="dataColloquio" cssClass="error" />
+						<label> Data colloquio: </label>
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-calendar"></i></span>
