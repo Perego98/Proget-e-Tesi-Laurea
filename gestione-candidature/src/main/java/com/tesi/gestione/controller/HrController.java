@@ -504,7 +504,6 @@ public class HrController {
 			theModel.addAttribute("crmSchedaValutazione", new CrmSchedaValutazione());
 			theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
 			theModel.addAttribute("user", userService.findByUserName(currentPrincipalName));
-//			theModel.addAttribute("sedi", candidatoService.getSedi());
 			
 			return "compilazione-scheda-valutazione";
 		}

@@ -109,7 +109,7 @@
 
 
 					<!-- Registration Form -->
-					<h4><span class="label label-default">Supervisore <security:authentication property="principal.username" /></span></h4>
+					<h4><span class="label label-default">Intervistatore ${user.userName}</span></h4>
 					<h4><span class="label label-default">Candidato ${candidato.codiceFiscale} - ${candidato.nome} - ${candidato.cognome}</span></h4>
 					
 					<!-- Elenco di dati del candidato
@@ -137,122 +137,99 @@
 								</div>
 							</div>
 						</div>
-
-
-						<!-- Sede 
-						<form:errors path="idSedePreferita" cssClass="error" />
-						<div style="margin-bottom: 25px" class="input-group">
-							<label for="sede">Sede:</label>
-							</br>
-							
-							<c:forEach var="tempSedi" items="${sedi}">
-								<form:radiobutton path="idSedePreferita" value="${tempSedi.id}"/> ${tempSedi.nameCity}, ${tempSedi.via},  ${tempSedi.civicNumber}, ${tempSedi.cap}.
-								</br>																
-							</c:forEach>
-							
-						</div>-->
 						
-						
-						<!-- Disponibilità a trasferimenti e Spostamenti -->
-						<form:errors path="dispSpostamentiTrasferimenti" cssClass="error" />
+						<!-- Data colloquio -->	
+						<form:errors path="dataColloquio" cssClass="error" />
+						<label> Data colloquio: </label>
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
-							<label> Disponibilità a Spostamenti e Trasferimenti: </label> </br>
-							<div>
-								<!-- ENUM(si, no) -->
-								<form:radiobutton path="dispSpostamentiTrasferimenti" value="si" />
-								Si </br>
-								<form:radiobutton path="dispSpostamentiTrasferimenti" value="no" />
-								No </br>
-						</div>
+							<span class="input-group-addon"><i
+								class="glyphicon glyphicon-calendar"></i></span>
+							<form:input path="dataColloquio" type="date"
+								placeholder="data del colloquio gg/mm/aaaa"
+								class="form-control" />
 						</div>
 
-						<!-- Dinamicità -->
-						<form:errors path="dinamicita" cssClass="error" />
-						<div style="margin-bottom: 25px" class="input-group col-xs-5">
-							<label> Dinamicità: </label> </br>
-							<div>
-								<!-- ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo') -->
-								<form:radiobutton path="dinamicita" value="insuff" />
-								insuff. </br>
-								<form:radiobutton path="dinamicita" value="suff" />
-								suff. </br>
-								<form:radiobutton path="dinamicita" value="discreto" />
-								discreto </br>
-								<form:radiobutton path="dinamicita" value="buono" />
-								buono </br>
-								<form:radiobutton path="dinamicita" value="ottimo" />
-								ottimo </br>
-							</div>
-						</div>
-						
-						<!-- comunicativita -->
-						<form:errors path="comunicativita" cssClass="error" />
-						<div style="margin-bottom: 25px" class="input-group col-xs-5">
-							<label> Comunicatività: </label> </br>
-							<div>
-								<!-- ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo') -->
-								<form:radiobutton path="comunicativita" value="insuff" />
-								insuff. </br>
-								<form:radiobutton path="comunicativita" value="suff" />
-								suff. </br>
-								<form:radiobutton path="comunicativita" value="discreto" />
-								discreto </br>
-								<form:radiobutton path="comunicativita" value="buono" />
-								buono </br>
-								<form:radiobutton path="comunicativita" value="ottimo" />
-								ottimo </br>
-							</div>
-						</div>
-						
-						
 						<!-- presenza -->
 						<form:errors path="presenza" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
-							<label> Presenza: </label> </br>
+							<label> Presenza: </label> <br>
 							<div>
 								<!-- ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo') -->
 								<form:radiobutton path="presenza" value="insuff" />
-								insuff. </br>
+								insuff. &nbsp;
 								<form:radiobutton path="presenza" value="suff" />
-								suff. </br>
+								suff. &nbsp;
 								<form:radiobutton path="presenza" value="discreto" />
-								discreto </br>
+								discreto &nbsp;
 								<form:radiobutton path="presenza" value="buono" />
-								buono </br>
+								buono &nbsp;
 								<form:radiobutton path="presenza" value="ottimo" />
-								ottimo </br>
+								ottimo &nbsp;
+								<br>
+							</div>
+						</div>
+					
+						<!-- comunicativita -->
+						<form:errors path="comunicativita" cssClass="error" />
+						<div style="margin-bottom: 25px" class="input-group col-xs-5">
+							<label> Comunicatività: </label> <br>
+							<div>
+								<!-- ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo') -->
+								<form:radiobutton path="comunicativita" value="insuff" />
+								insuff. &nbsp;
+								<form:radiobutton path="comunicativita" value="suff" />
+								suff. &nbsp;
+								<form:radiobutton path="comunicativita" value="discreto" />
+								discreto &nbsp;
+								<form:radiobutton path="comunicativita" value="buono" />
+								buono &nbsp;
+								<form:radiobutton path="comunicativita" value="ottimo" />
+								ottimo &nbsp;
+								<br>
+							</div>
+						</div>
+						
+						<!-- Dinamicità -->
+						<form:errors path="dinamicita" cssClass="error" />
+						<div style="margin-bottom: 25px" class="input-group col-xs-5">
+							<label> Dinamicità: </label> <br>
+							<div>
+								<!-- ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo') -->
+								<form:radiobutton path="dinamicita" value="insuff" />
+								insuff. &nbsp;
+								<form:radiobutton path="dinamicita" value="suff" />
+								suff. &nbsp;
+								<form:radiobutton path="dinamicita" value="discreto" />
+								discreto &nbsp;
+								<form:radiobutton path="dinamicita" value="buono" />
+								buono &nbsp;
+								<form:radiobutton path="dinamicita" value="ottimo" />
+								ottimo &nbsp;
+								<br>
+							</div>
+						</div>
+		
+						<!-- Disponibilità a trasferimenti e Spostamenti -->
+						<form:errors path="dispSpostamentiTrasferimenti" cssClass="error" />
+						<div style="margin-bottom: 25px" class="input-group col-xs-5">
+							<label> Disponibilità a Spostamenti e Trasferimenti: </label> <br>
+							<div>
+								<!-- ENUM(si, no) -->
+								<form:radiobutton path="dispSpostamentiTrasferimenti" value="si" />
+								Si &nbsp;
+								<form:radiobutton path="dispSpostamentiTrasferimenti" value="no" />
+								No <br>
 							</div>
 						</div>
 
-
-						<!-- esperienzePosizione -->
-						<form:errors path="esperienzePosizione" cssClass="error" />
-						<label> Esperienze in questa posizione: </label>
+						<!-- noteSpostamenti -->
+						<form:errors path="noteSpostamenti" cssClass="error" />
+						<label> Note spostamenti: </label>
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-comment"></i></span>
-							<form:textarea path="esperienzePosizione" rows="5" cols="80"
-								placeholder="esperienze in questa posizione" class="form-control" />
-						</div>
-
-						<!-- esperienzeGenerali -->
-						<form:errors path="esperienzeGenerali" cssClass="error" />
-						<label> Esperienze generali: </label>
-						<div style="margin-bottom: 25px" class="input-group col-xs-5">
-							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-comment"></i></span>
-							<form:textarea path="esperienzeGenerali" rows="5" cols="80"
-								placeholder="esperienze generali" class="form-control" />
-						</div>
-						
-						<!-- motivazioneCambiamento -->
-						<form:errors path="motivazioneCambiamento" cssClass="error" />
-						<label> Motivazione del cambiamento: </label>
-						<div style="margin-bottom: 25px" class="input-group col-xs-5">
-							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-comment"></i></span>
-							<form:textarea path="motivazioneCambiamento" rows="5" cols="60"
-								placeholder="Motivazione del cambiamento" class="form-control" />
+							<form:textarea path="noteSpostamenti" rows="5" cols="60"
+								placeholder="Note spostamenti" class="form-control" />
 						</div>
 						
 						<!-- motivazioneProfessionale -->
@@ -265,17 +242,36 @@
 								placeholder="Motivazione professionale" class="form-control" />
 						</div>
 						
-						<!-- noteSpostamenti -->
-						<form:errors path="noteSpostamenti" cssClass="error" />
-						<label> Note spostamenti: </label>
+						<!-- motivazioneCambiamento -->
+						<form:errors path="motivazioneCambiamento" cssClass="error" />
+						<label> Motivazione del cambiamento: </label>
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-comment"></i></span>
-							<form:textarea path="noteSpostamenti" rows="5" cols="60"
-								placeholder="Note spostamenti" class="form-control" />
+							<form:textarea path="motivazioneCambiamento" rows="5" cols="60"
+								placeholder="Motivazione del cambiamento" class="form-control" />
 						</div>
 						
+						<!-- esperienzeGenerali -->
+						<form:errors path="esperienzeGenerali" cssClass="error" />
+						<label> Esperienze generali: </label>
+						<div style="margin-bottom: 25px" class="input-group col-xs-5">
+							<span class="input-group-addon"><i
+								class="glyphicon glyphicon-comment"></i></span>
+							<form:textarea path="esperienzeGenerali" rows="5" cols="80"
+								placeholder="esperienze generali" class="form-control" />
+						</div>
 						
+						<!-- esperienzePosizione -->
+						<form:errors path="esperienzePosizione" cssClass="error" />
+						<label> Esperienze in questa posizione: </label>
+						<div style="margin-bottom: 25px" class="input-group col-xs-5">
+							<span class="input-group-addon"><i
+								class="glyphicon glyphicon-comment"></i></span>
+							<form:textarea path="esperienzePosizione" rows="5" cols="80"
+								placeholder="esperienze in questa posizione" class="form-control" />
+						</div>
+
 						<!-- lingue -->
 						<form:errors path="noteSpostamenti" cssClass="error" />
 						<label> Lingue: </label>
@@ -306,6 +302,7 @@
 								placeholder="Note" class="form-control" />
 						</div>
 						
+						
 						<!-- retribuzioneAttuale -->
 						<form:errors path="retribuzioneAttuale" cssClass="error" />
 						<label> Retribuzione attuale: </label>
@@ -326,34 +323,25 @@
 						
 						<!-- inquadramentoAttuale -->
 						<form:errors path="inquadramentoAttuale" cssClass="error" />
-						<label> Note: </label>
+						<label> Inquadramento attuale: </label>
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-comment"></i></span>
-							<form:textarea path="inquadramentoAttuale" rows="5" cols="40"
+							<form:input path="inquadramentoAttuale"
 								placeholder="Inquadramento attuale" class="form-control" />
 						</div>
 						
 						<!-- inquadramentoRichiesto -->
 						<form:errors path="inquadramentoRichiesto" cssClass="error" />
-						<label> Note: </label>
+						<label> Inquadramento richiesto: </label>
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-comment"></i></span>
-							<form:textarea path="inquadramentoRichiesto" rows="5" cols="40"
+							<form:input path="inquadramentoRichiesto"
 								placeholder="Inquadramento richiesto" class="form-control" />
 						</div>
 						
-						<!-- Data colloquio -->	
-						<form:errors path="dataColloquio" cssClass="error" />
-						<label> Data colloquio: </label>
-						<div style="margin-bottom: 25px" class="input-group col-xs-5">
-							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-calendar"></i></span>
-							<form:input path="dataColloquio" type="date"
-								placeholder="data del colloquio gg/mm/aaaa"
-								class="form-control" />
-						</div>
+						
 						
 						<!-- Il periodo di preavviso lo prendo da Candidato nel Service-->
 						
