@@ -94,7 +94,7 @@
 	<!-- END NAV BAR -->
 
 	<c:url var="sendLink"
-		value="${pageContext.request.contextPath}/hr/addSchedaValutazione">
+		value="/hr/addSchedaValutazione">
 		<c:param name="userUsername" value="${user.userName}" />
 		<c:param name="codFiscale" value="${candidato.codiceFiscale}" />
 	</c:url>
@@ -208,7 +208,21 @@
 								<br>
 							</div>
 						</div>
-		
+
+						<!-- Sede -->
+						<form:errors path="idSedePreferita" cssClass="error" />
+						<div style="margin-bottom: 25px" class="input-group">
+							<label for="sede">Sede:</label>
+							<br>
+							<!-- Print the radiobutton sedi -->
+							<c:forEach var="tempSedi" items="${sedi}">
+								<form:radiobutton path="idSedePreferita" value="${tempSedi.id}"/> ${tempSedi.nameCity}, ${tempSedi.via},  ${tempSedi.civicNumber}, ${tempSedi.cap}.
+								<br>																
+							</c:forEach>
+														
+						</div>
+						
+								
 						<!-- Disponibilità a trasferimenti e Spostamenti -->
 						<form:errors path="dispSpostamentiTrasferimenti" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">

@@ -42,9 +42,11 @@ import com.tesi.gestione.dao.RoleDao;
 import com.tesi.gestione.dao.SedeDao;
 import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.Role;
+import com.tesi.gestione.entity.SchedaDiValutazione;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.service.CandidatoService;
+import com.tesi.gestione.service.SchedaValutazioneService;
 import com.tesi.gestione.service.UserService;
 
 @Controller
@@ -58,6 +60,9 @@ public class HrController {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private SchedaValutazioneService schedaValutazioneService;
     
     private Logger logger = Logger.getLogger(getClass().getName());
     
@@ -501,13 +506,78 @@ public class HrController {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String currentPrincipalName = authentication.getName();
 			
+
+			
 			theModel.addAttribute("crmSchedaValutazione", new CrmSchedaValutazione());
 			theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
 			theModel.addAttribute("user", userService.findByUserName(currentPrincipalName));
+			theModel.addAttribute("sedi", candidatoService.getSedi());
 			
 			return "compilazione-scheda-valutazione";
 		}
 		
+		
+		@PostMapping("/addSchedaValutazione")
+		public String addSchedaValutazioneForm(
+					@Valid @ModelAttribute("crmSchedaValutazione") CrmSchedaValutazione crmSchedaValutazione, 
+					@RequestParam("codFiscale") String codFiscale, 
+					@RequestParam("userUsername") String userUsername, 
+					BindingResult theBindingResult, 
+					Model theModel) {
+			
+			System.out.println(" ********** RegistrationController -> dentro processRegistrationCandidatoForm()");
+			
+			
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String currentPrincipalName = authentication.getName();
+			
+			
+			// form validation
+		 	if (theBindingResult.hasErrors()){
+		 						
+				theModel.addAttribute("crmSchedaValutazione", new CrmSchedaValutazione());
+				theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
+				theModel.addAttribute("user", userService.findByUserName(currentPrincipalName));
+		 		
+		 		return "compilazione-scheda-valutazione";
+	        }
+
+		 	
+			// check the database if user already exists
+	        SchedaDiValutazione existing = schedaValutazioneService.findByCodiceFiscaleAndUsername(codFiscale, userUsername);
+	        if (existing != null){
+	        	// devo chiedere a UserService (UserDao) l'elenco degli user
+				List<Candidato> theCandidati = candidatoService.getCandidati();
+
+				// devo aggiungerli al model
+				theModel.addAttribute("candidati", theCandidati);
+				
+				theModel.addAttribute("registrationError", "La scheda di valutazione è già presente.");
+
+				logger.warning("Candidato already exists.");
+	        	return "list-candidati";
+	        }
+			// create user account   
+	        
+	        crmSchedaValutazione.setIdCandidatoRelativo(codFiscale);
+	        crmSchedaValutazione.setIdUtenteRelatore(userUsername);
+	        schedaValutazioneService.save(crmSchedaValutazione);
+			
+			
+			
+			
+			logger.info("Successfully created user: " + codFiscale);
+			        
+			// devo chiedere a UserService (UserDao) l'elenco degli user
+			List<Candidato> theCandidati = candidatoService.getCandidati();
+
+			// devo aggiungerli al model
+			theModel.addAttribute("candidati", theCandidati);
+			
+			theModel.addAttribute("registrationSucces", "Candidato registrato con successo.");
+			
+	        return "list-candidati";		
+		}
 	
 	
 }
