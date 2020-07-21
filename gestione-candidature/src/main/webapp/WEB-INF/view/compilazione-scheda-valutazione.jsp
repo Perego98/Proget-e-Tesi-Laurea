@@ -115,10 +115,14 @@
 					<!-- Elenco di dati del candidato
 					
 					action="${pageContext.request.contextPath}/hr/addSchedaValutazione"
+					
+					action="${sendLink}"
+					
+					
 					 -->
 					
 					<form:form
-						action="${sendLink}"
+						action="${pageContext.request.contextPath}/hr/addSchedaValutazione?userUsername=${user.userName}&codFiscale=${candidato.codiceFiscale}"
 						modelAttribute="crmSchedaValutazione" class="form-horizontal">
 
 						<!-- Place for messages: error, alert etc ... -->
@@ -139,7 +143,7 @@
 						</div>
 						
 						<!-- Data colloquio -->	
-						<form:errors path="dataColloquio" cssClass="error" />
+						<form:errors path="dataColloquio" cssClass="error" /> <br>
 						<label> Data colloquio: </label>
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
 							<span class="input-group-addon"><i

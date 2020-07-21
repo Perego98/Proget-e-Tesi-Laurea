@@ -520,10 +520,10 @@ public class HrController {
 		@PostMapping("/addSchedaValutazione")
 		public String addSchedaValutazioneForm(
 					@Valid @ModelAttribute("crmSchedaValutazione") CrmSchedaValutazione crmSchedaValutazione, 
-					@RequestParam("codFiscale") String codFiscale, 
-					@RequestParam("userUsername") String userUsername, 
 					BindingResult theBindingResult, 
-					Model theModel) {
+					Model theModel,
+					@RequestParam("codFiscale") String codFiscale, 
+					@RequestParam("userUsername") String userUsername) {
 			
 			System.out.println(" ********** RegistrationController -> dentro processRegistrationCandidatoForm()");
 			
@@ -535,7 +535,7 @@ public class HrController {
 			// form validation
 		 	if (theBindingResult.hasErrors()){
 		 						
-				theModel.addAttribute("crmSchedaValutazione", new CrmSchedaValutazione());
+		 		theModel.addAttribute("sedi", candidatoService.getSedi());
 				theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
 				theModel.addAttribute("user", userService.findByUserName(currentPrincipalName));
 		 		
@@ -559,8 +559,8 @@ public class HrController {
 	        }
 			// create user account   
 	        
-	        crmSchedaValutazione.setIdCandidatoRelativo(codFiscale);
-	        crmSchedaValutazione.setIdUtenteRelatore(userUsername);
+//	        crmSchedaValutazione.setIdCandidatoRelativo(codFiscale);
+//	        crmSchedaValutazione.setIdUtenteRelatore(userUsername);
 	        schedaValutazioneService.save(crmSchedaValutazione);
 			
 			

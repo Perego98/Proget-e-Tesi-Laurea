@@ -18,13 +18,13 @@ public class CrmSchedaValutazione {
 
 	
 
-	// user
-	@NotNull(message = "is required")
-	private String idUtenteRelatore;
+//	// user
+//	@NotNull(message = "is required")
+//	private String idUtenteRelatore;
 	
-	//candidato
-	@NotNull(message = "is required")
-	private String idCandidatoRelativo;
+//	//candidato
+//	@NotNull(message = "is required")
+//	private String idCandidatoRelativo;
 	
 	
 	// Radio button
@@ -87,21 +87,21 @@ public class CrmSchedaValutazione {
 	public CrmSchedaValutazione() {
 	}
 
-	public String getIdUtenteRelatore() {
-		return idUtenteRelatore;
-	}
-
-	public void setIdUtenteRelatore(String idUtenteRelatore) {
-		this.idUtenteRelatore = idUtenteRelatore;
-	}
-
-	public String getIdCandidatoRelativo() {
-		return idCandidatoRelativo;
-	}
-
-	public void setIdCandidatoRelativo(String idCandidatoRelativo) {
-		this.idCandidatoRelativo = idCandidatoRelativo;
-	}
+//	public String getIdUtenteRelatore() {
+//		return idUtenteRelatore;
+//	}
+//
+//	public void setIdUtenteRelatore(String idUtenteRelatore) {
+//		this.idUtenteRelatore = idUtenteRelatore;
+//	}
+//
+//	public String getIdCandidatoRelativo() {
+//		return idCandidatoRelativo;
+//	}
+//
+//	public void setIdCandidatoRelativo(String idCandidatoRelativo) {
+//		this.idCandidatoRelativo = idCandidatoRelativo;
+//	}
 
 	public String getIdSedePreferita() {
 		return idSedePreferita;
@@ -263,22 +263,22 @@ public class CrmSchedaValutazione {
 		this.dataColloquio = dataColloquio;
 	}
 
-	@Override
-	public String toString() {
-		return "CrmSchedaValutazione [idUtenteRelatore=" + idUtenteRelatore + ", idCandidatoRelativo="
-				+ idCandidatoRelativo + ", idSedePreferita=" + idSedePreferita + ", dispSpostamentiTrasferimenti="
-				+ dispSpostamentiTrasferimenti + ", dinamicita=" + dinamicita + ", comunicativita=" + comunicativita
-				+ ", presenza=" + presenza + ", esperienzePosizione=" + esperienzePosizione + ", esperienzeGenerali="
-				+ esperienzeGenerali + ", motivazioneCambiamento=" + motivazioneCambiamento
-				+ ", motivazioneProfessionale=" + motivazioneProfessionale + ", noteSpostamenti=" + noteSpostamenti
-				+ ", lingue=" + lingue + ", competenza=" + competenza + ", note=" + note + ", retribuzioneAttuale="
-				+ retribuzioneAttuale + ", retribuzioneRichiesta=" + retribuzioneRichiesta + ", inquadramentoAttuale="
-				+ inquadramentoAttuale + ", inquadramentoRichiesto=" + inquadramentoRichiesto + ", periodoPreavviso="
-				+ periodoPreavviso + ", CVAllegato=" + CVAllegato + ", dataColloquio=" + dataColloquio + "]";
-	}
-
-	
-	
+//	@Override
+//	public String toString() {
+//		return "CrmSchedaValutazione [idUtenteRelatore=" + idUtenteRelatore + ", idCandidatoRelativo="
+//				+ idCandidatoRelativo + ", idSedePreferita=" + idSedePreferita + ", dispSpostamentiTrasferimenti="
+//				+ dispSpostamentiTrasferimenti + ", dinamicita=" + dinamicita + ", comunicativita=" + comunicativita
+//				+ ", presenza=" + presenza + ", esperienzePosizione=" + esperienzePosizione + ", esperienzeGenerali="
+//				+ esperienzeGenerali + ", motivazioneCambiamento=" + motivazioneCambiamento
+//				+ ", motivazioneProfessionale=" + motivazioneProfessionale + ", noteSpostamenti=" + noteSpostamenti
+//				+ ", lingue=" + lingue + ", competenza=" + competenza + ", note=" + note + ", retribuzioneAttuale="
+//				+ retribuzioneAttuale + ", retribuzioneRichiesta=" + retribuzioneRichiesta + ", inquadramentoAttuale="
+//				+ inquadramentoAttuale + ", inquadramentoRichiesto=" + inquadramentoRichiesto + ", periodoPreavviso="
+//				+ periodoPreavviso + ", CVAllegato=" + CVAllegato + ", dataColloquio=" + dataColloquio + "]";
+//	}
+//
+//	
+//	
 	
 
 	
