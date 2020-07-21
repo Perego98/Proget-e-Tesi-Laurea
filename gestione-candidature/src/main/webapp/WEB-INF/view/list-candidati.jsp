@@ -22,6 +22,17 @@
 			$('[data-toggle="tooltip"]').tooltip();
 		});
 	</script>
+	
+	<script>
+	$(document).ready(function(){
+	  $("#myInput").on("keyup", function() {
+	    var value = $(this).val().toLowerCase();
+	    $("#myTable tr").filter(function() {
+	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	    });
+	  });
+	});
+	</script>
 
 </head>
 
@@ -78,7 +89,7 @@
 
 			</ul>
 
-			<!-- Aggiunta barra di ricerca -->
+			<!-- Aggiunta barra di ricerca 
 			<security:authorize access="hasRole('HR')">
 				<form class="navbar-form navbar-left" action="search">
 					<div class="form-group">
@@ -87,7 +98,7 @@
 					</div>
 					<button type="submit" class="btn btn-default">Cerca</button>
 				</form>
-			</security:authorize>
+			</security:authorize>-->
 
 			<ul class="nav navbar-nav navbar-right">
 
@@ -122,6 +133,11 @@
 		<div class="panel-heading"><h2>Elenco Candidati</h2></div>
 		<div  class="panel-body">
 		
+		
+		
+			<h4>Ricerca Candidati</h4>
+			<input class="form-control" id="myInput" type="text" placeholder="Cerca..">
+			<br>
 			<table class="table table-striped">
 				<tr>
 					<th>Codice Fiscale</th>
@@ -136,6 +152,7 @@
 				</tr>
 			
 				<!-- loop over and print our customers -->
+				 <tbody id="myTable">
 				
 				<c:forEach var="tempCandidato" items="${candidati}">
 				
@@ -233,7 +250,8 @@
 					</tr>
 				
 				</c:forEach>
-			
+				
+				</tbody>
 			</table>
 		
 		</div>

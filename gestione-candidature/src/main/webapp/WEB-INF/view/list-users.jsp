@@ -23,6 +23,17 @@
 		});
 	</script>
 	
+	<script>
+	$(document).ready(function(){
+	  $("#myInput").on("keyup", function() {
+	    var value = $(this).val().toLowerCase();
+	    $("#myTable tr").filter(function() {
+	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	    });
+	  });
+	});
+	</script>
+	
 </head>
 
 
@@ -77,7 +88,7 @@
 
 			</ul>
 			
-			<!-- Aggiunta barra di ricerca -->
+			<!-- Aggiunta barra di ricerca 
 			<security:authorize access="hasRole('ADMIN')">
 				<form class="navbar-form navbar-left" action="search">
 					<div class="form-group">
@@ -85,7 +96,7 @@
 					</div>
 					<button type="submit" class="btn btn-default">Cerca</button>
 				</form>
-			</security:authorize>
+			</security:authorize>-->
 			
 			<ul class="nav navbar-nav navbar-right">
 
@@ -130,9 +141,9 @@
             -->
             
             
-            
-            
-            
+            <h4>Ricerca Utenti</h4>
+ 			<input class="form-control" id="myInput" type="text" placeholder="Cerca..">
+            <br>
             
 		
 			<table class="table table-striped">
@@ -149,6 +160,7 @@
 				</tr>
 			
 				<!-- loop over and print our customers -->
+				<tbody id="myTable">
 				
 				<c:forEach var="tempUser" items="${users}">
 				
@@ -368,6 +380,7 @@
 				
 				</c:forEach>
 			
+				</tbody>
 			</table>
 		
 		</div>
