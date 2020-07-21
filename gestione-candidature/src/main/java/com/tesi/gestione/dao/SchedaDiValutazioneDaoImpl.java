@@ -61,6 +61,7 @@ public class SchedaDiValutazioneDaoImpl implements SchedaDiValutazioneDao {
 	}
 
 	@Override
+	@Transactional
 	public List<Schedavalutazione> findByCodiceFiscale(String codFiscale) {
 		System.out.println(" ********** RoleDaoImpl -> Entrato in getRoles().");
 		// get the current hibernate session
@@ -80,6 +81,7 @@ public class SchedaDiValutazioneDaoImpl implements SchedaDiValutazioneDao {
 	}
 
 	@Override
+	@Transactional
 	public List<Schedavalutazione> findByUsername(String userUsername) {
 		System.out.println(" ********** RoleDaoImpl -> Entrato in getRoles().");
 		// get the current hibernate session

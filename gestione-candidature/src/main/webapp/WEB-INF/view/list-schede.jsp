@@ -96,15 +96,127 @@
 	
 
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2>Info Candidato</h2></div>
+		<div class="panel-heading"><h2>Elenco schede</h2></div>
 		<div  class="panel-body">
 		
-			
-				<!-- construct an "delete" link with customer id -->
-				<c:url var="deleteLink"
-					value="${pageContext.request.contextPath}/admin/deleteUser">
-					<c:param name="userUsername" value="${candidato.codiceFiscale}" />
-				</c:url>
+		<div class="panel-group" id="accordion">
+			<c:forEach var="tempSchede" items="${schede}">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion"
+									href="#collapse${tempSchede.id}"> ${tempSchede.dataColloquio.getTime()}</a>
+							</h4>
+						</div>
+						<div id="collapse${tempSchede.id}" class="panel-collapse collapse">
+							<div class="panel-body">
+								<table class="table table-striped">
+									<tr>
+										<th>Intervistatore:</th>
+										<td>${tempSchede.utenteRelatore}</td>
+									</tr>
+									
+									
+									<tr>
+										<th>Presenza:</th>
+										<td>${tempSchede.presenza}</td>
+									</tr>
+									<tr>
+										<th>Comunicatività:</th>
+										<td>${tempSchede.comunicativita}</td>
+									</tr>
+									<tr>
+										<th>Dinamicità:</th>
+										<td>${tempSchede.dinamicita}</td>
+									</tr>
+									<tr>
+										<th>Disponibilità spostamneti / trasferimenti:</th>
+										<td>${tempSchede.dispSpostamentiTrasferimenti}</td>
+									</tr>
+									
+									<tr>
+										<th>Note spostamenti / trasferimenti:</th>
+										<td>${tempSchede.noteSpostamenti}</td>
+									</tr>
+									<tr>
+										<th>Motivazioni professionali:</th>
+										<td>${tempSchede.motivazioneProfessionale}</td>
+									</tr>
+									<tr>
+										<th>Motivazioni al cambiamento:</th>
+										<td>${tempSchede.motivazioneCambiamento}</td>
+									</tr>
+									<tr>
+										<th>Esperienze in generale:</th>
+										<td>${tempSchede.esperienzeGenerali}</td>
+									</tr>
+									<tr>
+										<th>Esperienze nella posizione:</th>
+										<td>${tempSchede.esperienzePosizione}</td>
+									</tr>
+									
+									<tr>
+										<th>Lingue:</th>
+										<td>${tempSchede.lingue}</td>
+									</tr>
+									
+									<tr>
+										<th>Competenza:</th>
+										<td>${tempSchede.competenza}</td>
+									</tr>
+									
+									<tr>
+										<th>Note:</th>
+										<td>${tempSchede.note}</td>
+									</tr>
+									
+									
+									<tr>
+										<th>Retribuzione attuale:</th>
+										<td>${tempSchede.retribuzioneAttuale}</td>
+									</tr>
+
+									<tr>
+										<th>Retribuzione richiesta:</th>
+										<td>${tempSchede.retribuzioneRichiesta}</td>
+									</tr>
+
+									
+									<tr>
+										<th>Inquadramento Attuale:</th>
+										<td>${tempSchede.inquadramentoAttuale}</td>
+									</tr>
+
+									<tr>
+										<th>Inquadramento richiesto:</th>
+										<td>${tempSchede.inquadramentoRichiesto}</td>
+									</tr>
+
+									<tr>
+										<th>Periodo di preavviso:</th>
+										<td>${tempSchede.periodoPreavviso}</td>
+									</tr>
+
+									<tr>
+										<th>Curriculum allegato:</th>
+										<td>${tempSchede.CVAllegato}</td>
+									</tr>
+
+
+
+
+								</table>
+							
+							
+							</div>
+						</div>
+					</div>
+
+
+				</c:forEach>
+		</div>
+
+<!--
 
 					<table class="table table-striped">
 						<tr>
@@ -183,7 +295,7 @@
 							<th>Scheda/e di valutazione</th>
 							<td>
 								<c:if test="${schedaVal != null}">
-									<input type="button" value="Mostra"
+									<input type="button" value="Download"
 										onclick="window.location.href='${pageContext.request.contextPath}/hr/showSchedeValutazione?codFiscale=${candidato.codiceFiscale}'; return false;"
 										class="btn btn-primary" />
 								</c:if>
@@ -213,16 +325,16 @@
 
 
 
-
+-->
 		</div>
-	
+			
 			<div class="panel-footer">
 
 				<input type="button" value="Back"
 							onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
 							class="btn btn-primary" />
-							
-			</div>
+						
+		</div>
 	
 	</div>
 </body>

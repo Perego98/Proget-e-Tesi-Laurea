@@ -151,11 +151,13 @@ public class SchedaVAlutazioneServiceImpl implements SchedaValutazioneService {
 	}
 
 	@Override
+	@Transactional
 	public List<Schedavalutazione> findByCodiceFiscale(String codFiscale) {
 		return schedaDiValutazioneDao.findByCodiceFiscale(codFiscale);
 	}
 
 	@Override
+	@Transactional
 	public List<Schedavalutazione> findByUsername(String userUsername) {
 		return schedaDiValutazioneDao.findByUsername(userUsername);
 	}

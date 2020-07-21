@@ -99,14 +99,24 @@
 				<form method="POST"
 					action="${pageContext.request.contextPath}/hr/uploadCV?codFiscale=${candidato.codiceFiscale}"
 					enctype="multipart/form-data">
-					<input type="file" name="file" /><br /> 
-					<input type="submit"
-						value="Submit" 
-						class="btn btn-primary"/>
+					<input type="file" name="file" /><br /> <input type="submit"
+						value="Submit" class="btn btn-primary" />
 				</form>
 			</div>
 
 		</div>
+
+
+
+		<div class="panel-footer">
+
+			<input type="button" value="Back"
+				onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
+				class="btn btn-primary" />
+
+		</div>
+
+
 	</div>
 
 

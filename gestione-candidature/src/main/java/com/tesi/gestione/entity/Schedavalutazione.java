@@ -274,6 +274,14 @@ public class Schedavalutazione {
 	public void setDataColloquio(Calendar dataColloquio) {
 		this.dataColloquio = dataColloquio;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	
 	

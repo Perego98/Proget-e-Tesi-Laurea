@@ -120,6 +120,15 @@ public class HrController {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		
 		
+		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);		
+		
+
+		if(theSchede.isEmpty()) {
+			theModel.addAttribute("schedaVal", null);
+		}else {
+			theModel.addAttribute("schedaVal", theSchede);
+		}
+		
 
 		String formatted = format1.format(theCandidato.getDataNascita().getTime());
 		theModel.addAttribute("dataN", formatted);
@@ -350,97 +359,7 @@ public class HrController {
 		return "info-candidato";
 	}
 	
-	
-	
-	
-	
-	
-	// FILE FILE FILE FILE
-	
-	// Mostra pagine per aggiungere documento
-//	@RequestMapping(value = { "/showUploadCV" }, method = RequestMethod.GET)
-//    public String addDocuments(@RequestParam("codFiscale") String codFiscale, ModelMap model) {
-//		Candidato candidato = candidatoService.findByCodiceFiscale(codFiscale);
-//        model.addAttribute("candidato", candidato);
-// 
-//        FileBucket fileModel = new FileBucket();
-//        model.addAttribute("fileBucket", fileModel);
-// 
-//         
-//        return "upload-cv";
-//    }
-     
-	
-	// Scarica documento
-//    @RequestMapping(value = { "/download-document-{userId}-{docId}" }, method = RequestMethod.GET)
-//    public String downloadDocument(@PathVariable int userId, @PathVariable int docId, HttpServletResponse response) throws IOException {
-//        UserDocument document = userDocumentService.findById(docId);
-//        response.setContentType(document.getType());
-//        response.setContentLength(document.getContent().length);
-//        response.setHeader("Content-Disposition","attachment; filename=\"" + document.getName() +"\"");
-//  
-//        FileCopyUtils.copy(document.getContent(), response.getOutputStream());
-//  
-//        return "redirect:/add-document-"+userId;
-//    }
- 
-	// Cancella documento
-//    @RequestMapping(value = { "/delete-document-{userId}-{docId}" }, method = RequestMethod.GET)
-//    public String deleteDocument(@PathVariable int userId, @PathVariable int docId) {
-//        userDocumentService.deleteById(docId);
-//        return "redirect:/add-document-"+userId;
-//    }
- 
-	// carica documento 
-//    @RequestMapping(value = { "/uploadCV" }, method = RequestMethod.POST)
-//    public String uploadDocument(FileBucket fileBucket, BindingResult result, ModelMap model, @RequestParam("codFiscale") String codFiscale) 
-//    				throws IOException{
-//         
-//        
-//             
-//            System.out.println("Fetching file");
-//             
-//            Candidato candidato = candidatoService.findByCodiceFiscale(codFiscale);
-// 
-//            candidatoService.uploadCV(fileBucket, candidato);
-//           
-//            
-//         // devo chiedere a UserService (UserDao) l'elenco degli user
-//    		List<Candidato> theCandidati = candidatoService.getCandidati();
-//
-//    		// devo aggiungerli al model
-//    		model.addAttribute("candidati", theCandidati);
-//    		
-//    		model.addAttribute("registrationSucces", "Curriculum Uploaded");
-//    		
-//            return "list-candidati";
-//        }
-    
-     
-//    private void saveDocument(FileBucket fileBucket, Candidato candidato) throws IOException{
-//         
-//    	
-//         
-//        MultipartFile multipartFile = fileBucket.getFile();
-//        
-//        
-//	    byte[] bytes = multipartFile.getBytes();
-//	    Blob blob;
-//		try {
-//			blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-//		} catch (SerialException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//        candidato.setCurriculum(blob);
-//        
-//        
-//    }
-	
+
     // MOVED 
 	// Mostra pagine per aggiungere documento
 	@RequestMapping(value = { "/showUploadCV" }, method = RequestMethod.GET)
@@ -465,22 +384,6 @@ public class HrController {
 	        
 	        candidatoService.uploadCV(file, candidato);
 	        
-//	        try {
-//
-//	        	 byte[] bytes = file.getBytes();
-//	        	 Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-//	        
-//	        	 
-//	        	 System.out.println("FILE CREATO !!!!!!!");
-//	        	 
-//	        	 
-//	        } catch (IOException e) {
-//	            e.printStackTrace();
-//	        } catch (SerialException e) {
-//				e.printStackTrace();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
 
 	        return "redirect:/hr/showListCandidati";
 	    }
@@ -595,5 +498,32 @@ public class HrController {
 	        return "list-candidati";		
 		}
 	
+		
+		@GetMapping("/showSchedeValutazione")
+		public String showMySchedeValutazione(@RequestParam("codFiscale") String codFiscale,
+				Model theModel) {
+			
+			
+			List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
+
+			if(theSchede.isEmpty()) {
+				theModel.addAttribute("schede", null);
+			}else {
+				theModel.addAttribute("schede", theSchede);
+				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+				for(Schedavalutazione temp : theSchede) {
+					String formatted = format1.format(temp.getDataColloquio().getTime());
+					theModel.addAttribute("data" + temp.getId(), formatted);
+				}
+				
+			}
+			
+			
+			
+			
+			return "list-schede";		
+		}
+		
+		
 	
 }
