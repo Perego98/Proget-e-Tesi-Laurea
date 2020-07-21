@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao {
 		// get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		// create the user ... finally LOL
+		// save user
 		currentSession.saveOrUpdate(theUser);
 	}
 

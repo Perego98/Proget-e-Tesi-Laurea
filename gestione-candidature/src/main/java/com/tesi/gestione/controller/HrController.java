@@ -42,7 +42,7 @@ import com.tesi.gestione.dao.RoleDao;
 import com.tesi.gestione.dao.SedeDao;
 import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.Role;
-import com.tesi.gestione.entity.SchedaDiValutazione;
+import com.tesi.gestione.entity.Schedavalutazione;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 import com.tesi.gestione.service.CandidatoService;
@@ -544,7 +544,7 @@ public class HrController {
 
 		 	
 			// check the database if user already exists
-	        SchedaDiValutazione existing = schedaValutazioneService.findByCodiceFiscaleAndUsername(codFiscale, userUsername);
+	        Schedavalutazione existing = schedaValutazioneService.findByCodiceFiscaleAndUsername(codFiscale, userUsername);
 	        if (existing != null){
 	        	// devo chiedere a UserService (UserDao) l'elenco degli user
 				List<Candidato> theCandidati = candidatoService.getCandidati();
@@ -554,14 +554,30 @@ public class HrController {
 				
 				theModel.addAttribute("registrationError", "La scheda di valutazione è già presente.");
 
-				logger.warning("Candidato already exists.");
+				logger.warning("Scheda Valutazione already exists.");
 	        	return "list-candidati";
 	        }
 			// create user account   
 	        
-//	        crmSchedaValutazione.setIdCandidatoRelativo(codFiscale);
-//	        crmSchedaValutazione.setIdUtenteRelatore(userUsername);
-	        schedaValutazioneService.save(crmSchedaValutazione);
+	        if(codFiscale != null && userUsername!= null) {
+	        	schedaValutazioneService.save(crmSchedaValutazione, codFiscale, userUsername);
+	        }
+	        else {
+	        	// devo chiedere a UserService (UserDao) l'elenco degli user
+				List<Candidato> theCandidati = candidatoService.getCandidati();
+
+				// devo aggiungerli al model
+				theModel.addAttribute("candidati", theCandidati);
+
+	        	if(codFiscale != null) {
+	        		theModel.addAttribute("registrationError", "Codice fiscale non presente.");
+	        	}
+	        	else {
+	        		theModel.addAttribute("registrationError", "Username non  presente.");
+	        	}
+	        	return "list-candidati";
+	        }
+	        
 			
 			
 			
@@ -574,7 +590,7 @@ public class HrController {
 			// devo aggiungerli al model
 			theModel.addAttribute("candidati", theCandidati);
 			
-			theModel.addAttribute("registrationSucces", "Candidato registrato con successo.");
+			theModel.addAttribute("registrationSucces", "Scheda di valutazione caricata con successo.");
 			
 	        return "list-candidati";		
 		}

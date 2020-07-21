@@ -35,4 +35,8 @@ public interface CandidatoService {
     List<Candidato> search(String theSearchName);
     
     List<Sede> getSedi();
+    
+    boolean CVpresente(String codiceFiscale);
+    
+    int getPeriodoPreavviso(String codiceFiscale);
 }

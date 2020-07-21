@@ -106,16 +106,17 @@ public class CandidatoDaoImpl implements CandidatoDao {
 			theCandidato = null;
 		}
 		
-		long lunghezza = 0;
-		try {
-			lunghezza = theCandidato.length();
-			System.out.println("Lunghezza: " + lunghezza);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if(lunghezza == 0)
-			return null;
+//		long lunghezza = 0;
+//		try {
+//			lunghezza = theCandidato.length();
+//			System.out.println("Lunghezza: " + lunghezza);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		if(lunghezza == 0)
+//			return null;
+
 		
 		return theCandidato;
 		
@@ -169,6 +170,22 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		// return the results
 		return candidati;
 
+	}
+
+	@Override
+	public boolean CVpresente(String codiceFiscale) {
+		
+		Blob tempCur = dowloadCurriculum(codiceFiscale);
+		
+		if(tempCur != null)
+			return true;
+		
+		return false;
+	}
+
+	@Override
+	public int getPeriodoPreavviso(String codiceFiscale) {
+		return findCandidatoByCF(codiceFiscale).getPreavviso();
 	}
 
 }

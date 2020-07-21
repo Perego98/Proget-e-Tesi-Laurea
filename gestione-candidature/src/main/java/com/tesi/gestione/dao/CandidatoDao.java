@@ -22,4 +22,8 @@ public interface CandidatoDao {
 	
 	List<Candidato> search(String theSearchName);
 	
+    boolean CVpresente(String codiceFiscale);
+    
+    int getPeriodoPreavviso(String codiceFiscale);
+	
 }

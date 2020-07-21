@@ -31,10 +31,11 @@ import com.tesi.gestione.crm.CrmCandidatoUpdate;
 import com.tesi.gestione.crm.CrmSchedaValutazione;
 import com.tesi.gestione.crm.CrmStato;
 import com.tesi.gestione.dao.CandidatoDao;
+import com.tesi.gestione.dao.SchedaDiValutazioneDao;
 import com.tesi.gestione.dao.SedeDao;
 import com.tesi.gestione.dao.UserDao;
 import com.tesi.gestione.entity.Candidato;
-import com.tesi.gestione.entity.SchedaDiValutazione;
+import com.tesi.gestione.entity.Schedavalutazione;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 
@@ -42,26 +43,121 @@ import com.tesi.gestione.entity.User;
 public class SchedaVAlutazioneServiceImpl implements SchedaValutazioneService {
 
 	@Autowired
-	private CandidatoDao candidatoDao;
-
+	private SchedaDiValutazioneDao schedaDiValutazioneDao;
+	
 	@Autowired
-	private UserDao userDao;
+	private UserService userService;
+	
+	@Autowired
+	private CandidatoService candidatoService;
 	
 	@Autowired
 	private SedeDao sedeDao;
-
+	
 	@Override
 	@Transactional
-	public void save(CrmSchedaValutazione crmSchedaValutazione) {
+	public Schedavalutazione findByCodiceFiscaleAndUsername(String codFiscale, String userUsername) {
 		
-		
+		return schedaDiValutazioneDao.findByCodiceFiscaleAndUsername(codFiscale, userUsername);
 	}
 
 	@Override
 	@Transactional
-	public SchedaDiValutazione findByCodiceFiscaleAndUsername(String codFiscale, String userUsername) {
-		// TODO Auto-generated method stub
-		return null;
+	public void save(CrmSchedaValutazione crmSchedaValutazione, String codFiscale, String userUsername) {
+		
+		// devo creare una Scheda di valutazione
+		Schedavalutazione tempSDV = new Schedavalutazione();
+		tempSDV.setUtenteRelatore(userService.findByUserName(userUsername));
+		tempSDV.setCandidatoRelativo(candidatoService.findByCodiceFiscale(codFiscale));
+
+		if(crmSchedaValutazione.getIdSedePreferita() != null)
+			tempSDV.setSedePreferita(sedeDao.findSedeByCityID(crmSchedaValutazione.getIdSedePreferita()));
+		
+//		tempSDV.setSedePreferita(sedeDao.findSedeByCityID(Long.parseLong(crmSchedaValutazione.getIdSedePreferita())));
+		
+		
+		tempSDV.setDispSpostamentiTrasferimenti(crmSchedaValutazione.getDispSpostamentiTrasferimenti());
+		tempSDV.setDinamicita(crmSchedaValutazione.getDinamicita());
+		tempSDV.setComunicativita(crmSchedaValutazione.getComunicativita());
+		tempSDV.setComunicativita(crmSchedaValutazione.getComunicativita());
+		tempSDV.setPresenza(crmSchedaValutazione.getPresenza());
+		tempSDV.setEsperienzePosizione(crmSchedaValutazione.getEsperienzePosizione());
+		tempSDV.setEsperienzeGenerali(crmSchedaValutazione.getEsperienzeGenerali());
+		tempSDV.setMotivazioneCambiamento(crmSchedaValutazione.getMotivazioneCambiamento());
+		tempSDV.setMotivazioneProfessionale(crmSchedaValutazione.getMotivazioneProfessionale());
+		tempSDV.setNoteSpostamenti(crmSchedaValutazione.getNoteSpostamenti());
+		tempSDV.setLingue(crmSchedaValutazione.getLingue());
+		tempSDV.setCompetenza(crmSchedaValutazione.getCompetenza());
+		tempSDV.setNote(crmSchedaValutazione.getNote());
+		tempSDV.setRetribuzioneAttuale(crmSchedaValutazione.getRetribuzioneAttuale());
+		tempSDV.setRetribuzioneRichiesta(crmSchedaValutazione.getRetribuzioneRichiesta());
+		tempSDV.setInquadramentoAttuale(crmSchedaValutazione.getInquadramentoAttuale());
+		tempSDV.setInquadramentoRichiesto(crmSchedaValutazione.getInquadramentoRichiesto());
+		
+		
+		// Setto la data
+		// recupero la data in forma String
+
+		String data = crmSchedaValutazione.getDataColloquio();
+		
+		String giorno = null , mese = null, anno = null;
+		if(data.contains("/")) {
+			// Estraggo i giorni
+			giorno = data.substring(0, data.indexOf("/"));
+			mese = data.substring(data.indexOf("/") + 1, data.lastIndexOf("/"));
+			anno = data.substring(data.lastIndexOf("/") + 1, data.length());
+		}
+		else if(data.contains("-")){
+			anno = data.substring(0, data.indexOf("-"));
+			mese = data.substring(data.indexOf("-") + 1, data.lastIndexOf("-"));
+			giorno = data.substring(data.lastIndexOf("-") + 1, data.length());
+		}
+		
+		if(giorno != null && mese != null && anno != null) {
+			int d = Integer.parseInt(giorno);
+			int m = Integer.parseInt(mese);
+			int a = Integer.parseInt(anno);
+
+			// creo la data
+			Calendar calendar = GregorianCalendar.getInstance();
+			calendar.set(Calendar.DAY_OF_MONTH, d);
+			calendar.set(Calendar.MONTH, m - 1);
+			calendar.set(Calendar.YEAR, a);
+			calendar.set(Calendar.MILLISECOND, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+
+			tempSDV.setDataColloquio(calendar);
+		}
+		
+		
+		
+		// SETTARE CV ALLEGATO
+		// cerco con candiadteoService se ho gia un CV allegato
+		if(candidatoService.CVpresente(codFiscale)) {
+			tempSDV.setCVAllegato("si");
+		}
+		else {
+			tempSDV.setCVAllegato("no");
+		}
+		
+		// SETTARE PERIODO PREAVVISO
+		// recupero il periodo di preavviso da candidato con candidatoService
+		tempSDV.setPeriodoPreavviso(candidatoService.getPeriodoPreavviso(codFiscale));
+		
+		
+		schedaDiValutazioneDao.save(tempSDV);
+	}
+
+	@Override
+	public List<Schedavalutazione> findByCodiceFiscale(String codFiscale) {
+		return schedaDiValutazioneDao.findByCodiceFiscale(codFiscale);
+	}
+
+	@Override
+	public List<Schedavalutazione> findByUsername(String userUsername) {
+		return schedaDiValutazioneDao.findByUsername(userUsername);
 	}
 
 	

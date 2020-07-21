@@ -57,7 +57,7 @@ public class User {
 
 	@OneToMany(mappedBy="utenteRelatore", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}
 					, fetch = FetchType.LAZY)
-	private List<SchedaDiValutazione> schedeValutazione;
+	private List<Schedavalutazione> schedeValutazione;
 	
 	public User() {
 	}
@@ -162,11 +162,11 @@ public class User {
 		this.qualified = qualified;
 	}
 
-	public List<SchedaDiValutazione> getSchedeValutazione() {
+	public List<Schedavalutazione> getSchedeValutazione() {
 		return schedeValutazione;
 	}
 
-	public void setSchedeValutazione(List<SchedaDiValutazione> schedeValutazione) {
+	public void setSchedeValutazione(List<Schedavalutazione> schedeValutazione) {
 		this.schedeValutazione = schedeValutazione;
 	}
 

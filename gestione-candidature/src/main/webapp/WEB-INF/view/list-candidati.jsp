@@ -111,6 +111,12 @@
 				<strong>Successo!</strong> ${registrationSucces}
 		</div>
 	</c:if>
+	
+	<c:if test="${registrationError != null}">
+		<div class="alert alert-danger">
+				<strong>Attenzione!</strong> ${registrationError}
+		</div>
+	</c:if>
 
 	<div class="panel panel-default">
 		<div class="panel-heading"><h2>Elenco Candidati</h2></div>

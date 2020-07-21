@@ -78,7 +78,7 @@ public class Candidato {
 	
 	@OneToMany(mappedBy="candidatoRelativo", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}
 						, fetch = FetchType.LAZY)
-	private List<SchedaDiValutazione> schedeValutazione;
+	private List<Schedavalutazione> schedeValutazione;
 	
 	public Candidato() {
 	}
@@ -264,11 +264,11 @@ public class Candidato {
 	}
 
 	
-	public List<SchedaDiValutazione> getSchedeValutazione() {
+	public List<Schedavalutazione> getSchedeValutazione() {
 		return schedeValutazione;
 	}
 
-	public void setSchedeValutazione(List<SchedaDiValutazione> schedeValutazione) {
+	public void setSchedeValutazione(List<Schedavalutazione> schedeValutazione) {
 		this.schedeValutazione = schedeValutazione;
 	}
 

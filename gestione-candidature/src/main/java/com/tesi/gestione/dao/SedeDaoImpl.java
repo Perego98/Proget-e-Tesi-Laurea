@@ -61,6 +61,15 @@ public class SedeDaoImpl implements SedeDao {
 		return sedi;
 	}
 
+	@Override
+	public Sede findSedeByCityID(String idSedePreferita) {
+		Long tempLong = Long.parseLong(idSedePreferita);
+		
+		Sede theSede = findSedeByCityID(tempLong);
+		
+		return theSede;
+	}
+
 
 
 

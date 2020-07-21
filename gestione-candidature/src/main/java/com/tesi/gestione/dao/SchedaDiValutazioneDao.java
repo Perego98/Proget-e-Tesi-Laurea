@@ -1,20 +1,22 @@
-package com.tesi.gestione.service;
+package com.tesi.gestione.dao;
 
-
+import java.sql.Blob;
 import java.util.List;
 
-import com.tesi.gestione.crm.CrmSchedaValutazione;
+import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.Schedavalutazione;
 
-public interface SchedaValutazioneService {
+
+public interface SchedaDiValutazioneDao {
 
 
-    void save(CrmSchedaValutazione crmSchedaValutazione, String codFiscale, String userUsername);
-
+	void save(Schedavalutazione schedaDiValutazione);
+	
 	Schedavalutazione findByCodiceFiscaleAndUsername(String codFiscale, String userUsername);
-   
+	
 	List<Schedavalutazione> findByCodiceFiscale(String codFiscale);
 
 	List<Schedavalutazione> findByUsername(String userUsername);
-   
+
+	
 }

@@ -343,6 +343,16 @@ public class CandidatoServiceImpl implements CandidatoService {
 
         return sedeDao.getSedi();
     }
+
+	@Override
+	public boolean CVpresente(String codiceFiscale) {
+		return candidatoDao.CVpresente(codiceFiscale);
+	}
+
+	@Override
+	public int getPeriodoPreavviso(String codiceFiscale) {
+		return candidatoDao.getPeriodoPreavviso(codiceFiscale);
+	}
 	
 
 }
