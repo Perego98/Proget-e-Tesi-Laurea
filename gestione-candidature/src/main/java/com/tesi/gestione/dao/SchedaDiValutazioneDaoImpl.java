@@ -100,6 +100,21 @@ public class SchedaDiValutazioneDaoImpl implements SchedaDiValutazioneDao {
 		return schedeDiValutazione;
 	}
 
+	@Override
+	public void deleteScheda(String idScheda) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// delete the obj with PK
+		Query theQuery = currentSession.createQuery("delete from Schedavalutazione where id=:idScheda");
+		
+		theQuery.setParameter("idScheda", Integer.parseInt(idScheda));
+		
+		theQuery.executeUpdate();
+	}
+	
+	
+
 
 	
 

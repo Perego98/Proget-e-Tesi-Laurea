@@ -113,10 +113,12 @@
 								<table class="table table-striped">
 									<tr>
 										<th>Intervistatore:</th>
-										<td>${tempSchede.utenteRelatore}</td>
-									</tr>
-									
-									
+										<td>${tempSchede.utenteRelatore.userName}</td>
+									</tr>									
+									<tr>
+										<th>Sede preferita:</th>
+										<td>${tempSchede.sedePreferita.toString()}</td>
+									</tr>									
 									<tr>
 										<th>Presenza:</th>
 										<td>${tempSchede.presenza}</td>
@@ -206,8 +208,14 @@
 
 
 								</table>
-							
-							
+								<c:if
+									test="${tempSchede.utenteRelatore.userName == accountAttuale}">
+									<input type="button" value="Delete"
+										onclick="window.location.href='${pageContext.request.contextPath}/hr/deleteScheda?codScheda=${tempSchede.id}'; return false;"
+										class="btn btn-danger btn-sm" />
+								</c:if>
+
+
 							</div>
 						</div>
 					</div>
@@ -216,116 +224,7 @@
 				</c:forEach>
 		</div>
 
-<!--
 
-					<table class="table table-striped">
-						<tr>
-							<th>Codice Fiscale</th>
-							<td>${candidato.codiceFiscale}</td>
-						</tr>
-						<tr>
-							<th>Nome</th>
-							<td>${candidato.nome}</td>
-						</tr>
-						<tr>
-							<th>Cognome</th>
-							<td>${candidato.cognome}</td>
-						</tr>
-						<tr>
-							<th>Stato candidatura</th>
-							<td>${candidato.statoCandidatura}</td>
-						</tr>
-						<tr>
-							<th>Telefono</th>
-							<td>${candidato.telephone}</td>
-						</tr>
-						<tr>
-							<th>Email</th>
-							<td>${candidato.email}</td>
-						</tr>
-						<tr>
-							<th>Data di nascita</th>
-							<td>${dataN}</td>
-						</tr>
-						<tr>
-							<th>Tipo di contratto</th>
-							<td>${candidato.tipoContratto}</td>
-						</tr>
-						<tr>
-							<th>Ral</th>
-							<td>${candidato.ral}</td>
-						</tr>
-						<tr>
-							<th>Giorni di preavviso</th>
-							<td>${candidato.preavviso}</td>
-						</tr>
-						<tr>
-							<th>Tipo di Offerta</th>
-							<td>${candidato.offerta}</td>
-						</tr>
-						<tr>
-							<th>Canale di Proveninenza</th>
-							<td>${candidato.proveninenza}</td>
-						</tr>
-						<tr>
-							<th>Aspettative</th>
-							<td>${candidato.aspettative}</td>
-						</tr>
-						<tr>
-							<th>Note</th>
-							<td>${candidato.note}</td>
-						</tr>
-						<tr>
-							<th>Curriculum</th>
-							<td>
-								<c:if test="${candidato.curriculum != null}">
-									<input type="button" value="Download"
-										onclick="window.location.href='${pageContext.request.contextPath}/hr/downloadCurriculum?codFiscale=${candidato.codiceFiscale}'; return false;"
-										class="btn btn-primary" />
-								</c:if>
-								
-								<c:if test="${candidato.curriculum == null}">
-									<h4><span data-toggle="tooltip" title="Non è stato caricato nessun curriculum" class="label label-info">Nessun Curriculum</span></h4>
-								</c:if>
-								
-							</td>
-						</tr>
-						
-						<tr>
-							<th>Scheda/e di valutazione</th>
-							<td>
-								<c:if test="${schedaVal != null}">
-									<input type="button" value="Download"
-										onclick="window.location.href='${pageContext.request.contextPath}/hr/showSchedeValutazione?codFiscale=${candidato.codiceFiscale}'; return false;"
-										class="btn btn-primary" />
-								</c:if>
-								
-								<c:if test="${schedaVal == null}">
-									<h4><span data-toggle="tooltip" title="Non è stato caricata nessuna scheda di valutazione" class="label label-info">Nessua Scheda di valutazione</span></h4>
-								</c:if>
-								
-							</td>
-						</tr>
-						
-						<tr>
-							<th>Supervisore</th>
-								<c:if test="${candidato.supervisore != null}">
-									<td>Username: ${candidato.supervisore.userName} - Ruolo: ${candidato.supervisore.roles}</td>
-								</c:if>
-								
-								<c:if test="${candidato.supervisore == null}">
-									<td><h4><span data-toggle="tooltip" title="Nessun Supervisore Associato" class="label label-warning">Attenzione</span></h4></td>
-								</c:if>
-									
-						</tr>
-					</table>
-
-
-
-
-
-
--->
 		</div>
 			
 			<div class="panel-footer">

@@ -162,6 +162,12 @@ public class SchedaVAlutazioneServiceImpl implements SchedaValutazioneService {
 		return schedaDiValutazioneDao.findByUsername(userUsername);
 	}
 
+	@Override
+	@Transactional
+	public void deleteScheda(String idScheda) {
+		schedaDiValutazioneDao.deleteScheda(idScheda);
+	}
+
 	
 
 	

@@ -25,5 +25,7 @@ public interface CandidatoDao {
     boolean CVpresente(String codiceFiscale);
     
     int getPeriodoPreavviso(String codiceFiscale);
+
+	public List<Candidato> getCandidatiAssociati(String userUsername);
 	
 }

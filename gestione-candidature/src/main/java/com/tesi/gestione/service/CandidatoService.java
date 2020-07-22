@@ -39,4 +39,5 @@ public interface CandidatoService {
     boolean CVpresente(String codiceFiscale);
     
     int getPeriodoPreavviso(String codiceFiscale);
+
 }

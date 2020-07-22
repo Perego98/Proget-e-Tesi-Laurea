@@ -16,5 +16,7 @@ public interface SchedaValutazioneService {
 	List<Schedavalutazione> findByCodiceFiscale(String codFiscale);
 
 	List<Schedavalutazione> findByUsername(String userUsername);
+	
+	void deleteScheda(String idScheda);
    
 }

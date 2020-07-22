@@ -378,6 +378,12 @@
 
 				</div>
 
+		<div class="panel-footer">
+			<input type="button" value="Back"
+							onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
+							class="btn btn-primary" />
+		</div>
+
 			</div>
 
 	</div>

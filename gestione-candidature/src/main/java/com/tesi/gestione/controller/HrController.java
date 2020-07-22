@@ -447,19 +447,19 @@ public class HrController {
 
 		 	
 			// check the database if user already exists
-	        Schedavalutazione existing = schedaValutazioneService.findByCodiceFiscaleAndUsername(codFiscale, userUsername);
-	        if (existing != null){
-	        	// devo chiedere a UserService (UserDao) l'elenco degli user
-				List<Candidato> theCandidati = candidatoService.getCandidati();
-
-				// devo aggiungerli al model
-				theModel.addAttribute("candidati", theCandidati);
-				
-				theModel.addAttribute("registrationError", "La scheda di valutazione è già presente.");
-
-				logger.warning("Scheda Valutazione already exists.");
-	        	return "list-candidati";
-	        }
+//	        Schedavalutazione existing = schedaValutazioneService.findByCodiceFiscaleAndUsername(codFiscale, userUsername);
+//	        if (existing != null){
+//	        	// devo chiedere a UserService (UserDao) l'elenco degli user
+//				List<Candidato> theCandidati = candidatoService.getCandidati();
+//
+//				// devo aggiungerli al model
+//				theModel.addAttribute("candidati", theCandidati);
+//				
+//				theModel.addAttribute("registrationError", "La scheda di valutazione è già presente.");
+//
+//				logger.warning("Scheda Valutazione already exists.");
+//	        	return "list-candidati";
+//	        }
 			// create user account   
 	        
 	        if(codFiscale != null && userUsername!= null) {
@@ -518,10 +518,28 @@ public class HrController {
 				
 			}
 			
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String currentPrincipalName = authentication.getName();
+			theModel.addAttribute("accountAttuale", currentPrincipalName);
 			
 			
 			
 			return "list-schede";		
+		}
+		
+		@GetMapping("/deleteScheda")
+		public String deleteScheda(@RequestParam("codScheda") String codScheda, Model theModel) {
+			
+			
+			schedaValutazioneService.deleteScheda(codScheda);
+			
+			List<Candidato> theCandidati = candidatoService.getCandidati();
+			
+			theModel.addAttribute("candidati", theCandidati);
+			
+			theModel.addAttribute("registrationSucces", "Scheda di valutazione cancellata con successo.");
+			
+	        return "list-candidati";	
 		}
 		
 		

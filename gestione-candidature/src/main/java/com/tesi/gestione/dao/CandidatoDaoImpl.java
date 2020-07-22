@@ -188,4 +188,23 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		return findCandidatoByCF(codiceFiscale).getPreavviso();
 	}
 
+	@Override
+	@Transactional
+	public List<Candidato> getCandidatiAssociati(String userUsername) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// create a query
+		Query<Candidato> theQuery = 
+				currentSession.createQuery("from Candidato where supervisore=:theSupervisore", Candidato.class);
+		theQuery.setParameter("theSupervisore", userUsername);
+
+		// execute query and get result list
+		List<Candidato> candidati = theQuery.getResultList();
+		
+		
+		// return the result
+		return candidati;
+	}
+
 }

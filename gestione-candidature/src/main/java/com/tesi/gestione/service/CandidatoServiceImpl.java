@@ -19,6 +19,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.sql.rowset.serial.SerialException;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -146,10 +148,31 @@ public class CandidatoServiceImpl implements CandidatoService {
 		Blob theBlob = candidatoDao.dowloadCurriculum(codFiscale);
 
 		System.out.println("Blob: " + theBlob.toString());
-
-		String fileName = "curriculum_" + codFiscale + ".pdf";
+		
+		// add path
+		// parent component of the dialog
+		JFrame parentFrame = new JFrame();
+		 
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Specify a file to save");   
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		
+		int userSelection = fileChooser.showSaveDialog(parentFrame);
+//		File fileToSave = null;
+		String fileName = "";
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+//		    fileToSave = fileChooser.getSelectedFile();
+//		    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+			fileName = fileChooser.getSelectedFile().getAbsolutePath();
+		}
+		
+		
+		
+//		String fileName = "curriculum_" + codFiscale + ".pdf";
+		fileName += "\\curriculum_" + codFiscale + ".pdf";
 		File file = new File(fileName);
 
+		if (file != null) 
 		if (!file.exists()) {
 
 			try {
@@ -353,6 +376,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 	public int getPeriodoPreavviso(String codiceFiscale) {
 		return candidatoDao.getPeriodoPreavviso(codiceFiscale);
 	}
+
 	
 
 }
