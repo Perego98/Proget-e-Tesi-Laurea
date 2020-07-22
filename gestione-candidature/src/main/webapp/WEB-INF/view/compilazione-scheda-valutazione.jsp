@@ -84,11 +84,7 @@
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Azioni<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<form:form action="${pageContext.request.contextPath}/logout"
-							method="POST">
-							<input class="btn btn-danger navbar-btn" type="submit"
-								value="Logout" />
-						</form:form>
+						<li><a href="${pageContext.request.contextPath}/logout" >Logout</a></li>
 					</ul></li>
 			</ul>
 		</div>
