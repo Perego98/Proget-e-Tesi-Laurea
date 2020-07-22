@@ -54,7 +54,7 @@
 
 
 				<security:authorize access="hasRole('HR')">
-					<li class="dropdown active"><a class="dropdown-toggle"
+					<li class="dropdown "><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">HR<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a
@@ -67,7 +67,7 @@
 				</security:authorize>
 
 				<security:authorize access="hasRole('MANAGER')">
-					<li class="dropdown"><a class="dropdown-toggle"
+					<li class="dropdown active"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">Manager<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a
@@ -124,7 +124,7 @@
 					 -->
 					
 					<form:form
-						action="${pageContext.request.contextPath}/hr/addSchedaValutazione?userUsername=${user.userName}&codFiscale=${candidato.codiceFiscale}"
+						action="${pageContext.request.contextPath}/manager/addSchedaValutazione?userUsername=${user.userName}&codFiscale=${candidato.codiceFiscale}"
 						modelAttribute="crmSchedaValutazione" class="form-horizontal">
 
 						<!-- Place for messages: error, alert etc ... -->
@@ -382,7 +382,7 @@
 
 		<div class="panel-footer">
 			<input type="button" value="Back"
-							onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
+							onclick="window.location.href='${pageContext.request.contextPath}/manager/showListCandidati'; return false;"
 							class="btn btn-primary" />
 		</div>
 

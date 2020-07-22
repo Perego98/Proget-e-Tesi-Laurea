@@ -54,7 +54,7 @@
 
 
 				<security:authorize access="hasRole('HR')">
-					<li class="dropdown active"><a class="dropdown-toggle"
+					<li class="dropdown "><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">HR<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a
@@ -67,7 +67,7 @@
 				</security:authorize>
 
 				<security:authorize access="hasRole('MANAGER')">
-					<li class="dropdown"><a class="dropdown-toggle"
+					<li class="dropdown active"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">Manager<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 						<li><a
@@ -213,7 +213,7 @@
 								<c:if
 									test="${tempSchede.utenteRelatore.userName == accountAttuale}">
 									<input type="button" value="Delete"
-										onclick="window.location.href='${pageContext.request.contextPath}/hr/deleteScheda?codScheda=${tempSchede.id}'; return false;"
+										onclick="window.location.href='${pageContext.request.contextPath}/manager/deleteScheda?codScheda=${tempSchede.id}'; return false;"
 										class="btn btn-danger btn-sm" />
 								</c:if>
 
@@ -232,7 +232,7 @@
 			<div class="panel-footer">
 
 				<input type="button" value="Back"
-							onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
+							onclick="window.location.href='${pageContext.request.contextPath}/manager/showListCandidati'; return false;"
 							class="btn btn-primary" />
 						
 		</div>

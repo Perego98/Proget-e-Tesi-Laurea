@@ -50,7 +50,7 @@
 
 
 				<security:authorize access="hasRole('HR')">
-					<li class="dropdown active"><a class="dropdown-toggle"
+					<li class="dropdown "><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">HR<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a
@@ -63,7 +63,7 @@
 				</security:authorize>
 
 				<security:authorize access="hasRole('MANAGER')">
-					<li class="dropdown"><a class="dropdown-toggle"
+					<li class="dropdown active"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">Manager<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a
@@ -102,54 +102,35 @@
 </c:if>
 	
 <div class="panel panel-default">
-		<div class="panel-heading"><h2>Aggiorna dati <b>${user.userName}</b></h2></div>
+		<div class="panel-heading">
+		<h2>Update stato candidato </h2>
+		<p>${candidato.codiceFiscale} - ${candidato.nome} - ${candidato.cognome}</p>
+						 
+			 
+		</div>
 		<div  class="panel-body">
 
 		
-		<form:form action="${pageContext.request.contextPath}/admin/processUpdateUserForm?userUsername=${user.userName}"  modelAttribute="user" method="POST">
-		
-			<!-- need to associate this data with user username-->
-			<form:hidden path="userName"/>
-		
+		<form:form action="${pageContext.request.contextPath}/manager/processUpdateStatoCandidatoForm?codFiscale=${candidato.codiceFiscale}" modelAttribute="candidato" method="POST">
+				
 			
-					
-
-
-		    <!-- First name -->
-			<form:errors path="firstName" cssClass="error" />
-			<label for="sede">Nome:</label>
-			<div style="margin-bottom: 5px" class="input-group col-xs-5">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-				<form:input path="firstName" placeholder="first name (*)" class="form-control" />
+			<!-- Role -->
+			<form:errors path="statoCandidatura" cssClass="error" />
+			<div style="margin-bottom: 25px" class="input-group col-xs-5">
+				
+				<label for="stato">Stato:</label>
+				</br>
+				
+					<div>
+						<form:radiobutton path="statoCandidatura"
+							value="in_valutazione" />
+						In valutazione </br>
+						<form:radiobutton path="statoCandidatura" value="assunto" />
+						Assunto </br>
+						<form:radiobutton path="statoCandidatura" value="rigettato" />
+						Rigettato </br>
+					</div>							
 			</div>
-			
-			<!-- Last name -->
-			<form:errors path="lastName" cssClass="error" />
-			<label for="sede">Cognome:</label>
-			<div style="margin-bottom: 5px" class="input-group col-xs-5">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-				<form:input path="lastName" placeholder="last name (*)" class="form-control" />
-			</div>
-			
-			<!-- Email -->
-			<form:errors path="email" cssClass="error" />
-			<label for="sede">Email:</label>
-			<div style="margin-bottom: 5px" class="input-group col-xs-5">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span> 
-				<form:input path="email" placeholder="email (*)" class="form-control" />
-			</div>
-			
-			
-			<!-- Telephone -->
-			<form:errors path="telephone" cssClass="error" />
-			<label for="sede">Telefono:</label>
-			<div style="margin-bottom: 5px" class="input-group col-xs-5">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
-				<form:input path="telephone" placeholder="telephone number (*)" class="form-control" />
-			</div>
-
-
-
 
 				<!-- Update Button -->
 			<div style="margin-top: 10px" class="form-group">						
@@ -166,7 +147,7 @@
 			
 		<div class="panel-footer">
 			<input type="button" value="Back"
-							onclick="window.location.href='${pageContext.request.contextPath}/admin/showListUsers'; return false;"
+							onclick="window.location.href='${pageContext.request.contextPath}/manager/showListCandidati'; return false;"
 							class="btn btn-primary" />
 		</div>
 		

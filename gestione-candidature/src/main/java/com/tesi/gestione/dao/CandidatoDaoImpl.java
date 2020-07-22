@@ -197,7 +197,8 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		// create a query
 		Query<Candidato> theQuery = 
 				currentSession.createQuery("from Candidato where supervisore=:theSupervisore", Candidato.class);
-		theQuery.setParameter("theSupervisore", userUsername);
+		User theUser = userService.findByUserName(userUsername);
+		theQuery.setParameter("theSupervisore", theUser);
 
 		// execute query and get result list
 		List<Candidato> candidati = theQuery.getResultList();

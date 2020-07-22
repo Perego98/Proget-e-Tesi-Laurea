@@ -68,7 +68,9 @@
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">Manager<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Ruolo 1</a></li>
+							<li><a
+									href="${pageContext.request.contextPath}/manager/showListCandidati">Elenco
+										Candidati associati</a></li>
 							<li><a href="#">Ruolo 2</a></li>
 						</ul></li>
 				</security:authorize>
@@ -214,8 +216,14 @@
 					</form:form>
 
 				</div>
-
+			<div class="panel-footer">
+				<input type="button" value="Back"
+					onclick="window.location.href='${pageContext.request.contextPath}/admin/showListUsers'; return false;"
+					class="btn btn-primary" />
 			</div>
+		</div>
+			
+		
 </div>
 
 </body>

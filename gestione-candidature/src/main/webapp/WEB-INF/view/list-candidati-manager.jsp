@@ -66,7 +66,7 @@
 
 
 				<security:authorize access="hasRole('HR')">
-					<li class="dropdown active"><a class="dropdown-toggle"
+					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">HR<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a
@@ -79,10 +79,12 @@
 				</security:authorize>
 
 				<security:authorize access="hasRole('MANAGER')">
-					<li class="dropdown"><a class="dropdown-toggle"
+					<li class="dropdown active"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">Manager<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Ruolo 1</a></li>
+							<li><a
+									href="${pageContext.request.contextPath}/manager/showListCandidati">Elenco
+										Candidati associati</a></li>
 							<li><a href="#">Ruolo 2</a></li>
 						</ul></li>
 				</security:authorize>
@@ -155,41 +157,7 @@
 				 <tbody id="myTable">
 				
 				<c:forEach var="tempCandidato" items="${candidati}">
-				
-				
-					<!-- Delete Modal -->
-						<div id="Delete${tempCandidato.codiceFiscale}" class="modal fade" role="dialog">
-						  <div class="modal-dialog">
 
-
-
-							<!-- Modal content-->
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal">&times;</button>
-						        <h4 class="modal-title">Eliminazione Account</h4>
-						      </div>
-						      <div class="modal-body">
-						        <p>Attenzione! Cliccando Elimina questo account verrà Eliminato</p>
-						        <br>
-						        <p>Una volta eliminato non sarà più possibile recuperare i dati</p>
-						      </div>
-						      <div class="modal-footer">
-						      	<button type="button" class="btn btn-danger" data-dismiss="modal"
-						      	onclick="window.location.href='${pageContext.request.contextPath}/hr/deleteCandidato?codFiscale=${tempCandidato.codiceFiscale}'"
-						      	>Elimina</button>
-						        <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
-						      </div>
-						    </div>
-						
-						  </div>
-						</div>
-				
-	
-					
-
-						
-				
 					<tr>
 						<td> ${tempCandidato.codiceFiscale}</td>
 						<td> ${tempCandidato.nome}</td>
@@ -215,36 +183,16 @@
 									</button>
 									<ul class="dropdown-menu">
 										<li class="dropdown-header">Update</li>
-										<li><a href="${pageContext.request.contextPath}/hr/showCandidatoUpdateForm?codFiscale=${tempCandidato.codiceFiscale}">Aggiorna Info</a></li>
-										<li><a href="${pageContext.request.contextPath}/hr/showCandidatoUpdateStatoForm?codFiscale=${tempCandidato.codiceFiscale}">Aggiorna Stato</a></li>
-										<li><a href="${pageContext.request.contextPath}/hr/showCandidatoSetManagerForm?codFiscale=${tempCandidato.codiceFiscale}">Assegna a Manager</a></li>
-										<li><a href="${pageContext.request.contextPath}/hr/showUploadCV?codFiscale=${tempCandidato.codiceFiscale}">Upload CV</a></li>
-										<li><a href="${pageContext.request.contextPath}/hr/showCompilazioneSchedaValutazioneForm?codFiscale=${tempCandidato.codiceFiscale}">Compila Scheda Val.</a></li>
+										<li><a href="${pageContext.request.contextPath}/manager/showCandidatoUpdateStatoForm?codFiscale=${tempCandidato.codiceFiscale}">Aggiorna Stato</a></li>
+										<li><a href="${pageContext.request.contextPath}/manager/showCompilazioneSchedaValutazioneForm?codFiscale=${tempCandidato.codiceFiscale}">Compila Scheda Val.</a></li>
 										
 										<li class="divider"></li>
 										<li class="dropdown-header">Info</li>
-										<li><a href="${pageContext.request.contextPath}/hr/showMoreInfoCandidato?codFiscale=${tempCandidato.codiceFiscale}">Mostra più Info</a></li>
-										<li class="divider"></li>
-										<li class="dropdown-header">Delete</li>
-										<!--  <li><a onclick="if((confirm('Sei sicuro di voler cancellare questo candidato?'))) window.location.href='${pageContext.request.contextPath}/hr/deleteCandidato?codFiscale=${tempCandidato.codiceFiscale}'; return false;" >Delete</a></li>-->
-										<li><a onclick="#Delete${tempCandidato.codiceFiscale}" data-toggle="modal" data-target="#Delete${tempCandidato.codiceFiscale}">Delete</a></li>
+										<li><a href="${pageContext.request.contextPath}/manager/showMoreInfoCandidato?codFiscale=${tempCandidato.codiceFiscale}">Mostra più Info</a></li>
+										
 									</ul>
 								</div>
-							<!-- 
-							<div class="btn-group-vertical btn-group-xs">
-								<input type="button" value="Update"
-												onclick="window.location.href='${updateLink}'; return false;"
-												class="btn btn-success"/>
-						
-								<input type="button" value="Show more info"
-												onclick="window.location.href='${pageContext.request.contextPath}/hr/showMoreInfoCandidato?codFiscale=${tempCandidato.codiceFiscale}'; return false;"
-												class="btn btn-info"/>
-												
-								<input type="button" value="Delete"
-												onclick="if((confirm('Sei sicuro di voler cancellare questo candidato?'))) window.location.href='${pageContext.request.contextPath}/hr/deleteCandidato?codFiscale=${tempCandidato.codiceFiscale}'; return false;"
-												class="btn btn-danger"/>
-							</div>
-							 -->
+							
 						</td>
 						
 					</tr>
@@ -256,11 +204,6 @@
 		
 		</div>
 
-		<!--<div class="panel-footer">
-			<input type="button" value="Torna alla Home"
-				onclick="window.location.href='${pageContext.request.contextPath}/'; return false;"
-				class="btn btn-primary" />
-		</div>-->
 	</div>
 
 

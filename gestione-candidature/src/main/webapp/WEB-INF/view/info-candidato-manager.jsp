@@ -54,7 +54,7 @@
 
 
 				<security:authorize access="hasRole('HR')">
-					<li class="dropdown active"><a class="dropdown-toggle"
+					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">HR<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a
@@ -67,7 +67,7 @@
 				</security:authorize>
 
 				<security:authorize access="hasRole('MANAGER')">
-					<li class="dropdown"><a class="dropdown-toggle"
+					<li class="dropdown active"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">Manager<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a
@@ -170,7 +170,7 @@
 							<td>
 								<c:if test="${candidato.curriculum != null}">
 									<input type="button" value="Download"
-										onclick="window.location.href='${pageContext.request.contextPath}/hr/downloadCurriculum?codFiscale=${candidato.codiceFiscale}'; return false;"
+										onclick="window.location.href='${pageContext.request.contextPath}/manager/downloadCurriculum?codFiscale=${candidato.codiceFiscale}'; return false;"
 										class="btn btn-primary" />
 								</c:if>
 								
@@ -186,7 +186,7 @@
 							<td>
 								<c:if test="${schedaVal != null}">
 									<input type="button" value="Mostra"
-										onclick="window.location.href='${pageContext.request.contextPath}/hr/showSchedeValutazione?codFiscale=${candidato.codiceFiscale}'; return false;"
+										onclick="window.location.href='${pageContext.request.contextPath}/manager/showSchedeValutazione?codFiscale=${candidato.codiceFiscale}'; return false;"
 										class="btn btn-primary" />
 								</c:if>
 								
@@ -221,7 +221,7 @@
 			<div class="panel-footer">
 
 				<input type="button" value="Back"
-							onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
+							onclick="window.location.href='${pageContext.request.contextPath}/manager/showListCandidati'; return false;"
 							class="btn btn-primary" />
 							
 			</div>

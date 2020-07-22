@@ -82,7 +82,9 @@
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">Manager<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Ruolo 1</a></li>
+							<li><a
+									href="${pageContext.request.contextPath}/manager/showListCandidati">Elenco
+										Candidati associati</a></li>
 							<li><a href="#">Ruolo 2</a></li>
 						</ul></li>
 				</security:authorize>

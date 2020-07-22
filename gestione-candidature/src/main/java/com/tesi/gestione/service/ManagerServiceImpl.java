@@ -39,7 +39,7 @@ import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
 
 @Service
-public class MasterServiceImpl implements MasterService {
+public class ManagerServiceImpl implements ManagerService {
 
 	@Autowired
 	private CandidatoDao candidatoDao;

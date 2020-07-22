@@ -99,15 +99,6 @@ public class HrController {
 		return "redirect:/hr/showListCandidati";		
 	}
 	
-//	@GetMapping("/downloadCurriculum")
-//	public String downloadCurriculum(@RequestParam("codFiscale") String codFiscale) {
-//		
-//		System.out.println("!!!!!! *C*C*C*C*C*C*C* Hr Controller Download Curriculum " + codFiscale);
-//		
-//		candidatoService.dowloadCurriculum(codFiscale);
-//		
-//		return "redirect:/hr/showListCandidati";		
-//	}
 	
 	@GetMapping("/showMoreInfoCandidato")
 	public String showMoreInfoCandidato(@RequestParam("codFiscale") String codFiscale, 
@@ -269,7 +260,6 @@ public class HrController {
 	}
 	
 	
-	
 	@GetMapping("/showCandidatoUpdateStatoForm")
 	public String showMyCandidatoUpdateStatoPage(@RequestParam("codFiscale") String codFiscale, 
 											Model theModel) {
@@ -299,7 +289,7 @@ public class HrController {
 		// devo aggiungerli al model
 		theModel.addAttribute("candidati", theCandidati);
 		
-		theModel.addAttribute("registrationSucces", "Candidato registrato con successo.");
+		theModel.addAttribute("registrationSucces", "Stato del candidato aggiornato con successo.");
 		
         return "list-candidati";		
 	}
@@ -339,12 +329,7 @@ public class HrController {
         return "list-candidati";		
 	}
 	
-	
-	
-	
-	
-	
-	
+
 	@GetMapping("/downloadCurriculum")
 	public String downloadCurriculum(@RequestParam("codFiscale") String codFiscale,
 									Model theModel) {
@@ -353,6 +338,15 @@ public class HrController {
 		
 		candidatoService.dowloadCurriculum(codFiscale);
 		
+		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);		
+		
+
+		if(theSchede.isEmpty()) {
+			theModel.addAttribute("schedaVal", null);
+		}else {
+			theModel.addAttribute("schedaVal", theSchede);
+		}
+		
 		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
 		theModel.addAttribute("candidato", theCandidato);
 		
@@ -360,7 +354,6 @@ public class HrController {
 	}
 	
 
-    // MOVED 
 	// Mostra pagine per aggiungere documento
 	@RequestMapping(value = { "/showUploadCV" }, method = RequestMethod.GET)
     public String addDocuments(@RequestParam("codFiscale") String codFiscale, ModelMap model) {
@@ -373,7 +366,7 @@ public class HrController {
     }
 	
 	 @PostMapping("/uploadCV") //new annotation since 4.3
-	    public String singleFileUpload(@RequestParam("file") MultipartFile file, 
+    public String singleFileUpload(@RequestParam("file") MultipartFile file, 
 	    		@RequestParam("codFiscale") String codFiscale) {
 
 	        if (file.isEmpty()) {
@@ -389,7 +382,7 @@ public class HrController {
 	    }
 	 
 		@GetMapping("/search")
-		public String searchCustomers(@RequestParam("theSearchName") String theSearchName, Model theModel) {
+	public String searchCustomers(@RequestParam("theSearchName") String theSearchName, Model theModel) {
 
 			// search customers from the service
 			List<Candidato> theCandidati = candidatoService.search(theSearchName);
@@ -401,52 +394,48 @@ public class HrController {
 		}
 	
 		
-		@GetMapping("/showCompilazioneSchedaValutazioneForm")
-		public String showMyCompilazioneSchedaValutazionePage(
-								@RequestParam("codFiscale") String codFiscale, 
-												Model theModel) {
+	@GetMapping("/showCompilazioneSchedaValutazioneForm")
+	public String showMyCompilazioneSchedaValutazionePage(@RequestParam("codFiscale") String codFiscale,
+			Model theModel) {
 
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String currentPrincipalName = authentication.getName();
-			
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
 
-			
-			theModel.addAttribute("crmSchedaValutazione", new CrmSchedaValutazione());
-			theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
-			theModel.addAttribute("user", userService.findByUserName(currentPrincipalName));
-			theModel.addAttribute("sedi", candidatoService.getSedi());
-			
-			return "compilazione-scheda-valutazione";
-		}
-		
+		theModel.addAttribute("crmSchedaValutazione", new CrmSchedaValutazione());
+		theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
+		theModel.addAttribute("user", userService.findByUserName(currentPrincipalName));
+		theModel.addAttribute("sedi", candidatoService.getSedi());
+
+		return "compilazione-scheda-valutazione";
+	}
 		
 		@PostMapping("/addSchedaValutazione")
-		public String addSchedaValutazioneForm(
-					@Valid @ModelAttribute("crmSchedaValutazione") CrmSchedaValutazione crmSchedaValutazione, 
-					BindingResult theBindingResult, 
-					Model theModel,
-					@RequestParam("codFiscale") String codFiscale, 
-					@RequestParam("userUsername") String userUsername) {
-			
-			System.out.println(" ********** RegistrationController -> dentro processRegistrationCandidatoForm()");
-			
-			
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String currentPrincipalName = authentication.getName();
-			
-			
-			// form validation
-		 	if (theBindingResult.hasErrors()){
-		 						
-		 		theModel.addAttribute("sedi", candidatoService.getSedi());
-				theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
-				theModel.addAttribute("user", userService.findByUserName(currentPrincipalName));
-		 		
-		 		return "compilazione-scheda-valutazione";
-	        }
+	public String addSchedaValutazioneForm(
+				@Valid @ModelAttribute("crmSchedaValutazione") CrmSchedaValutazione crmSchedaValutazione, 
+				BindingResult theBindingResult, 
+				Model theModel,
+				@RequestParam("codFiscale") String codFiscale, 
+				@RequestParam("userUsername") String userUsername) {
+		
+		System.out.println(" ********** RegistrationController -> dentro processRegistrationCandidatoForm()");
+		
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		
+		// form validation
+	 	if (theBindingResult.hasErrors()){
+	 						
+	 		theModel.addAttribute("sedi", candidatoService.getSedi());
+			theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
+			theModel.addAttribute("user", userService.findByUserName(currentPrincipalName));
+	 		
+	 		return "compilazione-scheda-valutazione";
+        }
 
-		 	
-			// check the database if user already exists
+	 	
+		// check the database if user already exists
 //	        Schedavalutazione existing = schedaValutazioneService.findByCodiceFiscaleAndUsername(codFiscale, userUsername);
 //	        if (existing != null){
 //	        	// devo chiedere a UserService (UserDao) l'elenco degli user
@@ -460,88 +449,87 @@ public class HrController {
 //				logger.warning("Scheda Valutazione already exists.");
 //	        	return "list-candidati";
 //	        }
-			// create user account   
-	        
-	        if(codFiscale != null && userUsername!= null) {
-	        	schedaValutazioneService.save(crmSchedaValutazione, codFiscale, userUsername);
-	        }
-	        else {
-	        	// devo chiedere a UserService (UserDao) l'elenco degli user
-				List<Candidato> theCandidati = candidatoService.getCandidati();
-
-				// devo aggiungerli al model
-				theModel.addAttribute("candidati", theCandidati);
-
-	        	if(codFiscale != null) {
-	        		theModel.addAttribute("registrationError", "Codice fiscale non presente.");
-	        	}
-	        	else {
-	        		theModel.addAttribute("registrationError", "Username non  presente.");
-	        	}
-	        	return "list-candidati";
-	        }
-	        
-			
-			
-			
-			
-			logger.info("Successfully created user: " + codFiscale);
-			        
-			// devo chiedere a UserService (UserDao) l'elenco degli user
+		// create user account   
+        
+        if(codFiscale != null && userUsername!= null) {
+        	schedaValutazioneService.save(crmSchedaValutazione, codFiscale, userUsername);
+        }
+        else {
+        	// devo chiedere a UserService (UserDao) l'elenco degli user
 			List<Candidato> theCandidati = candidatoService.getCandidati();
 
 			// devo aggiungerli al model
 			theModel.addAttribute("candidati", theCandidati);
-			
-			theModel.addAttribute("registrationSucces", "Scheda di valutazione caricata con successo.");
-			
-	        return "list-candidati";		
-		}
-	
-		
-		@GetMapping("/showSchedeValutazione")
-		public String showMySchedeValutazione(@RequestParam("codFiscale") String codFiscale,
-				Model theModel) {
-			
-			
-			List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
 
-			if(theSchede.isEmpty()) {
-				theModel.addAttribute("schede", null);
-			}else {
-				theModel.addAttribute("schede", theSchede);
-				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-				for(Schedavalutazione temp : theSchede) {
-					String formatted = format1.format(temp.getDataColloquio().getTime());
-					theModel.addAttribute("data" + temp.getId(), formatted);
-				}
-				
+        	if(codFiscale != null) {
+        		theModel.addAttribute("registrationError", "Codice fiscale non presente.");
+        	}
+        	else {
+        		theModel.addAttribute("registrationError", "Username non  presente.");
+        	}
+        	return "list-candidati";
+        }
+        
+		
+		
+		
+		
+		logger.info("Successfully created user: " + codFiscale);
+		        
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<Candidato> theCandidati = candidatoService.getCandidati();
+
+		// devo aggiungerli al model
+		theModel.addAttribute("candidati", theCandidati);
+		
+		theModel.addAttribute("registrationSucces", "Scheda di valutazione caricata con successo.");
+		
+        return "list-candidati";		
+	}
+
+	
+	@GetMapping("/showSchedeValutazione")
+	public String showMySchedeValutazione(@RequestParam("codFiscale") String codFiscale,
+			Model theModel) {
+		
+		
+		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
+
+		if(theSchede.isEmpty()) {
+			theModel.addAttribute("schede", null);
+		}else {
+			theModel.addAttribute("schede", theSchede);
+			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+			for(Schedavalutazione temp : theSchede) {
+				String formatted = format1.format(temp.getDataColloquio().getTime());
+				theModel.addAttribute("data" + temp.getId(), formatted);
 			}
 			
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String currentPrincipalName = authentication.getName();
-			theModel.addAttribute("accountAttuale", currentPrincipalName);
-			
-			
-			
-			return "list-schede";		
 		}
 		
-		@GetMapping("/deleteScheda")
-		public String deleteScheda(@RequestParam("codScheda") String codScheda, Model theModel) {
-			
-			
-			schedaValutazioneService.deleteScheda(codScheda);
-			
-			List<Candidato> theCandidati = candidatoService.getCandidati();
-			
-			theModel.addAttribute("candidati", theCandidati);
-			
-			theModel.addAttribute("registrationSucces", "Scheda di valutazione cancellata con successo.");
-			
-	        return "list-candidati";	
-		}
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		theModel.addAttribute("accountAttuale", currentPrincipalName);
 		
 		
+		
+		return "list-schede";		
+	}
+	
+	@GetMapping("/deleteScheda")
+	public String deleteScheda(@RequestParam("codScheda") String codScheda, Model theModel) {
+		
+		
+		schedaValutazioneService.deleteScheda(codScheda);
+		
+		List<Candidato> theCandidati = candidatoService.getCandidati();
+		
+		theModel.addAttribute("candidati", theCandidati);
+		
+		theModel.addAttribute("registrationSucces", "Scheda di valutazione cancellata con successo.");
+		
+        return "list-candidati";	
+	}
+	
 	
 }

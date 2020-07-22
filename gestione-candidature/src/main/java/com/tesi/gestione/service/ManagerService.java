@@ -12,7 +12,7 @@ import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.Sede;
 
 
-public interface MasterService {
+public interface ManagerService {
 
 	List<Candidato> getCandidatiAssociati(String userUsername);
 	
