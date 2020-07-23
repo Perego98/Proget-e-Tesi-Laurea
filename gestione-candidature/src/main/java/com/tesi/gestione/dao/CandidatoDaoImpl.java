@@ -229,6 +229,94 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		return numUser;
 	}
 
+	@Override
+	@Transactional
+	public List<Candidato> getCandidati(int firstResult, int maxResult) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// create a query
+		Query<Candidato> theQuery = 
+				currentSession.createQuery("from Candidato", Candidato.class);
+		
+		// set max e min result number
+		theQuery.setFirstResult(firstResult);
+		theQuery.setMaxResults(maxResult);
+		
+		// execute query and get result list
+		List<Candidato> candidati = theQuery.getResultList();
+
+		// return the result
+		return candidati;
+	}
+
+	@Override
+	@Transactional
+	public int totCandidati() {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// now retrieve/read from database using CF
+		Query<Long> theQuery = currentSession.createQuery("SELECT COUNT(*) FROM Candidato", Long.class);
+		
+		long numCandidati = 0l;
+		
+		try {
+			numCandidati = theQuery.getSingleResult();
+		} catch (Exception e) {
+			numCandidati = 0l;
+		}
+		
+		return (int) numCandidati;
+	}
+
+	@Override
+	@Transactional
+	public List<Candidato> getCandidatiAssociati(String userUsername, int firstResult, int maxResult) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// create a query
+		Query<Candidato> theQuery = 
+				currentSession.createQuery("from Candidato where supervisore=:theSupervisore", Candidato.class);
+		
+		// set max e min result number
+		theQuery.setFirstResult(firstResult);
+		theQuery.setMaxResults(maxResult);
+		
+		User theUser = userService.findByUserName(userUsername);
+		theQuery.setParameter("theSupervisore", theUser);
+
+		// execute query and get result list
+		List<Candidato> candidati = theQuery.getResultList();
+		
+		
+		// return the result
+		return candidati;
+	}
+
+	@Override
+	public int totCandidatiAssociati(String userUsername) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// now retrieve/read from database using CF
+		Query<Long> theQuery = currentSession.createQuery("SELECT COUNT(*) FROM Candidato where supervisore=:theSupervisore", Long.class);
+		
+		User theUser = userService.findByUserName(userUsername);
+		theQuery.setParameter("theSupervisore", theUser);
+
+		
+		long numCandidati = 0l;
+		
+		try {
+			numCandidati = theQuery.getSingleResult();
+		} catch (Exception e) {
+			numCandidati = 0l;
+		}
+		
+		return (int) numCandidati;
+	}
 	
 
 }

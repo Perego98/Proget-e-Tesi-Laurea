@@ -53,7 +53,7 @@ import com.tesi.gestione.service.UserService;
 @RequestMapping("/hr")
 public class HrController {
 	
-
+	private static int FixCandidatiPerPagina = 10;
 	
     @Autowired
     private CandidatoService candidatoService;
@@ -78,16 +78,115 @@ public class HrController {
 	@GetMapping("/showListCandidati")
 	public String showMyListCandidati(Model theModel) {
 		
+//		// devo chiedere a UserService (UserDao) l'elenco degli user
+//		List<Candidato> theCandidati = candidatoService.getCandidati();
+//
+//		
+//		// devo aggiungerli al model
+//		theModel.addAttribute("candidati", theCandidati);
+//		
+//		
+//		return "list-candidati";		
+		
+		return "redirect:/hr/showListCandidatiPagination";
+	}
+	
+	@GetMapping("/showListCandidatiPagination")
+	public String showMyListCandidatiPagination(Model theModel) {
+		// numero di utenti per pagina
+		int candidatiPerPagina = FixCandidatiPerPagina;
+		
+		// numero di candidati totali
+		int maxSize = candidatoService.totCandidati();
+		
+		// pagine necessarie
+		int numPagine = maxSize / candidatiPerPagina;
+		
+		// se ho un resto aggiungo una pagina
+		if(maxSize % candidatiPerPagina != 0) {
+			numPagine++;
+		}
+	
+		
 		// devo chiedere a UserService (UserDao) l'elenco degli user
-		List<Candidato> theCandidati = candidatoService.getCandidati();
+		List<Candidato> theCandidati = null;
+		if(numPagine > 1)
+			theCandidati = candidatoService.getCandidati(0, candidatiPerPagina);
+		else
+			theCandidati = candidatoService.getCandidati(0, maxSize);
+		
+		
+		List<Integer> numeroPagine = new ArrayList<>();
 
+		for(int i = 0; i<numPagine; i++) {
+			numeroPagine.add(i+1);
+		}
 		
-		// devo aggiungerli al model
+		
+		// aggiungo le info di chi è loggato
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		theModel.addAttribute("adminAccount", currentPrincipalName);
 		theModel.addAttribute("candidati", theCandidati);
-		
+		theModel.addAttribute("numeroPagineList", numeroPagine);
+		theModel.addAttribute("firstPage", true);
+		theModel.addAttribute("pageNumber", 1);
+		theModel.addAttribute("candidatiPerPagina", candidatiPerPagina);
 		
 		return "list-candidati";		
 	}
+	
+	@GetMapping("/showListCandidatiMinMax")
+	public String showMyListCandidatiPaginationMinMax(
+			Model theModel,
+			@RequestParam("firstPage") String firstPage,
+			@RequestParam("maxPage") String maxPage) {
+		// numero di utenti per pagina
+		int candidatiPerPagina = FixCandidatiPerPagina;
+		
+		// numero di candidati totali
+		int maxSize = candidatoService.totCandidati();
+		
+		// pagine necessarie
+		int numPagine = maxSize / candidatiPerPagina;
+		
+		// se ho un resto aggiungo una pagina
+		if(maxSize % candidatiPerPagina != 0) {
+			numPagine++;
+		}
+		
+		int pageNumber = (Integer.parseInt(firstPage) / candidatiPerPagina) + 1;
+		
+		
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<Candidato> theCandidati = candidatoService.getCandidati(Integer.parseInt(firstPage), Integer.parseInt(maxPage));
+		
+		
+		
+		
+		// aggiungo le info di chi è loggato
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		
+		List<Integer> numeroPagine = new ArrayList<>();
+
+		for(int i = 0; i<numPagine; i++) {
+			numeroPagine.add(i+1);
+		}
+		
+		theModel.addAttribute("candidati", theCandidati);
+		theModel.addAttribute("adminAccount", currentPrincipalName);
+		theModel.addAttribute("numeroPagineList", numeroPagine);
+		theModel.addAttribute("firstPage", false);
+		theModel.addAttribute("pageNumber", pageNumber);
+		theModel.addAttribute("candidatiPerPagina", candidatiPerPagina);
+		
+		return "list-candidati";		
+	}
+
+	
 	
 	@GetMapping("/deleteCandidato")
 	public String deleteCandidato(@RequestParam("codFiscale") String codFiscale) {

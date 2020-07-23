@@ -382,6 +382,18 @@ public class CandidatoServiceImpl implements CandidatoService {
 		return (int) candidatoDao.getCandidatiStatus(stato);
 	}
 
+	@Override
+	public List<Candidato> getCandidati(int firstResult, int maxResult) {
+		
+		return candidatoDao.getCandidati(firstResult, maxResult);
+	}
+
+	@Override
+	@Transactional
+	public int totCandidati() {
+		return candidatoDao.totCandidati();
+	}
+
 	
 
 }

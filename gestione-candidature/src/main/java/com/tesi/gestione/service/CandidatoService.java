@@ -41,5 +41,11 @@ public interface CandidatoService {
     int getPeriodoPreavviso(String codiceFiscale);
     
     int getCandidatiStatus(String stato);
+    
+    List<Candidato> getCandidati(int firstResult, int maxResult);
+
+	int totCandidati();
+	
+	
 
 }

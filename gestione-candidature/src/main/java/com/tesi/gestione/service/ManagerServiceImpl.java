@@ -55,6 +55,19 @@ public class ManagerServiceImpl implements ManagerService {
 	public List<Candidato> getCandidatiAssociati(String userUsername) {
 		return candidatoDao.getCandidatiAssociati(userUsername);
 	}
+
+	@Override
+	@Transactional
+	public List<Candidato> getCandidatiAssociati(String userUsername, int firstResult, int maxResult) {
+		
+		return candidatoDao.getCandidatiAssociati(userUsername, firstResult, maxResult);
+	}
+
+	@Override
+	@Transactional
+	public int totCandidatiAssociati(String userUsername) {
+		return candidatoDao.totCandidatiAssociati(userUsername);
+	}
 	
 	
 

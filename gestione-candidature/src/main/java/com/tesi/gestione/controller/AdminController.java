@@ -36,7 +36,7 @@ import com.tesi.gestione.service.UserService;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	private static int FixUserPerPagina = 6;
+	private static int FixUserPerPagina = 10;
 	
     @Autowired
     private UserService userService;
@@ -64,19 +64,21 @@ public class AdminController {
 	@GetMapping("/showListUsers")
 	public String showMyListUsers(Model theModel) {
 		
-		// devo chiedere a UserService (UserDao) l'elenco degli user
-		List<User> theUsers = userService.getUsers();
+//		// devo chiedere a UserService (UserDao) l'elenco degli user
+//		List<User> theUsers = userService.getUsers();
+//		
+//		// devo aggiungerli al model
+//		theModel.addAttribute("users", theUsers);
+//		
+//		// aggiungo le info di chi è loggato
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		String currentPrincipalName = authentication.getName();
+//		theModel.addAttribute("adminAccount", currentPrincipalName);
+//		
+//		
+//		return "list-users";	
 		
-		// devo aggiungerli al model
-		theModel.addAttribute("users", theUsers);
-		
-		// aggiungo le info di chi è loggato
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		theModel.addAttribute("adminAccount", currentPrincipalName);
-		
-		
-		return "list-users";		
+		return "redirect:/admin/showListUsersPagination";
 	}
 	
 	@GetMapping("/showListUsersPagination")

@@ -1,6 +1,7 @@
 package com.tesi.gestione.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -44,7 +45,8 @@ import com.tesi.gestione.service.UserService;
 @RequestMapping("/manager")
 public class ManagerController {
 	
-
+	private static int FixCandidatiPerPagina = 10;
+	
 	@Autowired
 	private ManagerService managerService;
 
@@ -70,15 +72,121 @@ public class ManagerController {
 	@GetMapping("/showListCandidati")
 	public String showMyListCandidati(Model theModel) {
 		
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		String currentPrincipalName = authentication.getName();
+//
+//		List<Candidato> theCandidati = managerService.getCandidatiAssociati(currentPrincipalName);
+//
+//		
+//		// devo aggiungerli al model
+//		theModel.addAttribute("candidati", theCandidati);
+//		
+//		
+//		return "list-candidati-manager";	
+		
+		return "redirect:/manager/showListCandidatiPagination";
+	}
+	
+	@GetMapping("/showListCandidatiPagination")
+	public String showMyListCandidatiPagination(Model theModel) {
+		
+		// aggiungo le info di chi è loggato
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-
-		List<Candidato> theCandidati = managerService.getCandidatiAssociati(currentPrincipalName);
-
 		
-		// devo aggiungerli al model
+		// numero di utenti per pagina
+		int candidatiPerPagina = FixCandidatiPerPagina;
+		
+		// numero di candidati totali
+		int maxSize = managerService.totCandidatiAssociati(currentPrincipalName);
+		
+		// pagine necessarie
+		int numPagine = maxSize / candidatiPerPagina;
+		
+		// se ho un resto aggiungo una pagina
+		if(maxSize % candidatiPerPagina != 0) {
+			numPagine++;
+		}
+	
+		
+				
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<Candidato> theCandidati = null;
+		if(numPagine > 1)
+			theCandidati = managerService.getCandidatiAssociati(currentPrincipalName, 0, candidatiPerPagina);
+		else
+			theCandidati = managerService.getCandidatiAssociati(currentPrincipalName, 0, maxSize);
+		
+		
+		List<Integer> numeroPagine = new ArrayList<>();
+
+		for(int i = 0; i<numPagine; i++) {
+			numeroPagine.add(i+1);
+		}
+		
+		
+		
+		
+		theModel.addAttribute("adminAccount", currentPrincipalName);
 		theModel.addAttribute("candidati", theCandidati);
+		theModel.addAttribute("numeroPagineList", numeroPagine);
+		theModel.addAttribute("firstPage", true);
+		theModel.addAttribute("pageNumber", 1);
+		theModel.addAttribute("candidatiPerPagina", candidatiPerPagina);
 		
+		return "list-candidati-manager";		
+	}
+	
+	@GetMapping("/showListCandidatiMinMax")
+	public String showMyListCandidatiPaginationMinMax(
+			Model theModel,
+			@RequestParam("firstPage") String firstPage,
+			@RequestParam("maxPage") String maxPage) {
+		
+		// aggiungo le info di chi è loggato
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		// numero di utenti per pagina
+		int candidatiPerPagina = FixCandidatiPerPagina;
+		
+		// numero di candidati totali
+		int maxSize = managerService.totCandidatiAssociati(currentPrincipalName);
+		
+		// pagine necessarie
+		int numPagine = maxSize / candidatiPerPagina;
+		
+		// se ho un resto aggiungo una pagina
+		if(maxSize % candidatiPerPagina != 0) {
+			numPagine++;
+		}
+		
+		
+		int pageNumber = (Integer.parseInt(firstPage) / candidatiPerPagina) + 1;
+		
+		
+		
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<Candidato> theCandidati = managerService.getCandidatiAssociati(currentPrincipalName, Integer.parseInt(firstPage), Integer.parseInt(maxPage));
+		
+		
+		
+		
+		
+		
+		
+		List<Integer> numeroPagine = new ArrayList<>();
+
+		for(int i = 0; i<numPagine; i++) {
+			numeroPagine.add(i+1);
+		}
+		
+		theModel.addAttribute("candidati", theCandidati);
+		theModel.addAttribute("adminAccount", currentPrincipalName);
+		theModel.addAttribute("numeroPagineList", numeroPagine);
+		theModel.addAttribute("firstPage", false);
+		theModel.addAttribute("pageNumber", pageNumber);
+		theModel.addAttribute("candidatiPerPagina", candidatiPerPagina);
 		
 		return "list-candidati-manager";		
 	}

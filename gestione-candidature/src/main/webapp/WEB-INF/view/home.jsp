@@ -67,7 +67,7 @@
 									href="${pageContext.request.contextPath}/hr/showCandidatoRegistrationForm">Registra
 										Candidato</a></li>
 								<li><a
-									href="${pageContext.request.contextPath}/hr/showListCandidati">Elenco
+									href="${pageContext.request.contextPath}/hr/showListCandidatiPagination">Elenco
 										Candidati</a></li>
 							</ul></li>
 					</c:if>
@@ -79,7 +79,7 @@
 							data-toggle="dropdown" href="#">Manager<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a
-									href="${pageContext.request.contextPath}/manager/showListCandidati">Elenco
+									href="${pageContext.request.contextPath}/manager/showListCandidatiPagination">Elenco
 										Candidati associati</a></li>
 								<li><a href="#">Ruolo 2</a></li>
 							</ul></li>

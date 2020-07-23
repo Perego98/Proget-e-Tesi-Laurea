@@ -254,11 +254,22 @@
 		
 		</div>
 
-		<!--<div class="panel-footer">
-			<input type="button" value="Torna alla Home"
-				onclick="window.location.href='${pageContext.request.contextPath}/'; return false;"
-				class="btn btn-primary" />
-		</div>-->
+		<div class="panel-footer">
+			<ul class="pagination">
+				<c:forEach var="numPagina" items="${numeroPagineList}">
+					<c:if test="${pageNumber == numPagina}">
+						<li class="active"><a
+							href="${pageContext.request.contextPath}/hr/showListCandidatiMinMax?firstPage=${(candidatiPerPagina*numPagina)-(candidatiPerPagina)}&maxPage=${candidatiPerPagina}">${numPagina}</a></li>
+					</c:if>
+					<c:if test="${pageNumber != numPagina}">
+						<li><a
+							href="${pageContext.request.contextPath}/hr/showListCandidatiMinMax?firstPage=${(candidatiPerPagina*numPagina)-(candidatiPerPagina)}&maxPage=${candidatiPerPagina}">${numPagina}</a></li>
+					</c:if>
+				</c:forEach>
+
+			</ul>
+
+		</div>
 	</div>
 
 

@@ -200,6 +200,23 @@
 		
 		</div>
 
+<div class="panel-footer">
+			<ul class="pagination">
+				<c:forEach var="numPagina" items="${numeroPagineList}">
+					<c:if test="${pageNumber == numPagina}">
+						<li class="active"><a
+							href="${pageContext.request.contextPath}/manager/showListCandidatiMinMax?firstPage=${(candidatiPerPagina*numPagina)-(candidatiPerPagina)}&maxPage=${candidatiPerPagina}">${numPagina}</a></li>
+					</c:if>
+					<c:if test="${pageNumber != numPagina}">
+						<li><a
+							href="${pageContext.request.contextPath}/manager/showListCandidatiMinMax?firstPage=${(candidatiPerPagina*numPagina)-(candidatiPerPagina)}&maxPage=${candidatiPerPagina}">${numPagina}</a></li>
+					</c:if>
+				</c:forEach>
+
+			</ul>
+
+		</div>
+
 	</div>
 
 

@@ -16,6 +16,8 @@ public interface ManagerService {
 
 	List<Candidato> getCandidatiAssociati(String userUsername);
 	
+	List<Candidato> getCandidatiAssociati(String userUsername, int firstResult, int maxResult);
 	
+	int totCandidatiAssociati(String userUsername);
 
 }
