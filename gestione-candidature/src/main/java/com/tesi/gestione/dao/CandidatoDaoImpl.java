@@ -208,4 +208,27 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		return candidati;
 	}
 
+	@Override
+	@Transactional
+	public long getCandidatiStatus(String stato) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// now retrieve/read from database using CF
+		Query<Long> theQuery = currentSession.createQuery("SELECT COUNT(*) FROM Candidato where stato_candidatura=:stato", Long.class);
+		theQuery.setParameter("stato", stato);
+		
+		long numCandidati = 0l;
+		
+		try {
+			numCandidati = theQuery.getSingleResult();
+		} catch (Exception e) {
+			numCandidati = 0l;
+		}
+		
+		return numCandidati;
+	}
+
+	
+
 }

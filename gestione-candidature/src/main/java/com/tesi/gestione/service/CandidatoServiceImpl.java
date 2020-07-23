@@ -377,6 +377,11 @@ public class CandidatoServiceImpl implements CandidatoService {
 		return candidatoDao.getPeriodoPreavviso(codiceFiscale);
 	}
 
+	@Override
+	public int getCandidatiStatus(String stato) {
+		return (int) candidatoDao.getCandidatiStatus(stato);
+	}
+
 	
 
 }

@@ -28,4 +28,17 @@ public interface CandidatoDao {
 
 	public List<Candidato> getCandidatiAssociati(String userUsername);
 	
+	long getCandidatiStatus(String stato);
+	
+//	int getCandidatiHr();
+//	
+//	int getCandidatiManager();
+//	
+//	int getCandidatiInValutazione();
+//	
+//	int getCandidatiAssunti();
+//	
+//	int getCandidatiRigettati();
+	
+	
 }

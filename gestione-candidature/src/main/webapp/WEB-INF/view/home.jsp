@@ -16,6 +16,17 @@
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+	
+	<script>
+		$(document).ready(function() {
+			$('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
+	
+	
+	
 </head>
 
 <body>
@@ -142,12 +153,29 @@
 
 
 					</table>
-		
+					
+			<c:if test="${user.qualified == true}">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion"
+							href="#collapse"> Grafico Statistiche</a>
+					</h4>
+				</div>
+				<div id="collapse" class="panel-collapse collapse">
+					<!-- Tabelle -->
+					<canvas id="bar-chart" width="300" height="150"></canvas>
+
+				</div>
+				<!-- Tabelle -->
+				${valori}
+			</c:if>
+
 		</div>
 		
 		
 	</div>
 
+	
 </body>
 
 </html>
