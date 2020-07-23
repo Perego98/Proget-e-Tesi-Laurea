@@ -30,7 +30,8 @@ public class HomeController {
 		cr= (int) candidatoService.getCandidatiStatus("rigettato");
 		
 		
-		String canvas = "	<script>\n" + 
+		String canvas = 
+				"	<script>\n" + 
 				"	// Bar chart\n" + 
 				"	new Chart(document.getElementById(\"bar-chart\"), {\n" + 
 				"	    type: 'horizontalBar',\n" + 

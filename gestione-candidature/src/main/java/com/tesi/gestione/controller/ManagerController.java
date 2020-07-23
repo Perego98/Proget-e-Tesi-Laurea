@@ -88,7 +88,9 @@ public class ManagerController {
 	}
 	
 	@GetMapping("/showListCandidatiPagination")
-	public String showMyListCandidatiPagination(Model theModel) {
+	public String showMyListCandidatiPagination(Model theModel,
+			@RequestParam(value = "registrationSucces", required = false) String registrationSucces,
+			@RequestParam(value = "registrationError", required = false) String registrationError) {
 		
 		// aggiungo le info di chi è loggato
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -133,6 +135,8 @@ public class ManagerController {
 		theModel.addAttribute("firstPage", true);
 		theModel.addAttribute("pageNumber", 1);
 		theModel.addAttribute("candidatiPerPagina", candidatiPerPagina);
+		theModel.addAttribute("registrationSucces", registrationSucces);
+		theModel.addAttribute("registrationError", registrationError);
 		
 		return "list-candidati-manager";		
 	}
@@ -239,19 +243,7 @@ public class ManagerController {
 		
 		candidatoService.changeStato(CrmStato, theCandidato);
 
-		        
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		
-	
-		List<Candidato> theCandidati = managerService.getCandidatiAssociati(currentPrincipalName);
-
-		// devo aggiungerli al model
-		theModel.addAttribute("candidati", theCandidati);
-		
-		theModel.addAttribute("registrationSucces", "Stato del candidato aggiornato con successo.");
-		
-        return "list-candidati-manager";		
+		return "redirect:/manager/showListCandidatiPagination?registrationSucces=Stato del candidato aggiornato con successo.";
 	}
 	
 	@GetMapping("/downloadCurriculum")
@@ -323,24 +315,14 @@ public class ManagerController {
 			theModel.addAttribute("candidati", theCandidati);
 
 			if (codFiscale != null) {
-				theModel.addAttribute("registrationError", "Codice fiscale non presente.");
+				return "redirect:/manager/showListCandidatiPagination?registrationError=Codice fiscale non presente.";
 			} else {
-				theModel.addAttribute("registrationError", "Username non  presente.");
+				return "redirect:/manager/showListCandidatiPagination?registrationError=Username non  presente.";
 			}
-			return "list-candidati-manager";
 		}
 		
 
-		List<Candidato> theCandidati = managerService.getCandidatiAssociati(currentPrincipalName);
-
-		
-
-		// devo aggiungerli al model
-		theModel.addAttribute("candidati", theCandidati);
-		
-		theModel.addAttribute("registrationSucces", "Scheda di valutazione caricata con successo.");
-		
-        return "list-candidati-manager";		
+		return "redirect:/manager/showListCandidatiPagination?registrationSucces=Scheda di valutazione caricata con successo.";	
 	}
 	
 		
@@ -374,17 +356,7 @@ public class ManagerController {
 		
 		schedaValutazioneService.deleteScheda(codScheda);
 		
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-
-		List<Candidato> theCandidati = managerService.getCandidatiAssociati(currentPrincipalName);
-
-		
-		theModel.addAttribute("candidati", theCandidati);
-		
-		theModel.addAttribute("registrationSucces", "Scheda di valutazione cancellata con successo.");
-		
-        return "list-candidati-manager";	
+		return "redirect:/manager/showListCandidatiPagination?registrationSucces=Scheda di valutazione cancellata con successo.";		
 	}
 
 }

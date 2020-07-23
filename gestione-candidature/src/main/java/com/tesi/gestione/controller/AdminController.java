@@ -82,7 +82,8 @@ public class AdminController {
 	}
 	
 	@GetMapping("/showListUsersPagination")
-	public String showMyListUsersPagination(Model theModel) {
+	public String showMyListUsersPagination(Model theModel, 
+			@RequestParam(value = "registrationSucces", required = false) String registrationSucces) {
 		// numero di utenti per pagina
 		int userPerPagina = FixUserPerPagina;
 		
@@ -123,6 +124,7 @@ public class AdminController {
 		theModel.addAttribute("firstPage", true);
 		theModel.addAttribute("pageNumber", 1);
 		theModel.addAttribute("userPerPagina", userPerPagina);
+		theModel.addAttribute("registrationSucces", registrationSucces);
 		
 		return "list-users";		
 	}
@@ -246,24 +248,9 @@ public class AdminController {
         	return "registration-user-form";
         }
      // create user account        						
-        userService.save(theCrmUser);
-        
-        logger.info("Successfully created user: " + userName);
-        
-		// devo chiedere a UserService (UserDao) l'elenco degli user
-		List<User> theUsers = userService.getUsers();
-
-		// devo aggiungerli al model
-		theModel.addAttribute("users", theUsers);
-        
-		theModel.addAttribute("registrationSucces", "Utente registrato con successo.");
+        userService.save(theCrmUser);	
 		
-		// aggiungo le info di chi è loggato
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		theModel.addAttribute("adminAccount", currentPrincipalName);
-		
-        return "list-users";		
+		return "redirect:/admin/showListUsersPagination?registrationSucces=Utente registrato con successo.";
 	}
 	
 	// mostra la pagina per inserire i dati da aggiornare
@@ -318,22 +305,8 @@ public class AdminController {
 		// create user account
 		userService.update(theUsername, theCrmUser);
 		
-		// devo chiedere a UserService (UserDao) l'elenco degli user
-		List<User> theUsers = userService.getUsers();
+		return "redirect:/admin/showListUsersPagination?registrationSucces=Utente aggiornato con successo.";
 		
-		// devo aggiungerli al model
-		theModel.addAttribute("users", theUsers);
-		
-		theModel.addAttribute("registrationSucces", "Utente aggiornato con successo.");
-		
-		System.out.println("********* AdminController --------- Dentro processUpdateUserForm ->  list-users");
-		
-		// aggiungo le info di chi è loggato
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		theModel.addAttribute("adminAccount", currentPrincipalName);
-		
-		return "list-users";	
 	}
 	
 	@GetMapping("/activateUser")
@@ -395,21 +368,9 @@ public class AdminController {
 		userService.changeSede(theSede, theUser);
 		
 		
-		// devo chiedere a UserService (UserDao) l'elenco degli user
-		List<User> theUsers = userService.getUsers();
-				
-		// devo aggiungerli al model
-		theModel.addAttribute("users", theUsers);
+		return "redirect:/admin/showListUsersPagination?registrationSucces=Sede aggiornata con successo.";
 		
-		theModel.addAttribute("registrationSucces", "Sede aggiornata con successo.");
-		
-		// aggiungo le info di chi è loggato
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		theModel.addAttribute("adminAccount", currentPrincipalName);
-		
-		return "list-users";	
-	}
+		}
 		
 	
 	@GetMapping("/showFormForUpdateUserRole")
@@ -452,21 +413,8 @@ public class AdminController {
 		
 		userService.changeRuolo(theRole, theUser);
 		
-		
-		// devo chiedere a UserService (UserDao) l'elenco degli user
-		List<User> theUsers = userService.getUsers();
-				
-		// devo aggiungerli al model
-		theModel.addAttribute("users", theUsers);
-		
-		theModel.addAttribute("registrationSucces", "Ruolo aggiornato con successo.");
-		
-		// aggiungo le info di chi è loggato
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		theModel.addAttribute("adminAccount", currentPrincipalName);
-		
-		return "list-users";	
+		return "redirect:/admin/showListUsersPagination?registrationSucces=Ruolo aggiornato con successo.";
+
 	}
 	
 	@GetMapping("/search")

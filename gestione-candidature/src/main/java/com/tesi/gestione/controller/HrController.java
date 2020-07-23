@@ -92,7 +92,9 @@ public class HrController {
 	}
 	
 	@GetMapping("/showListCandidatiPagination")
-	public String showMyListCandidatiPagination(Model theModel) {
+	public String showMyListCandidatiPagination(Model theModel,
+			@RequestParam(value = "registrationSucces", required = false) String registrationSucces, 
+			@RequestParam(value = "registrationError", required = false) String registrationError) {
 		// numero di utenti per pagina
 		int candidatiPerPagina = FixCandidatiPerPagina;
 		
@@ -133,6 +135,8 @@ public class HrController {
 		theModel.addAttribute("firstPage", true);
 		theModel.addAttribute("pageNumber", 1);
 		theModel.addAttribute("candidatiPerPagina", candidatiPerPagina);
+		theModel.addAttribute("registrationSucces", registrationSucces);
+		theModel.addAttribute("registrationError", registrationError);
 		
 		return "list-candidati";		
 	}
@@ -261,17 +265,9 @@ public class HrController {
         
 		candidatoService.save(CrmCandidato);
 		
-		logger.info("Successfully created user: " + codFiscale);
-		        
-		// devo chiedere a UserService (UserDao) l'elenco degli user
-		List<Candidato> theCandidati = candidatoService.getCandidati();
 
-		// devo aggiungerli al model
-		theModel.addAttribute("candidati", theCandidati);
-		
-		theModel.addAttribute("registrationSucces", "Candidato registrato con successo.");
-		
-        return "list-candidati";		
+		return "redirect:/hr/showListCandidatiPagination?registrationSucces=Candidato registrato con successo.";
+	
 	}
 	
 	
@@ -345,17 +341,8 @@ public class HrController {
         
 		candidatoService.update(codFiscale, CrmCandidato);
 		
-		logger.info("Successfully created user: " + codFiscale);
-		        
-		// devo chiedere a UserService (UserDao) l'elenco degli user
-		List<Candidato> theCandidati = candidatoService.getCandidati();
-
-		// devo aggiungerli al model
-		theModel.addAttribute("candidati", theCandidati);
-		
-		theModel.addAttribute("registrationSucces", "Candidato registrato con successo.");
-		
-        return "list-candidati";		
+		return "redirect:/hr/showListCandidatiPagination?registrationSucces=Candidato aggiornato con successo.";
+	
 	}
 	
 	
@@ -381,16 +368,8 @@ public class HrController {
 		
 		candidatoService.changeStato(CrmStato, theCandidato);
 
+		return "redirect:/hr/showListCandidatiPagination?registrationSucces=Stato del candidato aggiornato con successo.";
 		        
-		// devo chiedere a UserService (UserDao) l'elenco degli user
-		List<Candidato> theCandidati = candidatoService.getCandidati();
-
-		// devo aggiungerli al model
-		theModel.addAttribute("candidati", theCandidati);
-		
-		theModel.addAttribute("registrationSucces", "Stato del candidato aggiornato con successo.");
-		
-        return "list-candidati";		
 	}
 	
 	
@@ -416,16 +395,8 @@ public class HrController {
 		
 		candidatoService.changeSupervisore(userUsername, theCandidato);
 
-		        
-		// devo chiedere a UserService (UserDao) l'elenco degli user
-		List<Candidato> theCandidati = candidatoService.getCandidati();
-
-		// devo aggiungerli al model
-		theModel.addAttribute("candidati", theCandidati);
-		
-		theModel.addAttribute("registrationSucces", "Supervisore " + userUsername + " assegnato con successo a " + theCandidato.getNome() + " CF: " + theCandidato.getCodiceFiscale());
-		
-        return "list-candidati";		
+		return "redirect:/hr/showListCandidatiPagination?registrationSucces=" + "Supervisore " + userUsername + 
+				" assegnato con successo a " + theCandidato.getNome() + " CF: " + theCandidato.getCodiceFiscale();		
 	}
 	
 
@@ -561,29 +532,16 @@ public class HrController {
 			theModel.addAttribute("candidati", theCandidati);
 
         	if(codFiscale != null) {
-        		theModel.addAttribute("registrationError", "Codice fiscale non presente.");
+        		return "redirect:/hr/showListCandidatiPagination?registrationError=Codice fiscale non presente.";
         	}
         	else {
-        		theModel.addAttribute("registrationError", "Username non  presente.");
-        	}
-        	return "list-candidati";
+        		return "redirect:/hr/showListCandidatiPagination?registrationError=Username non  presente.";
+        	}    		
         }
         
 		
-		
-		
-		
-		logger.info("Successfully created user: " + codFiscale);
-		        
-		// devo chiedere a UserService (UserDao) l'elenco degli user
-		List<Candidato> theCandidati = candidatoService.getCandidati();
-
-		// devo aggiungerli al model
-		theModel.addAttribute("candidati", theCandidati);
-		
-		theModel.addAttribute("registrationSucces", "Scheda di valutazione caricata con successo.");
-		
-        return "list-candidati";		
+    	return "redirect:/hr/showListCandidatiPagination?registrationSucces=Scheda di valutazione caricata con successo.";
+			
 	}
 
 	
@@ -621,13 +579,7 @@ public class HrController {
 		
 		schedaValutazioneService.deleteScheda(codScheda);
 		
-		List<Candidato> theCandidati = candidatoService.getCandidati();
-		
-		theModel.addAttribute("candidati", theCandidati);
-		
-		theModel.addAttribute("registrationSucces", "Scheda di valutazione cancellata con successo.");
-		
-        return "list-candidati";	
+		return "redirect:/hr/showListCandidatiPagination";
 	}
 	
 	
