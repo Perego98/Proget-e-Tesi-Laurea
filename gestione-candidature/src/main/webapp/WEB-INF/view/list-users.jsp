@@ -58,7 +58,7 @@
 								href="${pageContext.request.contextPath}/admin/showRegistrationForm">Registra
 									Utente</a></li>
 							<li><a
-								href="${pageContext.request.contextPath}/admin/showListUsers">Elenco
+								href="${pageContext.request.contextPath}/admin/showListUsersPagination">Elenco
 									Utenti</a></li>
 						</ul></li>
 				</security:authorize>
@@ -382,12 +382,23 @@
 			</table>
 		
 		</div>
-		
-		<!--<div class="panel-footer">
-			<input type="button" value="Torna alla Home"
-				onclick="window.location.href='${pageContext.request.contextPath}/'; return false;"
-				class="btn btn-primary" />
-		</div>-->
+
+		<div class="panel-footer">
+			<ul class="pagination">
+				<c:forEach var="numPagina" items="${numeroPagineList}">
+					<c:if test="${pageNumber == numPagina}">
+						<li class="active"><a
+							href="${pageContext.request.contextPath}/admin/showListUsersMinMax?firstPage=${(userPerPagina*numPagina)-(userPerPagina)}&maxPage=${userPerPagina}">${numPagina}</a></li>
+					</c:if>
+					<c:if test="${pageNumber != numPagina}">
+						<li><a
+							href="${pageContext.request.contextPath}/admin/showListUsersMinMax?firstPage=${(userPerPagina*numPagina)-(userPerPagina)}&maxPage=${userPerPagina}">${numPagina}</a></li>
+					</c:if>
+				</c:forEach>
+
+			</ul>
+
+		</div>
 	</div>
 
 </body>

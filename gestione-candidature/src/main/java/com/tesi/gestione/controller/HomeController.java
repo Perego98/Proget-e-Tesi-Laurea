@@ -12,6 +12,7 @@ import com.tesi.gestione.service.CandidatoService;
 public class HomeController {
 
 
+
     @Autowired
     private CandidatoService candidatoService;
 	

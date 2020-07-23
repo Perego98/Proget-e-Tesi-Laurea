@@ -12,6 +12,8 @@ public interface UserDao {
     
     List<User> getUsers();
     
+    List<User> getUsers(int firstResult, int maxResult);
+    
     List<User> getManager();
     
     void save(User user);
@@ -22,5 +24,6 @@ public interface UserDao {
     
     List<User> search(String theSearchName);
 
+    int totUser();
     
 }

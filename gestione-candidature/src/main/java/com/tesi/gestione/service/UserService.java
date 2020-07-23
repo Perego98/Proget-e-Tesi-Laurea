@@ -18,6 +18,8 @@ public interface UserService extends UserDetailsService {
     
     List<User> getUsers();
     
+    List<User> getUsers(int firstResult, int maxResult);
+    
     List<User> getManager();
     
     void deleteUser(String username);
@@ -35,4 +37,6 @@ public interface UserService extends UserDetailsService {
     void changeRuolo(CrmRole newRole,  User theUser);
     
     List<User> search(String theSearchName);
+    
+    int totUser();
 }

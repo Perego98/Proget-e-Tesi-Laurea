@@ -1,5 +1,6 @@
 package com.tesi.gestione.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -35,7 +36,7 @@ import com.tesi.gestione.service.UserService;
 @RequestMapping("/admin")
 public class AdminController {
 	
-
+	private static int FixUserPerPagina = 6;
 	
     @Autowired
     private UserService userService;
@@ -77,6 +78,102 @@ public class AdminController {
 		
 		return "list-users";		
 	}
+	
+	@GetMapping("/showListUsersPagination")
+	public String showMyListUsersPagination(Model theModel) {
+		// numero di utenti per pagina
+		int userPerPagina = FixUserPerPagina;
+		
+		// numero di utenti totali
+		int maxSize = userService.totUser();
+		
+		// pagine necessarie
+		int numPagine = maxSize / userPerPagina;
+		
+		// se ho un resto aggiungo una pagina
+		if(maxSize % userPerPagina != 0) {
+			numPagine++;
+		}
+	
+		
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<User> theUsers = null;
+		if(numPagine > 1)
+			theUsers = userService.getUsers(0, userPerPagina);
+		else
+			theUsers = userService.getUsers(0, maxSize);
+		
+		
+		List<Integer> numeroPagine = new ArrayList<>();
+
+		for(int i = 0; i<numPagine; i++) {
+			numeroPagine.add(i+1);
+		}
+		
+		
+		// aggiungo le info di chi è loggato
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		theModel.addAttribute("adminAccount", currentPrincipalName);
+		theModel.addAttribute("users", theUsers);
+		theModel.addAttribute("numeroPagineList", numeroPagine);
+		theModel.addAttribute("firstPage", true);
+		theModel.addAttribute("pageNumber", 1);
+		theModel.addAttribute("userPerPagina", userPerPagina);
+		
+		return "list-users";		
+	}
+	
+	@GetMapping("/showListUsersMinMax")
+	public String showMyListUsersPaginationMinMax(
+			Model theModel,
+			@RequestParam("firstPage") String firstPage,
+			@RequestParam("maxPage") String maxPage) {
+		// numero di utenti per pagina
+		int userPerPagina = FixUserPerPagina;
+		
+		// numero di utenti totali
+		int maxSize = userService.totUser();
+		
+		// pagine necessarie
+		int numPagine = maxSize / userPerPagina;
+		
+		// se ho un resto aggiungo una pagina
+		if(maxSize % userPerPagina != 0) {
+			numPagine++;
+		}
+		
+		int pageNumber = (Integer.parseInt(firstPage) / userPerPagina) + 1;
+		
+		
+		// devo chiedere a UserService (UserDao) l'elenco degli user
+		List<User> theUsers = userService.getUsers(Integer.parseInt(firstPage), Integer.parseInt(maxPage));
+		
+		
+		
+		
+		// aggiungo le info di chi è loggato
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		
+		List<Integer> numeroPagine = new ArrayList<>();
+
+		for(int i = 0; i<numPagine; i++) {
+			numeroPagine.add(i+1);
+		}
+		
+		theModel.addAttribute("users", theUsers);
+		theModel.addAttribute("adminAccount", currentPrincipalName);
+		theModel.addAttribute("numeroPagineList", numeroPagine);
+		theModel.addAttribute("firstPage", false);
+		theModel.addAttribute("pageNumber", pageNumber);
+		theModel.addAttribute("userPerPagina", userPerPagina);
+		
+		return "list-users";		
+	}
+
 
 	@GetMapping("/deleteUser")
 	public String deleteUser(@RequestParam("userUsername") String theUsername) {

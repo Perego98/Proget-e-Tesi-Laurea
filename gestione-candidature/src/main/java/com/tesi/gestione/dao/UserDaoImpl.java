@@ -173,4 +173,46 @@ public class UserDaoImpl implements UserDao {
         
     	}
 
+	@Override
+	@Transactional
+	public int totUser() {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// now retrieve/read from database using CF
+		Query<Long> theQuery = currentSession.createQuery("SELECT COUNT(*) FROM User", Long.class);
+		
+		long numCandidati = 0l;
+		
+		try {
+			numCandidati = theQuery.getSingleResult();
+		} catch (Exception e) {
+			numCandidati = 0l;
+		}
+		
+		return (int) numCandidati;
+		
+	}
+
+	@Override
+	@Transactional
+	public List<User> getUsers(int firstResult, int maxResult) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// create a query
+		Query<User> theQuery = 
+				currentSession.createQuery("from User order by username", User.class);
+		
+		// set max e min result number
+		theQuery.setFirstResult(firstResult);
+		theQuery.setMaxResults(maxResult);
+		
+		// execute query and get result list
+		List<User> users = theQuery.getResultList();
+
+		// return the result
+		return users;
+	}
+
 }

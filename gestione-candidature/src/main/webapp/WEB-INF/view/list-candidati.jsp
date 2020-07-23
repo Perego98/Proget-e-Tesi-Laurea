@@ -59,7 +59,7 @@
 								href="${pageContext.request.contextPath}/admin/showRegistrationForm">Registra
 									Utente</a></li>
 							<li><a
-								href="${pageContext.request.contextPath}/admin/showListUsers">Elenco
+								href="${pageContext.request.contextPath}/admin/showListUsersPagination">Elenco
 									Utenti</a></li>
 						</ul></li>
 				</security:authorize>

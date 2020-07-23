@@ -180,5 +180,17 @@ public class UserServiceImpl implements UserService {
 
         return userDao.search(theSearchName);
     }
+
+	@Override
+	public int totUser() {
+		return userDao.totUser();
+	}
+
+	@Override
+	@Transactional
+	public List<User> getUsers(int firstResult, int maxResult) {
+		
+		return userDao.getUsers(firstResult, maxResult);
+	}
 	
 }

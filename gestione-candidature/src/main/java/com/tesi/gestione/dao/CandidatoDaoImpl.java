@@ -218,15 +218,15 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		Query<Long> theQuery = currentSession.createQuery("SELECT COUNT(*) FROM Candidato where stato_candidatura=:stato", Long.class);
 		theQuery.setParameter("stato", stato);
 		
-		long numCandidati = 0l;
+		long numUser = 0l;
 		
 		try {
-			numCandidati = theQuery.getSingleResult();
+			numUser = theQuery.getSingleResult();
 		} catch (Exception e) {
-			numCandidati = 0l;
+			numUser = 0l;
 		}
 		
-		return numCandidati;
+		return numUser;
 	}
 
 	
