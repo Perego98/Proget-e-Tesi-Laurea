@@ -73,7 +73,7 @@
 						<li><a
 									href="${pageContext.request.contextPath}/manager/showListCandidati">Elenco
 										Candidati associati</a></li>
-								<li><a href="#">Ruolo 2</a></li>
+								
 						</ul></li>
 				</security:authorize>
 
