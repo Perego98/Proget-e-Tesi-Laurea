@@ -327,7 +327,10 @@ public class ManagerController {
 	
 		
 	@GetMapping("/showSchedeValutazione")
-	public String showMySchedeValutazione(@RequestParam("codFiscale") String codFiscale, Model theModel) {
+	public String showMySchedeValutazione(@RequestParam("codFiscale") String codFiscale, 
+			@RequestParam(value = "registrationSucces", required = false) String registrationSucces, 
+			@RequestParam(value = "registrationError", required = false) String registrationError,
+			Model theModel) {
 
 		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
 
@@ -346,17 +349,22 @@ public class ManagerController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 		theModel.addAttribute("accountAttuale", currentPrincipalName);
-
+		theModel.addAttribute("codiceFiscale", codFiscale);
+		theModel.addAttribute("registrationSucces", registrationSucces);
+		theModel.addAttribute("registrationError", registrationError);
+		
 		return "list-schede-manager";
 	}
 
 		@GetMapping("/deleteScheda")
-	public String deleteScheda(@RequestParam("codScheda") String codScheda, Model theModel) {
+	public String deleteScheda(@RequestParam("codScheda") String codScheda, 
+			@RequestParam("codFiscale") String codFiscale,
+			Model theModel) {
 		
 		
 		schedaValutazioneService.deleteScheda(codScheda);
 		
-		return "redirect:/manager/showListCandidatiPagination?registrationSucces=Scheda di valutazione cancellata con successo.";		
+		return "redirect:/manager/showSchedeValutazione?codFiscale="+codFiscale+"&registrationSucces=Scheda di valutazione cancellata con successo.";
 	}
 
 }

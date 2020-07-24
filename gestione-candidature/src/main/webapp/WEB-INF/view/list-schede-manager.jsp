@@ -91,7 +91,19 @@
 	</nav>
 	<!-- END NAV BAR -->
 	
+	<!-- Check for registration success -->
+	<c:if test="${registrationSucces != null}">
+		<div class="alert alert-success">
+				<strong>Successo!</strong> ${registrationSucces}
+		</div>
+	</c:if>
 	
+	<c:if test="${registrationError != null}">
+		<div class="alert alert-danger">
+				<strong>Attenzione!</strong> ${registrationError}
+		</div>
+	</c:if>	
+
 
 	<div class="panel panel-default">
 		<div class="panel-heading"><h2>Elenco schede</h2></div>
@@ -209,7 +221,7 @@
 								<c:if
 									test="${tempSchede.utenteRelatore.userName == accountAttuale}">
 									<input type="button" value="Delete"
-										onclick="window.location.href='${pageContext.request.contextPath}/manager/deleteScheda?codScheda=${tempSchede.id}'; return false;"
+										onclick="window.location.href='${pageContext.request.contextPath}/manager/deleteScheda?codScheda=${tempSchede.id}&codFiscale=${codiceFiscale}'; return false;"
 										class="btn btn-danger btn-sm" />
 								</c:if>
 
