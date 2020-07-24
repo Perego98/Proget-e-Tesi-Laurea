@@ -1,6 +1,8 @@
 package com.tesi.gestione.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,8 @@ public class HomeController {
 	@GetMapping("/")
 	public String showHome(Model theModel) {
 		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
 		
 		int cn, chr, cm, cv, ca, cr;
 		// devo recuperare i valori
@@ -40,7 +44,7 @@ public class HomeController {
 				"	      datasets: [\n" + 
 				"	        {\n" + 
 				"	          label: \"Numero\",\n" + 
-				"	          backgroundColor: [\"#3e95cd\", \"#8e5ea2\",\"#3cba9f\",\"#e8c3b9\",\"#c45850\",\"#808000\"],\n" + 
+				"	          backgroundColor: [\"#3e95cd\", \"#8e5ea2\",\"#54aedb\",\"#e8c3b9\",\"#3cba9f\",\"#c45850\"],\n" + 
 				"	          //data: [${valori}]\n" + 
 				"	          data: ["+ cn +","+chr+","+cm+","+cv+","+ca+","+cr+", 0]\n" + 
 				"	        }\n" + 
@@ -58,8 +62,70 @@ public class HomeController {
 				"	</script>";
 		
 		
+		int candidatiTotali = candidatoService.totCandidati();
+		int candidatiCollegati=candidatoService.totCandidatiCollegati(currentPrincipalName);
+
+		
+		String canvashr = 
+				"	<script>\n" + 
+				"	// Bar chart\n" + 
+				"	new Chart(document.getElementById(\"grafico-candidati-assegnati-hr\"), {\n" + 
+				"	    type: 'doughnut',\n" + 
+				"	    data: {\n" + 
+				"	      labels: [\"Candidati Totali\", \"Assegnati a "+currentPrincipalName+"\"],\n" + 
+				"	      datasets: [\n" + 
+				"	        {\n" + 
+				"	          label: \"Numero\",\n" + 
+				"	          backgroundColor: [\"#3e95cd\", \"#8e5ea2\"],\n" + 
+				"	          //data: [${valori}]\n" + 
+				"	          data: ["+ candidatiTotali +","+candidatiCollegati+"]\n" + 
+				"	        }\n" + 
+				"	      ]\n" + 
+				"	    },\n" + 
+				"	    options: {\n" + 
+				"	      legend: { display: false },\n" + 
+				"	      title: {\n" + 
+				"	        display: true,\n" + 
+				"	        text: 'Grafico andamento delle candidature assegnate al HR rispetto alle candidature totali'\n" + 
+				"	      }\n" + 
+				"	    }\n" + 
+				"	});\n" + 
+				"	\n" + 
+				"	</script>";
+		
+		
+		String canvasmanager = 
+				"	<script>\n" + 
+				"	// Bar chart\n" + 
+				"	new Chart(document.getElementById(\"grafico-candidati-assegnati-manager\"), {\n" + 
+				"	    type: 'doughnut',\n" + 
+				"	    data: {\n" + 
+				"	      labels: [\"Candidati Totali\", \"Assegnati a "+currentPrincipalName+"\"],\n" + 
+				"	      datasets: [\n" + 
+				"	        {\n" + 
+				"	          label: \"Numero\",\n" + 
+				"	          backgroundColor: [\"#3e95cd\", \"#8e5ea2\"],\n" + 
+				"	          //data: [${valori}]\n" + 
+				"	          data: ["+ candidatiTotali +","+candidatiCollegati+"]\n" + 
+				"	        }\n" + 
+				"	      ]\n" + 
+				"	    },\n" + 
+				"	    options: {\n" + 
+				"	      legend: { display: false },\n" + 
+				"	      title: {\n" + 
+				"	        display: true,\n" + 
+				"	        text: 'Grafico andamento delle candidature assegnate al Manager rispetto alle candidature totali'\n" + 
+				"	      }\n" + 
+				"	    }\n" + 
+				"	});\n" + 
+				"	\n" + 
+				"	</script>";
+		
+		
 		
 		theModel.addAttribute("valori", canvas);
+		theModel.addAttribute("valorihr", canvashr);
+		theModel.addAttribute("valorimanager", canvasmanager);
 		
 		
 		return "home";

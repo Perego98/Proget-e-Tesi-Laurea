@@ -41,18 +41,9 @@ public interface CandidatoDao {
 
 	public int totCandidati();
 	
-	public int totCandidatiAssociati(String userUsername);
+	int totCandidatiAssociati(String userUsername);
 	
-	
-//	int getCandidatiHr();
-//	
-//	int getCandidatiManager();
-//	
-//	int getCandidatiInValutazione();
-//	
-//	int getCandidatiAssunti();
-//	
-//	int getCandidatiRigettati();
+
 	
 	
 }

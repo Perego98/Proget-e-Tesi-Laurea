@@ -155,19 +155,71 @@
 					</table>
 					
 			<c:if test="${user.qualified == true}">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion"
-							href="#collapse"> Grafico Statistiche</a>
-					</h4>
-				</div>
-				<div id="collapse" class="panel-collapse collapse">
-					<!-- Tabelle -->
-					<canvas id="bar-chart" width="300" height="150"></canvas>
+				<div class="panel-group" id="accordion">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion"
+									href="#collapse"> Grafico Statistiche Generali</a>
+							</h4>
+						</div>
+						<div id="collapse" class="panel-collapse collapse">
+
+							<canvas id="bar-chart" width="300" height="150"></canvas>
+
+						</div>
+					</div>
+
+					<security:authorize access="hasRole('HR')">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="#collapse2"> Grafico Statistiche Personali HR</a>
+								</h4>
+							</div>
+							<div id="collapse2" class="panel-collapse collapse">
+
+								<canvas id="grafico-candidati-assegnati-hr" width="300"
+									height="150"></canvas>
+
+							</div>
+						</div>
+					</security:authorize>
+
+					<security:authorize access="hasRole('MANAGER')">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="#collapse3"> Grafico Statistiche Personali Manager</a>
+								</h4>
+							</div>
+							<div id="collapse3" class="panel-collapse collapse">
+
+								<canvas id="grafico-candidati-assegnati-manager" width="300"
+									height="150"></canvas>
+
+							</div>
+						</div>
+					</security:authorize>
 
 				</div>
+
 				<!-- Tabelle -->
 				${valori}
+				${valorihr}
+				${valorimanager}
+
+
+
+
+
+
+				
+
+
+
 			</c:if>
 
 		</div>

@@ -142,7 +142,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 	@Override
 	@Transactional
 	@CrossOrigin
-	public void dowloadCurriculum(String codFiscale) {
+	public boolean dowloadCurriculum(String codFiscale) {
 
 		// Retrive curriculum from database
 		Blob theBlob = candidatoDao.dowloadCurriculum(codFiscale);
@@ -164,63 +164,67 @@ public class CandidatoServiceImpl implements CandidatoService {
 //		    fileToSave = fileChooser.getSelectedFile();
 //		    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
 			fileName = fileChooser.getSelectedFile().getAbsolutePath();
-		}
-		
+			fileName += "\\curriculum_" + codFiscale + ".pdf";
+			
+			
+			File file = new File(fileName);
+
+			if (file != null) 
+			if (!file.exists()) {
+
+				try {
+					file.createNewFile();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				System.out.println("File created: " + file);
+			} else {
+				System.out.println("File gia esistente: " + file);
+			}
+
+			// save in download
+			InputStream in = null;
+			FileOutputStream out = null;
+
+			try {
+				in = theBlob.getBinaryStream();
+				out = new FileOutputStream(fileName);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			byte[] buff = new byte[4096]; // how much of the blob to read/write at a time
+			int len = 0;
+
+			// scrivo su file
+			try {
+				System.out.println("*********** START READ Blob:" + in.toString());
+				while ((len = in.read(buff)) != -1) {
+					out.write(buff, 0, len);
+//					System.out.println(buff);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			try {
+				out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}	
 		
 		
 //		String fileName = "curriculum_" + codFiscale + ".pdf";
-		fileName += "\\curriculum_" + codFiscale + ".pdf";
-		File file = new File(fileName);
-
-		if (file != null) 
-		if (!file.exists()) {
-
-			try {
-				file.createNewFile();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			System.out.println("File created: " + file);
-		} else {
-			System.out.println("File gia esistente: " + file);
-		}
-
-		// save in download
-		InputStream in = null;
-		FileOutputStream out = null;
-
-		try {
-			in = theBlob.getBinaryStream();
-			out = new FileOutputStream(fileName);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		byte[] buff = new byte[4096]; // how much of the blob to read/write at a time
-		int len = 0;
-
-		// scrivo su file
-		try {
-			System.out.println("*********** START READ Blob:" + in.toString());
-			while ((len = in.read(buff)) != -1) {
-				out.write(buff, 0, len);
-//				System.out.println(buff);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			out.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		fileName += "\\curriculum_" + codFiscale + ".pdf";
+		return false;
 	}
 
 	// Update
@@ -392,6 +396,13 @@ public class CandidatoServiceImpl implements CandidatoService {
 	@Transactional
 	public int totCandidati() {
 		return candidatoDao.totCandidati();
+	}
+
+	@Override
+	@Transactional
+	public int totCandidatiCollegati(String userUsername) {
+	
+		return candidatoDao.totCandidatiAssociati(userUsername);
 	}
 
 	

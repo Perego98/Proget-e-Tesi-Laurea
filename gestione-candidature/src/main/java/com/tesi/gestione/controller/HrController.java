@@ -406,7 +406,7 @@ public class HrController {
 		
 		// call serivce
 		
-		candidatoService.dowloadCurriculum(codFiscale);
+		boolean result = candidatoService.dowloadCurriculum(codFiscale);
 		
 		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);		
 		
@@ -419,6 +419,12 @@ public class HrController {
 		
 		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
 		theModel.addAttribute("candidato", theCandidato);
+		if(result) {
+			theModel.addAttribute("registrationSucces", "Dowload Completato correttamente.");
+		}else {
+			theModel.addAttribute("registrationError", "Il Download non è andato a buon fine.");
+		}
+		
 		
 		return "info-candidato";
 	}
@@ -437,7 +443,8 @@ public class HrController {
 	
 	 @PostMapping("/uploadCV") //new annotation since 4.3
     public String singleFileUpload(@RequestParam("file") MultipartFile file, 
-	    		@RequestParam("codFiscale") String codFiscale) {
+	    		@RequestParam("codFiscale") String codFiscale,
+	    		Model theModel) {
 
 	        if (file.isEmpty()) {
 	        	// Errore reindirizzamento pagina
@@ -448,7 +455,21 @@ public class HrController {
 	        candidatoService.uploadCV(file, candidato);
 	        
 
-	        return "redirect:/hr/showListCandidati";
+	        List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);		
+			
+
+			if(theSchede.isEmpty()) {
+				theModel.addAttribute("schedaVal", null);
+			}else {
+				theModel.addAttribute("schedaVal", theSchede);
+			}
+			
+			Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
+			theModel.addAttribute("candidato", theCandidato);
+		
+			theModel.addAttribute("registrationSucces", "Upload completato correttamente.");
+
+			return "info-candidato";
 	    }
 	 
 		@GetMapping("/search")

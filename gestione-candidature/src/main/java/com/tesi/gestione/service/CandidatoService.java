@@ -22,7 +22,7 @@ public interface CandidatoService {
     
     void uploadCV(MultipartFile multipartFile, Candidato candidato);
     
-    void dowloadCurriculum(String codFiscale);
+    boolean dowloadCurriculum(String codFiscale);
     
     void deleteCandidato(String codFiscale);
     
@@ -45,6 +45,8 @@ public interface CandidatoService {
     List<Candidato> getCandidati(int firstResult, int maxResult);
 
 	int totCandidati();
+	
+	int totCandidatiCollegati(String userUsername);
 	
 	
 

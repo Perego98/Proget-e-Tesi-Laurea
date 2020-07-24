@@ -317,6 +317,7 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		
 		return (int) numCandidati;
 	}
+
 	
 
 }

@@ -92,6 +92,18 @@
 	<!-- END NAV BAR -->
 	
 	
+	<!-- Check for registration success -->
+	<c:if test="${registrationSucces != null}">
+		<div class="alert alert-success">
+				<strong>Successo!</strong> ${registrationSucces}
+		</div>
+	</c:if>
+	
+	<c:if test="${registrationError != null}">
+		<div class="alert alert-danger">
+				<strong>Attenzione!</strong> ${registrationError}
+		</div>
+	</c:if>
 
 	<div class="panel panel-default">
 		<div class="panel-heading"><h2>Info Candidato</h2></div>
