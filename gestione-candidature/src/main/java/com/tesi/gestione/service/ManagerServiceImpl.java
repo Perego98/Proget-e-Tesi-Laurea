@@ -46,7 +46,7 @@ public class ManagerServiceImpl implements ManagerService {
 
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private SedeDao sedeDao;
 
@@ -59,7 +59,7 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
 	@Transactional
 	public List<Candidato> getCandidatiAssociati(String userUsername, int firstResult, int maxResult) {
-		
+
 		return candidatoDao.getCandidatiAssociati(userUsername, firstResult, maxResult);
 	}
 
@@ -68,7 +68,5 @@ public class ManagerServiceImpl implements ManagerService {
 	public int totCandidatiAssociati(String userUsername) {
 		return candidatoDao.totCandidatiAssociati(userUsername);
 	}
-	
-	
 
 }

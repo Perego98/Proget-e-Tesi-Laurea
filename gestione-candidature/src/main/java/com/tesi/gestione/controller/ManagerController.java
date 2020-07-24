@@ -44,9 +44,9 @@ import com.tesi.gestione.service.UserService;
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {
-	
+
 	private static int FixCandidatiPerPagina = 10;
-	
+
 	@Autowired
 	private ManagerService managerService;
 
@@ -61,17 +61,15 @@ public class ManagerController {
 
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
-		
+
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-		
+
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-	}	
-	
-	
-	
+	}
+
 	@GetMapping("/showListCandidati")
 	public String showMyListCandidati(Model theModel) {
-		
+
 //		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //		String currentPrincipalName = authentication.getName();
 //
@@ -83,52 +81,46 @@ public class ManagerController {
 //		
 //		
 //		return "list-candidati-manager";	
-		
+
 		return "redirect:/manager/showListCandidatiPagination";
 	}
-	
+
 	@GetMapping("/showListCandidatiPagination")
 	public String showMyListCandidatiPagination(Model theModel,
 			@RequestParam(value = "registrationSucces", required = false) String registrationSucces,
 			@RequestParam(value = "registrationError", required = false) String registrationError) {
-		
+
 		// aggiungo le info di chi è loggato
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		
+
 		// numero di utenti per pagina
 		int candidatiPerPagina = FixCandidatiPerPagina;
-		
+
 		// numero di candidati totali
 		int maxSize = managerService.totCandidatiAssociati(currentPrincipalName);
-		
+
 		// pagine necessarie
 		int numPagine = maxSize / candidatiPerPagina;
-		
+
 		// se ho un resto aggiungo una pagina
-		if(maxSize % candidatiPerPagina != 0) {
+		if (maxSize % candidatiPerPagina != 0) {
 			numPagine++;
 		}
-	
-		
-				
+
 		// devo chiedere a UserService (UserDao) l'elenco degli user
 		List<Candidato> theCandidati = null;
-		if(numPagine > 1)
+		if (numPagine > 1)
 			theCandidati = managerService.getCandidatiAssociati(currentPrincipalName, 0, candidatiPerPagina);
 		else
 			theCandidati = managerService.getCandidatiAssociati(currentPrincipalName, 0, maxSize);
-		
-		
+
 		List<Integer> numeroPagine = new ArrayList<>();
 
-		for(int i = 0; i<numPagine; i++) {
-			numeroPagine.add(i+1);
+		for (int i = 0; i < numPagine; i++) {
+			numeroPagine.add(i + 1);
 		}
-		
-		
-		
-		
+
 		theModel.addAttribute("adminAccount", currentPrincipalName);
 		theModel.addAttribute("candidati", theCandidati);
 		theModel.addAttribute("numeroPagineList", numeroPagine);
@@ -137,138 +129,116 @@ public class ManagerController {
 		theModel.addAttribute("candidatiPerPagina", candidatiPerPagina);
 		theModel.addAttribute("registrationSucces", registrationSucces);
 		theModel.addAttribute("registrationError", registrationError);
-		
-		return "list-candidati-manager";		
+
+		return "list-candidati-manager";
 	}
-	
+
 	@GetMapping("/showListCandidatiMinMax")
-	public String showMyListCandidatiPaginationMinMax(
-			Model theModel,
-			@RequestParam("firstPage") String firstPage,
+	public String showMyListCandidatiPaginationMinMax(Model theModel, @RequestParam("firstPage") String firstPage,
 			@RequestParam("maxPage") String maxPage) {
-		
+
 		// aggiungo le info di chi è loggato
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		
+
 		// numero di utenti per pagina
 		int candidatiPerPagina = FixCandidatiPerPagina;
-		
+
 		// numero di candidati totali
 		int maxSize = managerService.totCandidatiAssociati(currentPrincipalName);
-		
+
 		// pagine necessarie
 		int numPagine = maxSize / candidatiPerPagina;
-		
+
 		// se ho un resto aggiungo una pagina
-		if(maxSize % candidatiPerPagina != 0) {
+		if (maxSize % candidatiPerPagina != 0) {
 			numPagine++;
 		}
-		
-		
+
 		int pageNumber = (Integer.parseInt(firstPage) / candidatiPerPagina) + 1;
-		
-		
-		
+
 		// devo chiedere a UserService (UserDao) l'elenco degli user
-		List<Candidato> theCandidati = managerService.getCandidatiAssociati(currentPrincipalName, Integer.parseInt(firstPage), Integer.parseInt(maxPage));
-		
-		
-		
-		
-		
-		
-		
+		List<Candidato> theCandidati = managerService.getCandidatiAssociati(currentPrincipalName,
+				Integer.parseInt(firstPage), Integer.parseInt(maxPage));
+
 		List<Integer> numeroPagine = new ArrayList<>();
 
-		for(int i = 0; i<numPagine; i++) {
-			numeroPagine.add(i+1);
+		for (int i = 0; i < numPagine; i++) {
+			numeroPagine.add(i + 1);
 		}
-		
+
 		theModel.addAttribute("candidati", theCandidati);
 		theModel.addAttribute("adminAccount", currentPrincipalName);
 		theModel.addAttribute("numeroPagineList", numeroPagine);
 		theModel.addAttribute("firstPage", false);
 		theModel.addAttribute("pageNumber", pageNumber);
 		theModel.addAttribute("candidatiPerPagina", candidatiPerPagina);
-		
-		return "list-candidati-manager";		
+
+		return "list-candidati-manager";
 	}
-	
+
 	@GetMapping("/showMoreInfoCandidato")
-	public String showMoreInfoCandidato(@RequestParam("codFiscale") String codFiscale, 
-										Model theModel) {
-		
-		
+	public String showMoreInfoCandidato(@RequestParam("codFiscale") String codFiscale, Model theModel) {
+
 		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
 		theModel.addAttribute("candidato", theCandidato);
-		
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-		
-		
-		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);		
-		
 
-		if(theSchede.isEmpty()) {
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+
+		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
+
+		if (theSchede.isEmpty()) {
 			theModel.addAttribute("schedaVal", null);
-		}else {
+		} else {
 			theModel.addAttribute("schedaVal", theSchede);
 		}
-		
 
 		String formatted = format1.format(theCandidato.getDataNascita().getTime());
 		theModel.addAttribute("dataN", formatted);
-		
-		return "info-candidato-manager";		
+
+		return "info-candidato-manager";
 	}
 
 	@GetMapping("/showCandidatoUpdateStatoForm")
-	public String showMyCandidatoUpdateStatoPage(@RequestParam("codFiscale") String codFiscale, 
-											Model theModel) {
+	public String showMyCandidatoUpdateStatoPage(@RequestParam("codFiscale") String codFiscale, Model theModel) {
 
 		theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
 		return "update-stato-candidato-manager";
 	}
-	
+
 	@PostMapping("/processUpdateStatoCandidatoForm")
-	public String processUpdateStatoCandidatoForm(
-				@RequestParam("codFiscale") String codFiscale, 
-				@Valid @ModelAttribute("crmCandidato") CrmStato CrmStato, 
-				BindingResult theBindingResult, 
-				Model theModel) {
-		
-		
+	public String processUpdateStatoCandidatoForm(@RequestParam("codFiscale") String codFiscale,
+			@Valid @ModelAttribute("crmCandidato") CrmStato CrmStato, BindingResult theBindingResult, Model theModel) {
+
 		// chiamo serviceCAndidato
 		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
-		
+
 		candidatoService.changeStato(CrmStato, theCandidato);
 
 		return "redirect:/manager/showListCandidatiPagination?registrationSucces=Stato del candidato aggiornato con successo.";
 	}
-	
-	@GetMapping("/downloadCurriculum")
-	public String downloadCurriculum(@RequestParam("codFiscale") String codFiscale,
-									Model theModel) {
-		
-		// call serivce
-		
-		candidatoService.dowloadCurriculum(codFiscale);
-		
-		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);		
-		
 
-		if(theSchede.isEmpty()) {
+	@GetMapping("/downloadCurriculum")
+	public String downloadCurriculum(@RequestParam("codFiscale") String codFiscale, Model theModel) {
+
+		// call serivce
+
+		candidatoService.dowloadCurriculum(codFiscale);
+
+		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
+
+		if (theSchede.isEmpty()) {
 			theModel.addAttribute("schedaVal", null);
-		}else {
+		} else {
 			theModel.addAttribute("schedaVal", theSchede);
 		}
-		
+
 		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
 		theModel.addAttribute("candidato", theCandidato);
-		
+
 		return "info-candidato-manager";
 	}
-	
+
 	@GetMapping("/showCompilazioneSchedaValutazioneForm")
 	public String showMyCompilazioneSchedaValutazionePage(@RequestParam("codFiscale") String codFiscale,
 			Model theModel) {
@@ -283,7 +253,7 @@ public class ManagerController {
 
 		return "compilazione-scheda-valutazione-manager";
 	}
-		
+
 	@PostMapping("/addSchedaValutazione")
 	public String addSchedaValutazioneForm(
 			@Valid @ModelAttribute("crmSchedaValutazione") CrmSchedaValutazione crmSchedaValutazione,
@@ -320,17 +290,14 @@ public class ManagerController {
 				return "redirect:/manager/showListCandidatiPagination?registrationError=Username non  presente.";
 			}
 		}
-		
 
-		return "redirect:/manager/showListCandidatiPagination?registrationSucces=Scheda di valutazione caricata con successo.";	
+		return "redirect:/manager/showListCandidatiPagination?registrationSucces=Scheda di valutazione caricata con successo.";
 	}
-	
-		
+
 	@GetMapping("/showSchedeValutazione")
-	public String showMySchedeValutazione(@RequestParam("codFiscale") String codFiscale, 
-			@RequestParam(value = "registrationSucces", required = false) String registrationSucces, 
-			@RequestParam(value = "registrationError", required = false) String registrationError,
-			Model theModel) {
+	public String showMySchedeValutazione(@RequestParam("codFiscale") String codFiscale,
+			@RequestParam(value = "registrationSucces", required = false) String registrationSucces,
+			@RequestParam(value = "registrationError", required = false) String registrationError, Model theModel) {
 
 		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
 
@@ -352,19 +319,18 @@ public class ManagerController {
 		theModel.addAttribute("codiceFiscale", codFiscale);
 		theModel.addAttribute("registrationSucces", registrationSucces);
 		theModel.addAttribute("registrationError", registrationError);
-		
+
 		return "list-schede-manager";
 	}
 
-		@GetMapping("/deleteScheda")
-	public String deleteScheda(@RequestParam("codScheda") String codScheda, 
-			@RequestParam("codFiscale") String codFiscale,
-			Model theModel) {
-		
-		
+	@GetMapping("/deleteScheda")
+	public String deleteScheda(@RequestParam("codScheda") String codScheda,
+			@RequestParam("codFiscale") String codFiscale, Model theModel) {
+
 		schedaValutazioneService.deleteScheda(codScheda);
-		
-		return "redirect:/manager/showSchedeValutazione?codFiscale="+codFiscale+"&registrationSucces=Scheda di valutazione cancellata con successo.";
+
+		return "redirect:/manager/showSchedeValutazione?codFiscale=" + codFiscale
+				+ "&registrationSucces=Scheda di valutazione cancellata con successo.";
 	}
 
 }

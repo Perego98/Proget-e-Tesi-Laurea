@@ -61,23 +61,6 @@ public class DemoAppConfig implements WebMvcConfigurer{
         return new StandardServletMultipartResolver();
     }
 	
-	//FILE
-//	 @Bean(name="multipartResolver")
-//	    public StandardServletMultipartResolver resolver(){
-//	        return new StandardServletMultipartResolver();
-//	    }
-//	 /**
-//	     * Configure MessageSource to lookup any validation/error message in internationalized property files
-//	     */
-	 // FILE
-//	    @Bean
-//	    public MessageSource messageSource() {
-//	        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-//	        messageSource.setBasename("messages");
-//	        return messageSource;
-//	    }
-	 
-	
 	// define a bean for our security datasource
 	
 	@Bean
@@ -187,11 +170,6 @@ public class DemoAppConfig implements WebMvcConfigurer{
 	    return multipartResolver;
 	}
 	
-//	 public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
-//        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/css/");
-//    }
-
 }
 
 

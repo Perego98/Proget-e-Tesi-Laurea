@@ -1,14 +1,11 @@
 package com.tesi.gestione.crm;
 
-
-
 public class CrmStato {
 
-	
 	private String statoCandidatura;
-	
+
 	public CrmStato() {
-		
+
 	}
 
 	public String getStatoCandidatura() {
@@ -19,15 +16,4 @@ public class CrmStato {
 		this.statoCandidatura = statoCandidatura;
 	}
 
-	
-	
-	
-	
-	
-
-	
-
-
-	
-	
 }

@@ -11,18 +11,17 @@ public class UsernameValidator implements ConstraintValidator<ValidUsername, Str
 	private Pattern pattern;
 	private Matcher matcher;
 
-
 	@Override
 	public boolean isValid(final String username, final ConstraintValidatorContext context) {
-		
+
 		if (username == null) {
 			return false;
 		}
-	
-		if(username.contains(" ")) {
+
+		if (username.contains(" ")) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

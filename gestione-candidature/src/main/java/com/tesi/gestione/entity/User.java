@@ -38,31 +38,30 @@ public class User {
 
 	@Column(name = "email")
 	private String email;
-	
+
 	@Column(name = "numeroTel")
 	private String telephone;
-	
+
 	@Column(name = "qualified")
 	private boolean qualified;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "users_roles", 
-	joinColumns = @JoinColumn(name = "user_username"), 
-	inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_username"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Collection<Role> roles;
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="sedeAssegnamento")
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "sedeAssegnamento")
 	private Sede sedeAssegnamento;
 
-	@OneToMany(mappedBy="utenteRelatore", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}
-					, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "utenteRelatore", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	private List<Schedavalutazione> schedeValutazione;
-	
+
 	public User() {
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String email, String telephone, boolean qualified) {
+	public User(String userName, String password, String firstName, String lastName, String email, String telephone,
+			boolean qualified) {
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
@@ -72,8 +71,8 @@ public class User {
 		this.qualified = qualified;
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String email, String telephone, boolean qualified, 
-			Collection<Role> roles) {
+	public User(String userName, String password, String firstName, String lastName, String email, String telephone,
+			boolean qualified, Collection<Role> roles) {
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
@@ -125,15 +124,14 @@ public class User {
 	}
 
 	public Collection<Role> getRoles() {
-		
+
 		return roles;
 	}
-	
 
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
-	
+
 	public String getTelephone() {
 		return telephone;
 	}
@@ -142,8 +140,6 @@ public class User {
 		this.telephone = telephone;
 	}
 
-	
-	
 	public Sede getSedeAssegnamento() {
 		return sedeAssegnamento;
 	}
@@ -151,8 +147,6 @@ public class User {
 	public void setSedeAssegnamento(Sede sedeAssegnamento) {
 		this.sedeAssegnamento = sedeAssegnamento;
 	}
-	
-	
 
 	public boolean isQualified() {
 		return qualified;
@@ -170,20 +164,4 @@ public class User {
 		this.schedeValutazione = schedeValutazione;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "User [userName=" + userName + ", password=" + password + ", firstName=" + firstName + ", lastName="
-//				+ lastName + ", email=" + email + ", telephone=" + telephone + ", qualified=" + qualified + ", roles="
-//				+ roles + ", sedeAssegnamento=" + sedeAssegnamento + ", schedeValutazione=" + schedeValutazione + "]";
-//	}
-
-	
-	
-
-
-
-
-
-	
- 
 }

@@ -21,65 +21,64 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "candidato")
 public class Candidato {
-	
+
 	@Id
 	@Column(name = "codiceFiscale")
 	private String codiceFiscale;
-	
+
 	@Column(name = "stato_candidatura")
 	private String statoCandidatura;
-	
+
 	@Column(name = "nome")
 	private String nome;
 
 	@Column(name = "cognome")
 	private String cognome;
-	
+
 	@Column(name = "telefono")
 	private String telephone;
-	
+
 	@Column(name = "email")
 	private String email;
-	
+
 	@Column(name = "dataNascita")
 	private Calendar dataNascita;
-	
+
 	@Column(name = "tipoContratto")
 	private String tipoContratto;
-	
+
 	@Column(name = "ral")
 	private float ral;
-	
+
 	@Column(name = "tempo_preavviso_giorni")
 	private int preavviso;
-	
+
 	@Column(name = "tipoOfferta")
 	private String offerta;
-	
+
 	@Column(name = "canale_provenienza", length = 150)
 	private String proveninenza;
-	
+
 	// not required
 	@Column(name = "aspettative", length = 100)
 	private String aspettative;
-	
+
 	// not required
-	@Column(name = "note", columnDefinition="TEXT")
+	@Column(name = "note", columnDefinition = "TEXT")
 	private String note;
-	
+
 	@Column(name = "curriculum")
 	@Lob
 	private Blob curriculum;
 
-	@OneToOne(cascade=CascadeType.REFRESH)
-	@JoinColumn(name="supervisore")
+	@OneToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "supervisore")
 	private User supervisore;
-	
-	
-	@OneToMany(mappedBy="candidatoRelativo", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}
-						, fetch = FetchType.LAZY)
+
+	@OneToMany(mappedBy = "candidatoRelativo", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	private List<Schedavalutazione> schedeValutazione;
-	
+
 	public Candidato() {
 	}
 
@@ -101,8 +100,6 @@ public class Candidato {
 		this.proveninenza = proveninenza;
 		this.curriculum = curriculum;
 	}
-
-	
 
 	public Candidato(String codiceFiscale, String statoCandidatura, String nome, String cognome, String telephone,
 			String email, Calendar dataNascita, String tipoContratto, float ral, int preavviso, String offerta,
@@ -176,13 +173,6 @@ public class Candidato {
 	public Calendar getDataNascita() {
 		return dataNascita;
 	}
-	
-//	public String getDataNascita() {
-//		Date date = (Date) dataNascita.getTime();
-//		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-//		
-//		return sdf.format( date );
-//	}
 
 	public void setDataNascita(Calendar dataNascita) {
 		this.dataNascita = dataNascita;
@@ -252,18 +242,14 @@ public class Candidato {
 		this.curriculum = blob;
 	}
 
-	
-	
 	public User getSupervisore() {
 		return supervisore;
 	}
-	
 
 	public void setSupervisore(User supervisore) {
 		this.supervisore = supervisore;
 	}
 
-	
 	public List<Schedavalutazione> getSchedeValutazione() {
 		return schedeValutazione;
 	}
@@ -281,12 +267,4 @@ public class Candidato {
 				+ note + ", curriculum=" + curriculum + ", supervisore=" + supervisore + "]";
 	}
 
-
-
-
-
-	
-	
-	
-	
 }

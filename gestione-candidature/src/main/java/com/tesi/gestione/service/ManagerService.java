@@ -11,13 +11,12 @@ import com.tesi.gestione.crm.CrmStato;
 import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.Sede;
 
-
 public interface ManagerService {
 
 	List<Candidato> getCandidatiAssociati(String userUsername);
-	
+
 	List<Candidato> getCandidatiAssociati(String userUsername, int firstResult, int maxResult);
-	
+
 	int totCandidatiAssociati(String userUsername);
 
 }

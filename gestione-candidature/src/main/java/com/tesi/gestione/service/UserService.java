@@ -14,29 +14,29 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
 
-    User findByUserName(String userName);
-    
-    List<User> getUsers();
-    
-    List<User> getUsers(int firstResult, int maxResult);
-    
-    List<User> getManager();
-    
-    void deleteUser(String username);
+	User findByUserName(String userName);
 
-    void update(String userUsername, CrmUserUpdate crmUser);
-    
-    void activateUser(String username);
-    
-    void deactivateUser(String username);
-    
-    void save(CrmUser crmUser);
-    
-    void changeSede(CrmSede crmSede, User theUser);
-    
-    void changeRuolo(CrmRole newRole,  User theUser);
-    
-    List<User> search(String theSearchName);
-    
-    int totUser();
+	List<User> getUsers();
+
+	List<User> getUsers(int firstResult, int maxResult);
+
+	List<User> getManager();
+
+	void deleteUser(String username);
+
+	void update(String userUsername, CrmUserUpdate crmUser);
+
+	void activateUser(String username);
+
+	void deactivateUser(String username);
+
+	void save(CrmUser crmUser);
+
+	void changeSede(CrmSede crmSede, User theUser);
+
+	void changeRuolo(CrmRole newRole, User theUser);
+
+	List<User> search(String theSearchName);
+
+	int totUser();
 }

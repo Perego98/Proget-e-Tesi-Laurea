@@ -1,6 +1,5 @@
 package com.tesi.gestione.crm;
 
-
 import java.sql.Blob;
 import java.sql.Date;
 import java.util.Calendar;
@@ -16,9 +15,9 @@ public class CrmSupervisore {
 
 	// idHr
 	private String hrId;
-	
+
 	public CrmSupervisore() {
-		
+
 	}
 
 	public String getHrId() {
@@ -28,16 +27,5 @@ public class CrmSupervisore {
 	public void setHrId(String hrId) {
 		this.hrId = hrId;
 	}
-	
-	
-	
-	
-	
-	
 
-	
-
-
-	
-	
 }

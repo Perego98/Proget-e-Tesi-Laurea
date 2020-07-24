@@ -1,6 +1,5 @@
 package com.tesi.gestione.crm;
 
-
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -13,11 +12,7 @@ import com.tesi.gestione.validation.ValidEmail;
 
 public class CrmCandidatoUpdate {
 
-//	private String codiceFiscale;
-
-	//@NotNull(message = "is required")
 	private String statoCandidatura;
-	
 
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
@@ -31,54 +26,40 @@ public class CrmCandidatoUpdate {
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String email;
-	
+
 	@NotNull(message = "is required")
-	@Size(min = 10, max=10, message = "is required")
+	@Size(min = 10, max = 10, message = "is required")
 	private String telephone;
-	
+
 //	@NotNull(message = "is required")
 //	@ValidData
 	private String dataNascita;
-	
+
 	@NotNull(message = "is required")
 	private String tipoContratto;
-	
+
 	@NotNull(message = "is required")
 	private float ral;
-	
+
 	@NotNull(message = "is required")
 	private int preavviso;
-	
+
 	@NotNull(message = "is required")
 	private String offerta;
-	
+
 	@NotNull(message = "is required")
 	@Size(max = 150, message = "Maximum length 150 characters")
 	private String proveninenza;
-	
+
 	@Size(max = 100, message = "Maximum length 100 characters")
 	private String aspettative;
-	
+
 	@Size(max = 65535, message = "Maximum length 65535 characters")
 	private String note;
-	
-//	@NotNull(message = "is required")
-//	private byte[] curriculum;
 
-	// idHr
-//	private String hrId;
-	
 	public CrmCandidatoUpdate() {
-		
-	}
 
-//	public String getCodiceFiscale() {
-//		return codiceFiscale;
-//	}
-//
-//	public void setCodiceFiscale(String codiceFiscale) {
-//		this.codiceFiscale = codiceFiscale;
-//	}
+	}
 
 	public String getStatoCandidatura() {
 		return statoCandidatura;
@@ -184,31 +165,4 @@ public class CrmCandidatoUpdate {
 		this.note = note;
 	}
 
-//	public byte[] getCurriculum() {
-//		return curriculum;
-//	}
-//
-//	public void setCurriculum(byte[] curriculum) {
-//		this.curriculum = curriculum;
-//	}
-
-//	public String getHrId() {
-//		return hrId;
-//	}
-//
-//	public void setHrId(String hrId) {
-//		this.hrId = hrId;
-//	}
-//	
-//	
-	
-	
-	
-	
-
-	
-
-
-	
-	
 }

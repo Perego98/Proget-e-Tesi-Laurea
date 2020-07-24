@@ -6,11 +6,7 @@ import javax.validation.constraints.Size;
 import com.tesi.gestione.validation.FieldMatch;
 import com.tesi.gestione.validation.ValidEmail;
 
-//@FieldMatch.List({
-//    @FieldMatch(first = "password", second = "matchingPassword", message = "The password fields must match")
-//})
 public class CrmRole {
-
 
 	@NotNull(message = "is required")
 	private String idRole;
@@ -19,7 +15,6 @@ public class CrmRole {
 
 	}
 
-	
 	public String getIdRole() {
 		return idRole;
 	}
@@ -28,9 +23,4 @@ public class CrmRole {
 		this.idRole = idRole;
 	}
 
-	
-
-
-	
-	
 }

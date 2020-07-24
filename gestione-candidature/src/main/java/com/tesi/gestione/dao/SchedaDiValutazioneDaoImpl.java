@@ -20,18 +20,17 @@ import com.tesi.gestione.service.UserService;
 @Repository
 public class SchedaDiValutazioneDaoImpl implements SchedaDiValutazioneDao {
 
-
 	// need to inject the session factory
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public void save(Schedavalutazione schedaDiValutazione) {
 		// get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// save schedaDiValutazione
-		currentSession.saveOrUpdate(schedaDiValutazione);		
+		currentSession.saveOrUpdate(schedaDiValutazione);
 	}
 
 	@Override
@@ -39,24 +38,21 @@ public class SchedaDiValutazioneDaoImpl implements SchedaDiValutazioneDao {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		// now retrieve/read from database using name
-//		Query<SchedaDiValutazione> theQuery = currentSession.createQuery("from Schedavalutazione where utente_relatore=:userUsername and "
-//				+ "candidato_relativo=:codFiscale", SchedaDiValutazione.class);
-		
-		Query<Schedavalutazione> theQuery = currentSession.createQuery("from Schedavalutazione where utente_relatore=:userUsername and "
-				+ "candidato_relativo=:codFiscale", Schedavalutazione.class);
-		
+		Query<Schedavalutazione> theQuery = currentSession.createQuery(
+				"from Schedavalutazione where utente_relatore=:userUsername and " + "candidato_relativo=:codFiscale",
+				Schedavalutazione.class);
+
 		theQuery.setParameter("codFiscale", codFiscale);
 		theQuery.setParameter("userUsername", userUsername);
-		
+
 		Schedavalutazione theSchedaDiValutazione = null;
-		
+
 		try {
 			theSchedaDiValutazione = theQuery.getSingleResult();
 		} catch (Exception e) {
 			theSchedaDiValutazione = null;
 		}
-		
+
 		return theSchedaDiValutazione;
 	}
 
@@ -66,16 +62,15 @@ public class SchedaDiValutazioneDaoImpl implements SchedaDiValutazioneDao {
 		System.out.println(" ********** RoleDaoImpl -> Entrato in getRoles().");
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// create a query
-		Query<Schedavalutazione> theQuery = 
-				currentSession.createQuery("from Schedavalutazione where candidato_relativo=:codFiscale", Schedavalutazione.class);
+		Query<Schedavalutazione> theQuery = currentSession
+				.createQuery("from Schedavalutazione where candidato_relativo=:codFiscale", Schedavalutazione.class);
 		theQuery.setParameter("codFiscale", codFiscale);
-		
+
 		// execute query and get result list
 		List<Schedavalutazione> schedeDiValutazione = theQuery.getResultList();
-		
-		
+
 		// return the result
 		return schedeDiValutazione;
 	}
@@ -86,16 +81,15 @@ public class SchedaDiValutazioneDaoImpl implements SchedaDiValutazioneDao {
 		System.out.println(" ********** RoleDaoImpl -> Entrato in getRoles().");
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// create a query
-		Query<Schedavalutazione> theQuery = 
-				currentSession.createQuery("from Schedavalutazione where utente_relatore=:userUsername", Schedavalutazione.class);
+		Query<Schedavalutazione> theQuery = currentSession
+				.createQuery("from Schedavalutazione where utente_relatore=:userUsername", Schedavalutazione.class);
 		theQuery.setParameter("userUsername", userUsername);
-		
+
 		// execute query and get result list
 		List<Schedavalutazione> schedeDiValutazione = theQuery.getResultList();
-		
-		
+
 		// return the result
 		return schedeDiValutazione;
 	}
@@ -104,18 +98,13 @@ public class SchedaDiValutazioneDaoImpl implements SchedaDiValutazioneDao {
 	public void deleteScheda(String idScheda) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// delete the obj with PK
 		Query theQuery = currentSession.createQuery("delete from Schedavalutazione where id=:idScheda");
-		
+
 		theQuery.setParameter("idScheda", Integer.parseInt(idScheda));
-		
+
 		theQuery.executeUpdate();
 	}
-	
-	
-
-
-	
 
 }

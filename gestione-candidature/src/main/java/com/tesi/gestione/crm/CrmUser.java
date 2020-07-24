@@ -8,8 +8,7 @@ import com.tesi.gestione.validation.ValidEmail;
 import com.tesi.gestione.validation.ValidUsername;
 
 @FieldMatch.List({
-    @FieldMatch(first = "password", second = "matchingPassword", message = "The password fields must match")
-})
+		@FieldMatch(first = "password", second = "matchingPassword", message = "The password fields must match") })
 public class CrmUser {
 
 	@NotNull(message = "is required")
@@ -20,7 +19,7 @@ public class CrmUser {
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String password;
-	
+
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String matchingPassword;
@@ -37,15 +36,15 @@ public class CrmUser {
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String email;
-	
+
 	@NotNull(message = "is required")
-	@Size(min = 10, max=10, message = "Devono essere 10 cifre")
+	@Size(min = 10, max = 10, message = "Devono essere 10 cifre")
 	private String telephone;
-	
+
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String idRole;
-	
+
 	@NotNull(message = "is required")
 	private int Sedeid;
 
@@ -124,10 +123,5 @@ public class CrmUser {
 	public void setSedeid(int sedeid) {
 		Sedeid = sedeid;
 	}
-	
-	
 
-
-	
-	
 }

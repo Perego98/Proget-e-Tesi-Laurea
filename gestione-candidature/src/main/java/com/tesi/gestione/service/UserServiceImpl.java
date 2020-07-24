@@ -33,16 +33,16 @@ public class UserServiceImpl implements UserService {
 	// need to inject user dao
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private CandidatoDao candidatoDao;
 
 	@Autowired
 	private RoleDao roleDao;
-	
+
 	@Autowired
 	private SedeDao sedeDao;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void save(CrmUser crmUser) {
 		User user = new User();
-		 // assign user details to the user object
+		// assign user details to the user object
 		user.setUserName(crmUser.getUserName());
 		user.setPassword(passwordEncoder.encode(crmUser.getPassword()));
 		user.setFirstName(crmUser.getFirstName());
@@ -70,15 +70,13 @@ public class UserServiceImpl implements UserService {
 
 		// set the role
 		user.setRoles(Arrays.asList(roleDao.findRoleByName(crmUser.getIdRole())));
-		
-		//set the Sede
+
+		// set the Sede
 		int sedeId = crmUser.getSedeid();
 		Sede tmpSede = sedeDao.findSedeByCityID(sedeId);
-		
-		if(tmpSede != null)
+
+		if (tmpSede != null)
 			user.setSedeAssegnamento(tmpSede);
-		
-		//user.setSedeAssegnamento(sedeDao.findSedeByCityID(crmUser.getSedeid()));
 
 		// save user in the database
 		userDao.save(user);
@@ -101,7 +99,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> getUsers() {
-		
+
 		return userDao.getUsers();
 	}
 
@@ -111,10 +109,10 @@ public class UserServiceImpl implements UserService {
 		// devo cercare tutti i candidati a lui assegnati
 		// poi devo settare per tutti loro lo stato a new
 		candidatoDao.triggerActionOnDeleteUser(username);
-		
+
 		// poi cancello l'username
 		userDao.deleteUser(username);
-		
+
 	}
 
 	@Override
@@ -127,22 +125,21 @@ public class UserServiceImpl implements UserService {
 		user.setFirstName(crmUser.getFirstName());
 		user.setLastName(crmUser.getLastName());
 		user.setTelephone(crmUser.getTelephone());
-		
+
 		userDao.save(user);
-		
+
 	}
 
 	@Override
 	@Transactional
 	public void activateUser(String username) {
 		userDao.changeState(true, username);
-		
 	}
 
 	@Override
 	@Transactional
 	public void deactivateUser(String username) {
-		userDao.changeState(false, username);		
+		userDao.changeState(false, username);
 	}
 
 	@Override
@@ -150,36 +147,32 @@ public class UserServiceImpl implements UserService {
 	public void changeSede(CrmSede crmSede, User theUser) {
 		theUser.setSedeAssegnamento(sedeDao.findSedeByCityID(crmSede.getSedeid()));
 		userDao.save(theUser);
-			
 	}
 
 	@Override
 	@Transactional
-	public void changeRuolo(CrmRole newRole,  User theUser) {
+	public void changeRuolo(CrmRole newRole, User theUser) {
 		// recupero il ruolo
-		if(newRole.getIdRole() != null) {
+		if (newRole.getIdRole() != null) {
 			Collection<Role> temp = new ArrayList<>();
 			temp.add(roleDao.findRoleByName(newRole.getIdRole()));
-			
-			
+
 			theUser.setRoles(temp);
-		}		
-		
+		}
+
 		userDao.save(theUser);
-		
 	}
 
 	@Override
 	public List<User> getManager() {
 		return userDao.getManager();
 	}
-	
-	@Override
-    @Transactional
-    public List<User> search(String theSearchName) {
 
-        return userDao.search(theSearchName);
-    }
+	@Override
+	@Transactional
+	public List<User> search(String theSearchName) {
+		return userDao.search(theSearchName);
+	}
 
 	@Override
 	public int totUser() {
@@ -189,8 +182,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public List<User> getUsers(int firstResult, int maxResult) {
-		
+
 		return userDao.getUsers(firstResult, maxResult);
 	}
-	
+
 }

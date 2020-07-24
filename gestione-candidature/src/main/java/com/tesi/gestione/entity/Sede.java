@@ -26,18 +26,18 @@ public class Sede {
 
 	@Column(name = "name_city")
 	private String nameCity;
-	
+
 	@Column(name = "via")
 	private String via;
-	
+
 	@Column(name = "cap")
 	private String cap;
-	
+
 	@Column(name = "civic_number")
 	private String civicNumber;
-	
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="sedeAssegnamento")
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "sedeAssegnamento")
 	private List<User> user;
 
 	public Sede() {
@@ -90,7 +90,7 @@ public class Sede {
 	public void setCivicNumber(String civicNumber) {
 		this.civicNumber = civicNumber;
 	}
-	
+
 	public List<User> getUser() {
 		return user;
 	}
@@ -99,17 +99,9 @@ public class Sede {
 		this.user = user;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "id(" + id + ") città=" + nameCity + ", via=" + via + ", numero civico="
-//				+ civicNumber + ", cap=" + cap ;
-//	}
-	
 	@Override
 	public String toString() {
-		return "città: " + nameCity + ", via: " + via + ",\n numero civico: "
-				+ civicNumber + ", cap: " + cap ;
+		return "città: " + nameCity + ", via: " + via + ",\n numero civico: " + civicNumber + ", cap: " + cap;
 	}
 
-	
 }

@@ -46,7 +46,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private SedeDao sedeDao;
 
@@ -84,21 +84,20 @@ public class CandidatoServiceImpl implements CandidatoService {
 		// recupero la data in forma String
 
 		String data = crmCandidato.getDataNascita();
-		
-		String giorno = null , mese = null, anno = null;
-		if(data.contains("/")) {
+
+		String giorno = null, mese = null, anno = null;
+		if (data.contains("/")) {
 			// Estraggo i giorni
 			giorno = data.substring(0, data.indexOf("/"));
 			mese = data.substring(data.indexOf("/") + 1, data.lastIndexOf("/"));
 			anno = data.substring(data.lastIndexOf("/") + 1, data.length());
-		}
-		else if(data.contains("-")){
+		} else if (data.contains("-")) {
 			anno = data.substring(0, data.indexOf("-"));
 			mese = data.substring(data.indexOf("-") + 1, data.lastIndexOf("-"));
 			giorno = data.substring(data.lastIndexOf("-") + 1, data.length());
 		}
-		
-		if(giorno != null && mese != null && anno != null) {
+
+		if (giorno != null && mese != null && anno != null) {
 			int d = Integer.parseInt(giorno);
 			int m = Integer.parseInt(mese);
 			int a = Integer.parseInt(anno);
@@ -115,7 +114,6 @@ public class CandidatoServiceImpl implements CandidatoService {
 
 			candidato.setDataNascita(calendar);
 		}
-		
 
 		User theHr = userDao.findByUserName(crmCandidato.getHrId());
 
@@ -148,41 +146,38 @@ public class CandidatoServiceImpl implements CandidatoService {
 		Blob theBlob = candidatoDao.dowloadCurriculum(codFiscale);
 
 		System.out.println("Blob: " + theBlob.toString());
-		
+
 		// add path
 		// parent component of the dialog
 		JFrame parentFrame = new JFrame();
-		 
+
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setDialogTitle("Specify a file to save");   
+		fileChooser.setDialogTitle("Specify a file to save");
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		
+
 		int userSelection = fileChooser.showSaveDialog(parentFrame);
-//		File fileToSave = null;
+
 		String fileName = "";
 		if (userSelection == JFileChooser.APPROVE_OPTION) {
-//		    fileToSave = fileChooser.getSelectedFile();
-//		    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
 			fileName = fileChooser.getSelectedFile().getAbsolutePath();
 			fileName += "\\curriculum_" + codFiscale + ".pdf";
-			
-			
+
 			File file = new File(fileName);
 
-			if (file != null) 
-			if (!file.exists()) {
+			if (file != null)
+				if (!file.exists()) {
 
-				try {
-					file.createNewFile();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					try {
+						file.createNewFile();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+					System.out.println("File created: " + file);
+				} else {
+					System.out.println("File gia esistente: " + file);
 				}
-
-				System.out.println("File created: " + file);
-			} else {
-				System.out.println("File gia esistente: " + file);
-			}
 
 			// save in download
 			InputStream in = null;
@@ -208,22 +203,17 @@ public class CandidatoServiceImpl implements CandidatoService {
 //					System.out.println(buff);
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 			try {
 				out.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return true;
-		}	
-		
-		
-//		String fileName = "curriculum_" + codFiscale + ".pdf";
-//		fileName += "\\curriculum_" + codFiscale + ".pdf";
+		}
+
 		return false;
 	}
 
@@ -277,28 +267,10 @@ public class CandidatoServiceImpl implements CandidatoService {
 			calendar.set(Calendar.SECOND, 0);
 			calendar.set(Calendar.MINUTE, 0);
 			calendar.set(Calendar.HOUR_OF_DAY, 0);
-//			calendar.setTime(data);
-
-			// salvo la data
-//			candidato.setDataNascita(calendar.getTime());
 
 			candidato.setDataNascita(calendar);
 
 		}
-
-//		if(crmCandidatoUpdate.getCurriculum() != null) {
-//			// salvo curriculum
-//			Blob blob = null;
-//			try {
-//				blob = new javax.sql.rowset.serial.SerialBlob(crmCandidatoUpdate.getCurriculum());
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			if (blob != null)
-//				candidato.setCurriculum(blob);
-//		}
-//		
 
 		// save user in the database
 		candidatoDao.save(candidato);
@@ -320,14 +292,15 @@ public class CandidatoServiceImpl implements CandidatoService {
 	@Transactional
 	public void changeSupervisore(String userUsername, Candidato theCandidato) {
 		theCandidato.setSupervisore(userDao.findByUserName(userUsername));
-		
+
 		// solo se il candidato era a new lo cambio con assegnato_manager
-		// in caso contrario o ha già un manager/ hr o è in uno stato che non va cambiato in questo modo
+		// in caso contrario o ha già un manager/ hr o è in uno stato che non va
+		// cambiato in questo modo
 		// perchè è assunto, in valutazione o rigettato
-		if(theCandidato.getStatoCandidatura().contains("new")) {
+		if (theCandidato.getStatoCandidatura().contains("new")) {
 			theCandidato.setStatoCandidatura("assegnato_manager");
 		}
-			
+
 		candidatoDao.save(theCandidato);
 	}
 
@@ -356,20 +329,20 @@ public class CandidatoServiceImpl implements CandidatoService {
 		}
 
 	}
-	
-	@Override
-    @Transactional
-    public List<Candidato> search(String theSearchName) {
 
-        return candidatoDao.search(theSearchName);
-    }
-	
 	@Override
-    @Transactional
-    public List<Sede> getSedi() {
+	@Transactional
+	public List<Candidato> search(String theSearchName) {
 
-        return sedeDao.getSedi();
-    }
+		return candidatoDao.search(theSearchName);
+	}
+
+	@Override
+	@Transactional
+	public List<Sede> getSedi() {
+
+		return sedeDao.getSedi();
+	}
 
 	@Override
 	public boolean CVpresente(String codiceFiscale) {
@@ -388,7 +361,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 
 	@Override
 	public List<Candidato> getCandidati(int firstResult, int maxResult) {
-		
+
 		return candidatoDao.getCandidati(firstResult, maxResult);
 	}
 
@@ -401,10 +374,8 @@ public class CandidatoServiceImpl implements CandidatoService {
 	@Override
 	@Transactional
 	public int totCandidatiCollegati(String userUsername) {
-	
+
 		return candidatoDao.totCandidatiAssociati(userUsername);
 	}
-
-	
 
 }

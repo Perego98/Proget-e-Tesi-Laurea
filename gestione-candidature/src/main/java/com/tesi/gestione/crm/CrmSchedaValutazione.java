@@ -1,6 +1,5 @@
 package com.tesi.gestione.crm;
 
-
 import java.sql.Blob;
 import java.sql.Date;
 import java.util.Calendar;
@@ -16,92 +15,65 @@ import com.tesi.gestione.validation.ValidEmail;
 
 public class CrmSchedaValutazione {
 
-	
-
-//	// user
-//	@NotNull(message = "is required")
-//	private String idUtenteRelatore;
-	
-//	//candidato
-//	@NotNull(message = "is required")
-//	private String idCandidatoRelativo;
-	
-	
 	// Radio button
 	private String idSedePreferita;
-	
+
 	// radio button (si, no)
 	private String dispSpostamentiTrasferimenti;
-	
+
 	// ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo')
 	private String dinamicita;
-	
+
 	// ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo')
 	private String comunicativita;
-	
+
 	// ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo')
 	private String presenza;
-	
+
 	@Size(max = 245, message = "Maximum length 245 characters")
 	private String esperienzePosizione;
-	
+
 	@Size(max = 245, message = "Maximum length 245 characters")
 	private String esperienzeGenerali;
-	
+
 	@Size(max = 145, message = "Maximum length 145 characters")
 	private String motivazioneCambiamento;
-	
+
 	@Size(max = 145, message = "Maximum length 145 characters")
 	private String motivazioneProfessionale;
-	
+
 	@Size(max = 145, message = "Maximum length 145 characters")
 	private String noteSpostamenti;
-	
+
 	@Size(max = 200, message = "Maximum length 200 characters")
 	private String lingue;
-	
+
 	@Size(max = 16777215, message = "Maximum length 16777215 characters")
 	private String competenza;
-	
+
 	@Size(max = 75, message = "Maximum length 75 characters")
 	private String note;
-	
+
 	private Float retribuzioneAttuale;
-	
+
 	private Float retribuzioneRichiesta;
-	
+
 	@Size(max = 75, message = "Maximum length 75 characters")
 	private String inquadramentoAttuale;
-	
+
 	@Size(max = 75, message = "Maximum length 75 characters")
 	private String inquadramentoRichiesto;
-	
+
 	private int periodoPreavviso;
-	
+
 	// radio button (si, no)
 	private String CVAllegato;
-	
+
 	@ValidData
 	private String dataColloquio;
 
 	public CrmSchedaValutazione() {
 	}
-
-//	public String getIdUtenteRelatore() {
-//		return idUtenteRelatore;
-//	}
-//
-//	public void setIdUtenteRelatore(String idUtenteRelatore) {
-//		this.idUtenteRelatore = idUtenteRelatore;
-//	}
-//
-//	public String getIdCandidatoRelativo() {
-//		return idCandidatoRelativo;
-//	}
-//
-//	public void setIdCandidatoRelativo(String idCandidatoRelativo) {
-//		this.idCandidatoRelativo = idCandidatoRelativo;
-//	}
 
 	public String getIdSedePreferita() {
 		return idSedePreferita;
@@ -263,27 +235,4 @@ public class CrmSchedaValutazione {
 		this.dataColloquio = dataColloquio;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "CrmSchedaValutazione [idUtenteRelatore=" + idUtenteRelatore + ", idCandidatoRelativo="
-//				+ idCandidatoRelativo + ", idSedePreferita=" + idSedePreferita + ", dispSpostamentiTrasferimenti="
-//				+ dispSpostamentiTrasferimenti + ", dinamicita=" + dinamicita + ", comunicativita=" + comunicativita
-//				+ ", presenza=" + presenza + ", esperienzePosizione=" + esperienzePosizione + ", esperienzeGenerali="
-//				+ esperienzeGenerali + ", motivazioneCambiamento=" + motivazioneCambiamento
-//				+ ", motivazioneProfessionale=" + motivazioneProfessionale + ", noteSpostamenti=" + noteSpostamenti
-//				+ ", lingue=" + lingue + ", competenza=" + competenza + ", note=" + note + ", retribuzioneAttuale="
-//				+ retribuzioneAttuale + ", retribuzioneRichiesta=" + retribuzioneRichiesta + ", inquadramentoAttuale="
-//				+ inquadramentoAttuale + ", inquadramentoRichiesto=" + inquadramentoRichiesto + ", periodoPreavviso="
-//				+ periodoPreavviso + ", CVAllegato=" + CVAllegato + ", dataColloquio=" + dataColloquio + "]";
-//	}
-//
-//	
-//	
-	
-
-	
-
-
-	
-	
 }

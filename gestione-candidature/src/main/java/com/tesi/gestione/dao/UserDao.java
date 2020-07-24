@@ -8,22 +8,22 @@ import com.tesi.gestione.entity.User;
 
 public interface UserDao {
 
-    User findByUserName(String userName);
-    
-    List<User> getUsers();
-    
-    List<User> getUsers(int firstResult, int maxResult);
-    
-    List<User> getManager();
-    
-    void save(User user);
-    
-    void deleteUser(String username);
-    
-    void changeState(boolean newState, String username);
-    
-    List<User> search(String theSearchName);
+	User findByUserName(String userName);
 
-    int totUser();
-    
+	List<User> getUsers();
+
+	List<User> getUsers(int firstResult, int maxResult);
+
+	List<User> getManager();
+
+	void save(User user);
+
+	void deleteUser(String username);
+
+	void changeState(boolean newState, String username);
+
+	List<User> search(String theSearchName);
+
+	int totUser();
+
 }

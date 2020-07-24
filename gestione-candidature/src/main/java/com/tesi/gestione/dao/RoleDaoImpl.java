@@ -27,15 +27,15 @@ public class RoleDaoImpl implements RoleDao {
 		// now retrieve/read from database using name
 		Query<Role> theQuery = currentSession.createQuery("from Role where name=:roleName", Role.class);
 		theQuery.setParameter("roleName", theRoleName);
-		
+
 		Role theRole = null;
-		
+
 		try {
 			theRole = theQuery.getSingleResult();
 		} catch (Exception e) {
 			theRole = null;
 		}
-		
+
 		return theRole;
 	}
 
@@ -45,16 +45,15 @@ public class RoleDaoImpl implements RoleDao {
 		System.out.println(" ********** RoleDaoImpl -> Entrato in getRoles().");
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// create a query
-		Query<Role> theQuery = 
-				currentSession.createQuery("from Role", Role.class);
-		
+		Query<Role> theQuery = currentSession.createQuery("from Role", Role.class);
+
 		// execute query and get result list
 		List<Role> roles = theQuery.getResultList();
-		
+
 		System.out.println(" ********** RoelDaoImpl -> roles: " + roles.toString());
-		
+
 		// return the result
 		return roles;
 	}
@@ -62,20 +61,20 @@ public class RoleDaoImpl implements RoleDao {
 	@Override
 	public Role findRoleById(String theRoleId) {
 		// get the current hibernate session
-				Session currentSession = sessionFactory.getCurrentSession();
+		Session currentSession = sessionFactory.getCurrentSession();
 
-				// now retrieve/read from database using name
-				Query<Role> theQuery = currentSession.createQuery("from Role where id=:theRoleId", Role.class);
-				theQuery.setParameter("theRoleId", theRoleId);
-				
-				Role theRole = null;
-				
-				try {
-					theRole = theQuery.getSingleResult();
-				} catch (Exception e) {
-					theRole = null;
-				}
-				
-				return theRole;
+		// now retrieve/read from database using name
+		Query<Role> theQuery = currentSession.createQuery("from Role where id=:theRoleId", Role.class);
+		theQuery.setParameter("theRoleId", theRoleId);
+
+		Role theRole = null;
+
+		try {
+			theRole = theQuery.getSingleResult();
+		} catch (Exception e) {
+			theRole = null;
+		}
+
+		return theRole;
 	}
 }

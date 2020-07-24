@@ -97,8 +97,8 @@
 				<form method="POST"
 					action="${pageContext.request.contextPath}/hr/uploadCV?codFiscale=${candidato.codiceFiscale}"
 					enctype="multipart/form-data">
-					<input type="file" name="file" /><br /> <input type="submit"
-						value="Submit" class="btn btn-primary" />
+					<input type="file" name="file" /><br /> <input type="Submit"
+						value="Carica" class="btn btn-primary" />
 				</form>
 			</div>
 

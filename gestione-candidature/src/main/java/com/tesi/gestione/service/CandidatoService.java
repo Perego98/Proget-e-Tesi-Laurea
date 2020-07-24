@@ -11,43 +11,40 @@ import com.tesi.gestione.crm.CrmStato;
 import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.Sede;
 
-
 public interface CandidatoService {
 
-    Candidato findByCodiceFiscale(String codiceFiscale);
+	Candidato findByCodiceFiscale(String codiceFiscale);
 
-    void save(CrmCandidato crmCandidato);
-    
-    List<Candidato> getCandidati();
-    
-    void uploadCV(MultipartFile multipartFile, Candidato candidato);
-    
-    boolean dowloadCurriculum(String codFiscale);
-    
-    void deleteCandidato(String codFiscale);
-    
-    void update(String codFiscale, CrmCandidatoUpdate crmCandidatoUpdate);
-    
-    void changeStato(CrmStato crmStato, Candidato theCandidato);
-    
-    void changeSupervisore(String userUsername,  Candidato theCandidato);
-    
-    List<Candidato> search(String theSearchName);
-    
-    List<Sede> getSedi();
-    
-    boolean CVpresente(String codiceFiscale);
-    
-    int getPeriodoPreavviso(String codiceFiscale);
-    
-    int getCandidatiStatus(String stato);
-    
-    List<Candidato> getCandidati(int firstResult, int maxResult);
+	void save(CrmCandidato crmCandidato);
+
+	List<Candidato> getCandidati();
+
+	void uploadCV(MultipartFile multipartFile, Candidato candidato);
+
+	boolean dowloadCurriculum(String codFiscale);
+
+	void deleteCandidato(String codFiscale);
+
+	void update(String codFiscale, CrmCandidatoUpdate crmCandidatoUpdate);
+
+	void changeStato(CrmStato crmStato, Candidato theCandidato);
+
+	void changeSupervisore(String userUsername, Candidato theCandidato);
+
+	List<Candidato> search(String theSearchName);
+
+	List<Sede> getSedi();
+
+	boolean CVpresente(String codiceFiscale);
+
+	int getPeriodoPreavviso(String codiceFiscale);
+
+	int getCandidatiStatus(String stato);
+
+	List<Candidato> getCandidati(int firstResult, int maxResult);
 
 	int totCandidati();
-	
+
 	int totCandidatiCollegati(String userUsername);
-	
-	
 
 }

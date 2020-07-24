@@ -17,7 +17,7 @@ public class SedeDaoImpl implements SedeDao {
 	// need to inject the session factory
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public Sede findSedeByCityID(long theCitySedeID) {
 
@@ -27,36 +27,35 @@ public class SedeDaoImpl implements SedeDao {
 		// now retrieve/read from database using name
 		Query<Sede> theQuery = currentSession.createQuery("from Sede where id=:cityID", Sede.class);
 		theQuery.setParameter("cityID", theCitySedeID);
-		
+
 		Sede theSede = null;
-		
+
 		try {
 			theSede = theQuery.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 			theSede = null;
 		}
-		
+
 		return theSede;
 	}
 
 	@Override
 	@Transactional
 	public List<Sede> getSedi() {
-		
+
 		System.out.println(" ********** SedeDaoImpl -> Entrato in getSedi().");
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// create a query
-		Query<Sede> theQuery = 
-				currentSession.createQuery("from Sede", Sede.class);
-		
+		Query<Sede> theQuery = currentSession.createQuery("from Sede", Sede.class);
+
 		// execute query and get result list
 		List<Sede> sedi = theQuery.getResultList();
-		
+
 		System.out.println(" ********** SedeDaoImpl -> Sedi: " + sedi.toString());
-		
+
 		// return the result
 		return sedi;
 	}
@@ -64,13 +63,10 @@ public class SedeDaoImpl implements SedeDao {
 	@Override
 	public Sede findSedeByCityID(String idSedePreferita) {
 		Long tempLong = Long.parseLong(idSedePreferita);
-		
+
 		Sede theSede = findSedeByCityID(tempLong);
-		
+
 		return theSede;
 	}
-
-
-
 
 }

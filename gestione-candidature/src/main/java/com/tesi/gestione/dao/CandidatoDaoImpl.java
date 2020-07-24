@@ -21,27 +21,28 @@ public class CandidatoDaoImpl implements CandidatoDao {
 	// need to inject the session factory
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Override
 	public Candidato findCandidatoByCF(String codFiscale) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// now retrieve/read from database using CF
-		Query<Candidato> theQuery = currentSession.createQuery("from Candidato where codiceFiscale=:codFiscale", Candidato.class);
+		Query<Candidato> theQuery = currentSession.createQuery("from Candidato where codiceFiscale=:codFiscale",
+				Candidato.class);
 		theQuery.setParameter("codFiscale", codFiscale);
-		
+
 		Candidato theCandidato = null;
-		
+
 		try {
 			theCandidato = theQuery.getSingleResult();
 		} catch (Exception e) {
 			theCandidato = null;
 		}
-		
+
 		return theCandidato;
 	}
 
@@ -50,15 +51,13 @@ public class CandidatoDaoImpl implements CandidatoDao {
 	public List<Candidato> getCandidati() {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// create a query
-		Query<Candidato> theQuery = 
-				currentSession.createQuery("from Candidato", Candidato.class);
-		
+		Query<Candidato> theQuery = currentSession.createQuery("from Candidato", Candidato.class);
+
 		// execute query and get result list
 		List<Candidato> candidati = theQuery.getResultList();
-		
-		
+
 		// return the result
 		return candidati;
 	}
@@ -68,22 +67,22 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		// get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		// create the candidato 
+		// create the candidato
 		currentSession.saveOrUpdate(candidato);
 
 	}
 
 	@Override
 	public void deleteCandidato(String codFiscale) {
-		
+
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// delete the obj with PK
 		Query theQuery = currentSession.createQuery("delete from Candidato where codiceFiscale=:theCodFiscale");
-		
+
 		theQuery.setParameter("theCodFiscale", codFiscale);
-		
+
 		theQuery.executeUpdate();
 	}
 
@@ -94,8 +93,8 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// now retrieve/read from database using CF
-		Query<Blob> theQuery = currentSession.createQuery("select curriculum from Candidato where codiceFiscale=:codFiscale",
-				Blob.class);
+		Query<Blob> theQuery = currentSession
+				.createQuery("select curriculum from Candidato where codiceFiscale=:codFiscale", Blob.class);
 		theQuery.setParameter("codFiscale", codFiscale);
 
 		Blob theCandidato = null;
@@ -105,44 +104,33 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		} catch (Exception e) {
 			theCandidato = null;
 		}
-		
-//		long lunghezza = 0;
-//		try {
-//			lunghezza = theCandidato.length();
-//			System.out.println("Lunghezza: " + lunghezza);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		if(lunghezza == 0)
-//			return null;
 
-		
 		return theCandidato;
-		
+
 	}
 
+	// azione che aggiorna di conseguenza lo stato dei candidati associati all'
+	// utente cancellato
 	@Override
 	@Transactional
 	public void triggerActionOnDeleteUser(String username) {
-		
+
 		// devo trovare tutti i candidati associati all'utente con username username
 		// devo fare un update del campo stato_candidatura, in new
-		
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// delete the obj with PK
 		Query theQuery = currentSession.createQuery("update Candidato set stato_candidatura='new' where "
 				+ "supervisore=:theUser and (stato_candidatura='assegnato_hr' or stato_candidatura='assegnato_manager')");
-		
-		User theUser = userService.findByUserName(username); 
+
+		User theUser = userService.findByUserName(username);
 		theQuery.setParameter("theUser", theUser);
-		
+
 		theQuery.executeUpdate();
-		
+
 	}
-	
+
 	@Override
 	public List<Candidato> search(String theSearchName) {
 
@@ -174,12 +162,12 @@ public class CandidatoDaoImpl implements CandidatoDao {
 
 	@Override
 	public boolean CVpresente(String codiceFiscale) {
-		
+
 		Blob tempCur = dowloadCurriculum(codiceFiscale);
-		
-		if(tempCur != null)
+
+		if (tempCur != null)
 			return true;
-		
+
 		return false;
 	}
 
@@ -193,17 +181,16 @@ public class CandidatoDaoImpl implements CandidatoDao {
 	public List<Candidato> getCandidatiAssociati(String userUsername) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// create a query
-		Query<Candidato> theQuery = 
-				currentSession.createQuery("from Candidato where supervisore=:theSupervisore", Candidato.class);
+		Query<Candidato> theQuery = currentSession.createQuery("from Candidato where supervisore=:theSupervisore",
+				Candidato.class);
 		User theUser = userService.findByUserName(userUsername);
 		theQuery.setParameter("theSupervisore", theUser);
 
 		// execute query and get result list
 		List<Candidato> candidati = theQuery.getResultList();
-		
-		
+
 		// return the result
 		return candidati;
 	}
@@ -215,17 +202,18 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// now retrieve/read from database using CF
-		Query<Long> theQuery = currentSession.createQuery("SELECT COUNT(*) FROM Candidato where stato_candidatura=:stato", Long.class);
+		Query<Long> theQuery = currentSession
+				.createQuery("SELECT COUNT(*) FROM Candidato where stato_candidatura=:stato", Long.class);
 		theQuery.setParameter("stato", stato);
-		
+
 		long numUser = 0l;
-		
+
 		try {
 			numUser = theQuery.getSingleResult();
 		} catch (Exception e) {
 			numUser = 0l;
 		}
-		
+
 		return numUser;
 	}
 
@@ -234,15 +222,14 @@ public class CandidatoDaoImpl implements CandidatoDao {
 	public List<Candidato> getCandidati(int firstResult, int maxResult) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// create a query
-		Query<Candidato> theQuery = 
-				currentSession.createQuery("from Candidato", Candidato.class);
-		
+		Query<Candidato> theQuery = currentSession.createQuery("from Candidato", Candidato.class);
+
 		// set max e min result number
 		theQuery.setFirstResult(firstResult);
 		theQuery.setMaxResults(maxResult);
-		
+
 		// execute query and get result list
 		List<Candidato> candidati = theQuery.getResultList();
 
@@ -258,15 +245,15 @@ public class CandidatoDaoImpl implements CandidatoDao {
 
 		// now retrieve/read from database using CF
 		Query<Long> theQuery = currentSession.createQuery("SELECT COUNT(*) FROM Candidato", Long.class);
-		
+
 		long numCandidati = 0l;
-		
+
 		try {
 			numCandidati = theQuery.getSingleResult();
 		} catch (Exception e) {
 			numCandidati = 0l;
 		}
-		
+
 		return (int) numCandidati;
 	}
 
@@ -275,22 +262,21 @@ public class CandidatoDaoImpl implements CandidatoDao {
 	public List<Candidato> getCandidatiAssociati(String userUsername, int firstResult, int maxResult) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// create a query
-		Query<Candidato> theQuery = 
-				currentSession.createQuery("from Candidato where supervisore=:theSupervisore", Candidato.class);
-		
+		Query<Candidato> theQuery = currentSession.createQuery("from Candidato where supervisore=:theSupervisore",
+				Candidato.class);
+
 		// set max e min result number
 		theQuery.setFirstResult(firstResult);
 		theQuery.setMaxResults(maxResult);
-		
+
 		User theUser = userService.findByUserName(userUsername);
 		theQuery.setParameter("theSupervisore", theUser);
 
 		// execute query and get result list
 		List<Candidato> candidati = theQuery.getResultList();
-		
-		
+
 		// return the result
 		return candidati;
 	}
@@ -301,23 +287,21 @@ public class CandidatoDaoImpl implements CandidatoDao {
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// now retrieve/read from database using CF
-		Query<Long> theQuery = currentSession.createQuery("SELECT COUNT(*) FROM Candidato where supervisore=:theSupervisore", Long.class);
-		
+		Query<Long> theQuery = currentSession
+				.createQuery("SELECT COUNT(*) FROM Candidato where supervisore=:theSupervisore", Long.class);
+
 		User theUser = userService.findByUserName(userUsername);
 		theQuery.setParameter("theSupervisore", theUser);
 
-		
 		long numCandidati = 0l;
-		
+
 		try {
 			numCandidati = theQuery.getSingleResult();
 		} catch (Exception e) {
 			numCandidati = 0l;
 		}
-		
+
 		return (int) numCandidati;
 	}
-
-	
 
 }

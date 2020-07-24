@@ -35,35 +35,31 @@ import com.tesi.gestione.service.UserService;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	
+
 	private static int FixUserPerPagina = 10;
-	
-    @Autowired
-    private UserService userService;
-    
-    @Autowired
-    private RoleDao roleDao;
-    
-    @Autowired
-    private SedeDao sedeDao;
-    
-	
-    private Logger logger = Logger.getLogger(getClass().getName());
-    
-    
-    
-    
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private RoleDao roleDao;
+
+	@Autowired
+	private SedeDao sedeDao;
+
+	private Logger logger = Logger.getLogger(getClass().getName());
+
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
-		
+
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-		
+
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-	}	
-	
+	}
+
 	@GetMapping("/showListUsers")
 	public String showMyListUsers(Model theModel) {
-		
+
 //		// devo chiedere a UserService (UserDao) l'elenco degli user
 //		List<User> theUsers = userService.getUsers();
 //		
@@ -77,47 +73,44 @@ public class AdminController {
 //		
 //		
 //		return "list-users";	
-		
+
 		return "redirect:/admin/showListUsersPagination";
 	}
-	
+
 	@GetMapping("/showListUsersPagination")
-	public String showMyListUsersPagination(Model theModel, 
+	public String showMyListUsersPagination(Model theModel,
 			@RequestParam(value = "registrationSucces", required = false) String registrationSucces) {
 		// numero di utenti per pagina
 		int userPerPagina = FixUserPerPagina;
-		
+
 		// numero di utenti totali
 		int maxSize = userService.totUser();
-		
+
 		// pagine necessarie
 		int numPagine = maxSize / userPerPagina;
-		
+
 		// se ho un resto aggiungo una pagina
-		if(maxSize % userPerPagina != 0) {
+		if (maxSize % userPerPagina != 0) {
 			numPagine++;
 		}
-	
-		
+
 		// devo chiedere a UserService (UserDao) l'elenco degli user
 		List<User> theUsers = null;
-		if(numPagine > 1)
+		if (numPagine > 1)
 			theUsers = userService.getUsers(0, userPerPagina);
 		else
 			theUsers = userService.getUsers(0, maxSize);
-		
-		
+
 		List<Integer> numeroPagine = new ArrayList<>();
 
-		for(int i = 0; i<numPagine; i++) {
-			numeroPagine.add(i+1);
+		for (int i = 0; i < numPagine; i++) {
+			numeroPagine.add(i + 1);
 		}
-		
-		
+
 		// aggiungo le info di chi è loggato
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		
+
 		theModel.addAttribute("adminAccount", currentPrincipalName);
 		theModel.addAttribute("users", theUsers);
 		theModel.addAttribute("numeroPagineList", numeroPagine);
@@ -125,298 +118,268 @@ public class AdminController {
 		theModel.addAttribute("pageNumber", 1);
 		theModel.addAttribute("userPerPagina", userPerPagina);
 		theModel.addAttribute("registrationSucces", registrationSucces);
-		
-		return "list-users";		
+
+		return "list-users";
 	}
-	
+
 	@GetMapping("/showListUsersMinMax")
-	public String showMyListUsersPaginationMinMax(
-			Model theModel,
-			@RequestParam("firstPage") String firstPage,
+	public String showMyListUsersPaginationMinMax(Model theModel, @RequestParam("firstPage") String firstPage,
 			@RequestParam("maxPage") String maxPage) {
 		// numero di utenti per pagina
 		int userPerPagina = FixUserPerPagina;
-		
+
 		// numero di utenti totali
 		int maxSize = userService.totUser();
-		
+
 		// pagine necessarie
 		int numPagine = maxSize / userPerPagina;
-		
+
 		// se ho un resto aggiungo una pagina
-		if(maxSize % userPerPagina != 0) {
+		if (maxSize % userPerPagina != 0) {
 			numPagine++;
 		}
-		
+
 		int pageNumber = (Integer.parseInt(firstPage) / userPerPagina) + 1;
-		
-		
+
 		// devo chiedere a UserService (UserDao) l'elenco degli user
 		List<User> theUsers = userService.getUsers(Integer.parseInt(firstPage), Integer.parseInt(maxPage));
-		
-		
-		
-		
+
 		// aggiungo le info di chi è loggato
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		
-		
+
 		List<Integer> numeroPagine = new ArrayList<>();
 
-		for(int i = 0; i<numPagine; i++) {
-			numeroPagine.add(i+1);
+		for (int i = 0; i < numPagine; i++) {
+			numeroPagine.add(i + 1);
 		}
-		
+
 		theModel.addAttribute("users", theUsers);
 		theModel.addAttribute("adminAccount", currentPrincipalName);
 		theModel.addAttribute("numeroPagineList", numeroPagine);
 		theModel.addAttribute("firstPage", false);
 		theModel.addAttribute("pageNumber", pageNumber);
 		theModel.addAttribute("userPerPagina", userPerPagina);
-		
-		return "list-users";		
-	}
 
+		return "list-users";
+	}
 
 	@GetMapping("/deleteUser")
 	public String deleteUser(@RequestParam("userUsername") String theUsername) {
-		
+
 		System.out.println("!!!!!! ******** Admin COntroller DELETE " + theUsername);
-		
+
 		userService.deleteUser(theUsername);
-		
-		return "redirect:/admin/showListUsers";		
+
+		return "redirect:/admin/showListUsers";
 	}
 
 	@GetMapping("/showRegistrationForm")
 	public String showRegistrationForm(Model theModel) {
-		
+
 		theModel.addAttribute("crmUser", new CrmUser());
-		
+
 		System.out.println(" ********** RegistrationController -> Entrato in showMyLoginPage().");
-		
+
 		// get Role from dao
 		List<Role> theRoles = roleDao.getRoles();
-		
+
 		// fet Sedi from dao
 		List<Sede> theSedi = sedeDao.getSedi();
-		
-		
+
 		System.out.println(" ********** RegistrationController -> Recuperati Ruoli: " + theRoles.toString());
 		System.out.println(" ********** RegistrationController -> Recuperati Sedi: " + theSedi.toString());
-		
+
 		// add the role to the model
 		theModel.addAttribute("roles", theRoles);
-		
+
 		// add the sedi to the model
 		theModel.addAttribute("sedi", theSedi);
-		
+
 		System.out.println(" ********** RegistrationController -> Aggiunti al modello: " + theModel.toString());
-		
-		
+
 		return "registration-user-form";
 	}
 
 	@PostMapping("/processRegistrationForm")
-	public String processRegistrationForm(
-				@Valid @ModelAttribute("crmUser") CrmUser theCrmUser, 
-				BindingResult theBindingResult, 
-				Model theModel) {
-		
+	public String processRegistrationForm(@Valid @ModelAttribute("crmUser") CrmUser theCrmUser,
+			BindingResult theBindingResult, Model theModel) {
+
 		List<Role> theRoles = roleDao.getRoles();
 		List<Sede> theSedi = sedeDao.getSedi();
-		
+
 		theModel.addAttribute("roles", theRoles);
 		theModel.addAttribute("sedi", theSedi);
-	
-		
+
 		String userName = theCrmUser.getUserName();
-		
+
 		// form validation
-		 if (theBindingResult.hasErrors()){
-			 return "registration-user-form";
-	        }
+		if (theBindingResult.hasErrors()) {
+			return "registration-user-form";
+		}
 
 		// check the database if user already exists
-        User existing = userService.findByUserName(userName);
-        if (existing != null){
-        	theModel.addAttribute("crmUser", new CrmUser());
+		User existing = userService.findByUserName(userName);
+		if (existing != null) {
+			theModel.addAttribute("crmUser", new CrmUser());
 			theModel.addAttribute("registrationError", "Username gia presente.");
 
 			logger.warning("User name already exists.");
-        	return "registration-user-form";
-        }
-     // create user account        						
-        userService.save(theCrmUser);	
-		
+			return "registration-user-form";
+		}
+		// create user account
+		userService.save(theCrmUser);
+
 		return "redirect:/admin/showListUsersPagination?registrationSucces=Utente registrato con successo.";
 	}
-	
+
 	// mostra la pagina per inserire i dati da aggiornare
 	@GetMapping("/showFormForUpdateUser")
-	public String showFormForUpdateUser(
-				@RequestParam("userUsername") String theUsername,
-				Model theModel) {
+	public String showFormForUpdateUser(@RequestParam("userUsername") String theUsername, Model theModel) {
 
 		System.out.println("********* AdminController --------- Dentro showFormForUpdateUser ->  Start");
 		theModel.addAttribute("crmUser", new CrmUserUpdate());
-		
+
 		User theUser = userService.findByUserName(theUsername);
 		List<Role> theRoles = roleDao.getRoles();
 		List<Sede> theSedi = sedeDao.getSedi();
-		
+
 		theModel.addAttribute("roles", theRoles);
 		theModel.addAttribute("sedi", theSedi);
 		theModel.addAttribute("user", theUser);
-        
-        return "update-user";		
+
+		return "update-user";
 	}
-	
+
 	// processa i dati da aggiornare
 	@PostMapping("/processUpdateUserForm")
-	public String processUpdateUserForm(
-				@RequestParam("userUsername") String theUsername,
-				@Valid @ModelAttribute("crmUser") CrmUserUpdate theCrmUser, 
-				BindingResult theBindingResult, 
-				Model theModel) {
-		
+	public String processUpdateUserForm(@RequestParam("userUsername") String theUsername,
+			@Valid @ModelAttribute("crmUser") CrmUserUpdate theCrmUser, BindingResult theBindingResult,
+			Model theModel) {
+
 		List<Role> theRoles = roleDao.getRoles();
 		List<Sede> theSedi = sedeDao.getSedi();
-		
+
 		theModel.addAttribute("roles", theRoles);
 		theModel.addAttribute("sedi", theSedi);
-	
+
 		System.out.println("********* AdminController --------- Dentro processUpdateUserForm ->  Start");
-		
+
 		// form validation
 		if (theBindingResult.hasErrors()) {
-			System.out.println("********* AdminController --------- Dentro processUpdateUserForm ->  theBindingResult.hasErrors()");
-			
+			System.out.println(
+					"********* AdminController --------- Dentro processUpdateUserForm ->  theBindingResult.hasErrors()");
+
 			User theUser = userService.findByUserName(theUsername);
-			
+
 			theModel.addAttribute("user", theUser);
-			
+
 			theModel.addAttribute("registrationError", "Uno o più parametri non sono corretti!");
-			
+
 			return "update-user";
 		}
-		
+
 		// create user account
 		userService.update(theUsername, theCrmUser);
-		
+
 		return "redirect:/admin/showListUsersPagination?registrationSucces=Utente aggiornato con successo.";
-		
+
 	}
-	
+
 	@GetMapping("/activateUser")
 	public String activateUser(@RequestParam("userUsername") String theUsername) {
-		
+
 		userService.activateUser(theUsername);
-		
-		return "redirect:/admin/showListUsers";	
+
+		return "redirect:/admin/showListUsers";
 	}
-	
+
 	@GetMapping("/deactivateUser")
 	public String deactivateUser(@RequestParam("userUsername") String theUsername) {
-		
+
 		userService.deactivateUser(theUsername);
-		
-		return "redirect:/admin/showListUsers";	
+
+		return "redirect:/admin/showListUsers";
 	}
-	
+
 	// mostra la pagina per aggiornare la sede
 	@GetMapping("/showFormForUpdateUserSede")
-	public String showFormForUpdateUserSede(
-				@RequestParam("userUsername") String theUsername,
-				Model theModel) {
-		
-		
+	public String showFormForUpdateUserSede(@RequestParam("userUsername") String theUsername, Model theModel) {
+
 		List<Sede> theSedi = sedeDao.getSedi();
 //		
 		theModel.addAttribute("sedi", theSedi);
-		
+
 		// recupero la sede attuale
 		theModel.addAttribute("sedeAttuale", userService.findByUserName(theUsername).getSedeAssegnamento());
-		
-		theModel.addAttribute("crmSede", new CrmSede());		
-		
+
+		theModel.addAttribute("crmSede", new CrmSede());
+
 		theModel.addAttribute("userUsername", theUsername);
-		
+
 //		User theUser = userService.findByUserName(theUsername);
 //		
 //		theModel.addAttribute("user", theUser);
-        
-        return "update-user-sede";		
+
+		return "update-user-sede";
 	}
-	
+
 	// processa la pagina per salvare la nuova sede
 	@PostMapping("/processUpdateUserSedeForm")
-	public String processUpdateUserSedeForm(
-				@RequestParam("userUsername") String theUsername,
-				@Valid @ModelAttribute("crmUser") CrmSede theSede, 
-				BindingResult theBindingResult, 
-				Model theModel) {
-		
+	public String processUpdateUserSedeForm(@RequestParam("userUsername") String theUsername,
+			@Valid @ModelAttribute("crmUser") CrmSede theSede, BindingResult theBindingResult, Model theModel) {
+
 		List<Sede> theSedi = sedeDao.getSedi();
-		
+
 		theModel.addAttribute("sedi", theSedi);
-	
+
 		// create user account
 		User theUser = userService.findByUserName(theUsername);
-		
+
 		userService.changeSede(theSede, theUser);
-		
-		
+
 		return "redirect:/admin/showListUsersPagination?registrationSucces=Sede aggiornata con successo.";
-		
-		}
-		
-	
+
+	}
+
 	@GetMapping("/showFormForUpdateUserRole")
-	public String showFormForUpdateUserRole(
-				@RequestParam("userUsername") String theUsername,
-				Model theModel) {
-		
-		
+	public String showFormForUpdateUserRole(@RequestParam("userUsername") String theUsername, Model theModel) {
+
 		List<Role> theRoles = roleDao.getRoles();
 //		
 		theModel.addAttribute("roles", theRoles);
-		
+
 		// recupero la sede attuale
 		theModel.addAttribute("ruoloAttuale", userService.findByUserName(theUsername).getRoles());
-		
-		theModel.addAttribute("crmRole", new CrmRole());		
-		
+
+		theModel.addAttribute("crmRole", new CrmRole());
+
 		theModel.addAttribute("userUsername", theUsername);
-		
+
 //		User theUser = userService.findByUserName(theUsername);
 //		
 //		theModel.addAttribute("user", theUser);
-        
-        return "update-user-role";		
+
+		return "update-user-role";
 	}
-	
+
 	@PostMapping("/processUpdateUserRoleForm")
-	public String processUpdateUserRoleForm(
-				@RequestParam("userUsername") String theUsername,
-				@Valid @ModelAttribute("crmUser") CrmRole theRole, 
-				BindingResult theBindingResult, 
-				Model theModel) {
-		
+	public String processUpdateUserRoleForm(@RequestParam("userUsername") String theUsername,
+			@Valid @ModelAttribute("crmUser") CrmRole theRole, BindingResult theBindingResult, Model theModel) {
+
 		List<Role> theSedi = roleDao.getRoles();
-		
+
 		theModel.addAttribute("roles", theSedi);
-	
+
 		// create user account
 		User theUser = userService.findByUserName(theUsername);
-		
+
 		userService.changeRuolo(theRole, theUser);
-		
+
 		return "redirect:/admin/showListUsersPagination?registrationSucces=Ruolo aggiornato con successo.";
 
 	}
-	
+
 	@GetMapping("/search")
 	public String searchCustomers(@RequestParam("theSearchName") String theSearchName, Model theModel) {
 
@@ -428,7 +391,5 @@ public class AdminController {
 
 		return "list-users";
 	}
-	
-	
-	
+
 }

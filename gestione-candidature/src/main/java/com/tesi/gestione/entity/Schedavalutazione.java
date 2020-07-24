@@ -18,83 +18,82 @@ import javax.transaction.Transactional;
 @Entity
 @Table(name = "schedavalutazione")
 public class Schedavalutazione {
-	
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
-	private int id;	
-	
-	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	@JoinColumn(name="utente_relatore")
-	private User utenteRelatore;
-	
 
-	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
-	@JoinColumn(name="candidato_relativo")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
+
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinColumn(name = "utente_relatore")
+	private User utenteRelatore;
+
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "candidato_relativo")
 	private Candidato candidatoRelativo;
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="sede_preferita")
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "sede_preferita")
 	private Sede sedePreferita;
-	
-	@JoinColumn(name="dispSpostamentiTrasferimenti")
+
+	@JoinColumn(name = "dispSpostamentiTrasferimenti")
 	private String dispSpostamentiTrasferimenti;
-	
-	@JoinColumn(name="dinamicita")
+
+	@JoinColumn(name = "dinamicita")
 	private String dinamicita;
-	
-	@JoinColumn(name="comunicativita")
+
+	@JoinColumn(name = "comunicativita")
 	private String comunicativita;
-	
-	@JoinColumn(name="presenza")
+
+	@JoinColumn(name = "presenza")
 	private String presenza;
-	
-	@JoinColumn(name="esperienzePosizione")
+
+	@JoinColumn(name = "esperienzePosizione")
 	private String esperienzePosizione;
-	
-	@JoinColumn(name="esperienzeGenerali")
+
+	@JoinColumn(name = "esperienzeGenerali")
 	private String esperienzeGenerali;
-	
-	@JoinColumn(name="motivazioneCambiamento")
+
+	@JoinColumn(name = "motivazioneCambiamento")
 	private String motivazioneCambiamento;
-	
-	@JoinColumn(name="motivazioneProfessionale")
+
+	@JoinColumn(name = "motivazioneProfessionale")
 	private String motivazioneProfessionale;
-	
-	@JoinColumn(name="noteSpostamenti")
+
+	@JoinColumn(name = "noteSpostamenti")
 	private String noteSpostamenti;
-	
-	@JoinColumn(name="lingue")
+
+	@JoinColumn(name = "lingue")
 	private String lingue;
-	
-	@JoinColumn(name="competenza")
+
+	@JoinColumn(name = "competenza")
 	private String competenza;
-	
-	@JoinColumn(name="note")
+
+	@JoinColumn(name = "note")
 	private String note;
-	
-	@JoinColumn(name="retribuzioneAttuale")
+
+	@JoinColumn(name = "retribuzioneAttuale")
 	private Float retribuzioneAttuale;
-	
-	@JoinColumn(name="retribuzioneRichiesta")
+
+	@JoinColumn(name = "retribuzioneRichiesta")
 	private Float retribuzioneRichiesta;
-	
-	@JoinColumn(name="inquadramentoAttuale")
+
+	@JoinColumn(name = "inquadramentoAttuale")
 	private String inquadramentoAttuale;
-	
-	@JoinColumn(name="inquadramentoRichiesto")
+
+	@JoinColumn(name = "inquadramentoRichiesto")
 	private String inquadramentoRichiesto;
-	
-	@JoinColumn(name="periodoPreavviso")
+
+	@JoinColumn(name = "periodoPreavviso")
 	private int periodoPreavviso;
-	
-	@JoinColumn(name="CVAllegato")
+
+	@JoinColumn(name = "CVAllegato")
 	private String CVAllegato;
-	
-	@JoinColumn(name="dataColloquio")
+
+	@JoinColumn(name = "dataColloquio")
 	private Calendar dataColloquio;
-	
+
 	public Schedavalutazione() {
 		super();
 	}
@@ -282,8 +281,5 @@ public class Schedavalutazione {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
-	
-	
+
 }
