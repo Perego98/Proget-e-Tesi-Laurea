@@ -186,4 +186,16 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUsers(firstResult, maxResult);
 	}
 
+	@Override
+	@Transactional
+	public List<Role> getRoles() {
+		return roleDao.getRoles();
+	}
+
+	@Override
+	@Transactional
+	public List<Sede> getSedi() {
+		return sedeDao.getSedi();
+	}
+
 }

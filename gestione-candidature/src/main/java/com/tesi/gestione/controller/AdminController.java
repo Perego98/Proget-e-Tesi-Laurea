@@ -41,12 +41,7 @@ public class AdminController {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private RoleDao roleDao;
-
-	@Autowired
-	private SedeDao sedeDao;
-
+	
 	private Logger logger = Logger.getLogger(getClass().getName());
 
 	@InitBinder
@@ -182,10 +177,10 @@ public class AdminController {
 		System.out.println(" ********** RegistrationController -> Entrato in showMyLoginPage().");
 
 		// get Role from dao
-		List<Role> theRoles = roleDao.getRoles();
+		List<Role> theRoles = userService.getRoles();
 
 		// fet Sedi from dao
-		List<Sede> theSedi = sedeDao.getSedi();
+		List<Sede> theSedi = userService.getSedi();
 
 		System.out.println(" ********** RegistrationController -> Recuperati Ruoli: " + theRoles.toString());
 		System.out.println(" ********** RegistrationController -> Recuperati Sedi: " + theSedi.toString());
@@ -205,8 +200,8 @@ public class AdminController {
 	public String processRegistrationForm(@Valid @ModelAttribute("crmUser") CrmUser theCrmUser,
 			BindingResult theBindingResult, Model theModel) {
 
-		List<Role> theRoles = roleDao.getRoles();
-		List<Sede> theSedi = sedeDao.getSedi();
+		List<Role> theRoles = userService.getRoles();
+		List<Sede> theSedi = userService.getSedi();
 
 		theModel.addAttribute("roles", theRoles);
 		theModel.addAttribute("sedi", theSedi);
@@ -241,8 +236,8 @@ public class AdminController {
 		theModel.addAttribute("crmUser", new CrmUserUpdate());
 
 		User theUser = userService.findByUserName(theUsername);
-		List<Role> theRoles = roleDao.getRoles();
-		List<Sede> theSedi = sedeDao.getSedi();
+		List<Role> theRoles = userService.getRoles();
+		List<Sede> theSedi = userService.getSedi();
 
 		theModel.addAttribute("roles", theRoles);
 		theModel.addAttribute("sedi", theSedi);
@@ -257,8 +252,8 @@ public class AdminController {
 			@Valid @ModelAttribute("crmUser") CrmUserUpdate theCrmUser, BindingResult theBindingResult,
 			Model theModel) {
 
-		List<Role> theRoles = roleDao.getRoles();
-		List<Sede> theSedi = sedeDao.getSedi();
+		List<Role> theRoles = userService.getRoles();
+		List<Sede> theSedi = userService.getSedi();
 
 		theModel.addAttribute("roles", theRoles);
 		theModel.addAttribute("sedi", theSedi);
@@ -306,7 +301,7 @@ public class AdminController {
 	@GetMapping("/showFormForUpdateUserSede")
 	public String showFormForUpdateUserSede(@RequestParam("userUsername") String theUsername, Model theModel) {
 
-		List<Sede> theSedi = sedeDao.getSedi();
+		List<Sede> theSedi = userService.getSedi();
 //		
 		theModel.addAttribute("sedi", theSedi);
 
@@ -329,7 +324,7 @@ public class AdminController {
 	public String processUpdateUserSedeForm(@RequestParam("userUsername") String theUsername,
 			@Valid @ModelAttribute("crmUser") CrmSede theSede, BindingResult theBindingResult, Model theModel) {
 
-		List<Sede> theSedi = sedeDao.getSedi();
+		List<Sede> theSedi = userService.getSedi();
 
 		theModel.addAttribute("sedi", theSedi);
 
@@ -345,7 +340,7 @@ public class AdminController {
 	@GetMapping("/showFormForUpdateUserRole")
 	public String showFormForUpdateUserRole(@RequestParam("userUsername") String theUsername, Model theModel) {
 
-		List<Role> theRoles = roleDao.getRoles();
+		List<Role> theRoles = userService.getRoles();
 //		
 		theModel.addAttribute("roles", theRoles);
 
@@ -367,7 +362,7 @@ public class AdminController {
 	public String processUpdateUserRoleForm(@RequestParam("userUsername") String theUsername,
 			@Valid @ModelAttribute("crmUser") CrmRole theRole, BindingResult theBindingResult, Model theModel) {
 
-		List<Role> theSedi = roleDao.getRoles();
+		List<Role> theSedi = userService.getRoles();
 
 		theModel.addAttribute("roles", theSedi);
 

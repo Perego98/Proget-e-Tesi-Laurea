@@ -39,4 +39,8 @@ public interface UserService extends UserDetailsService {
 	List<User> search(String theSearchName);
 
 	int totUser();
+	
+	List<Role> getRoles();
+	
+	List<Sede> getSedi();
 }
