@@ -39,6 +39,11 @@
 
 <body>
 
+	<!-- Se l'account non è autorizzato viene rimandato alla home -->
+	<c:if test="${user.qualified == false}">
+		<meta http-equiv="refresh"
+			content="0; url = http://localhost:8080/gestione-candidature/" />
+	</c:if>
 
 	<!-- Start NAV BAR -->
 	<nav class="navbar navbar-inverse">
@@ -125,6 +130,7 @@
 			<strong>Attenzione!</strong> ${registrationError}
 		</div>
 	</c:if>
+
 
 	<div class="panel panel-default">
 		<div class="panel-heading">

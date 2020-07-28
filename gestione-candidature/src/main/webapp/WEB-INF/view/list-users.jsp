@@ -39,6 +39,12 @@
 
 <body>
 	
+	<!-- Se l'account non è autorizzato viene rimandato alla home -->
+	<c:if test="${user.qualified == false}">
+		<meta http-equiv="refresh"
+			content="0; url = http://localhost:8080/gestione-candidature/" />
+	</c:if>
+	
 	<!-- Start NAV BAR -->
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
@@ -271,13 +277,7 @@
 						<!-- <td> ${tempUser.qualified}</td> -->
 						<td> 
 							<c:if test="${tempUser.qualified == false}">
-								<!-- Account disattivato 
-								<span data-toggle="tooltip" title="Questo account è stato disattivato, clicca per attivare" class="label label-warning" 
-								onclick="if((confirm('Sei sicuro di voler attivare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/activateUser?userUsername=${tempUser.userName}'" >Disattivato</span>
-								-->
-
 								
-
 								<!-- Trigger the modal with a button -->
 								<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModalDeactivate${tempUser.userName}">
 									<span data-toggle="tooltip"
@@ -286,26 +286,34 @@
 								</button>
 								
 								
-								
-							
 							</c:if>
 							
 							<c:if test="${tempUser.qualified == true}">
-								<!-- Account attivato 
-								<span data-toggle="tooltip" title="Questo account è attivo, clicca per disattivare" class="label label-success" 
-								onclick="if((confirm('Sei sicuro di voler disattivare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deactivateUser?userUsername=${tempUser.userName}'">Attivo</span>
-							-->
-								<!-- Trigger the modal with a button -->
-								<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModalActivate${tempUser.userName}">
-									<span data-toggle="tooltip"
-									title="Questo account è stato disattivato, clicca per attivare"
-									class="label">Attivo</span>
-								</button>
+								<c:if test="${tempUser.userName == adminAccount}">
+								
+									<!-- Trigger the modal with a button -->
+									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#">
+										<span data-toggle="tooltip"
+										title="Questo account è attivo, non è possibile disattivarlo in quanto si è loggatti con questo account"
+										class="label">Attivo</span>
+									</button>
+								
+								</c:if>
+								
+								<c:if test="${tempUser.userName != adminAccount}">
+								
+									<!-- Trigger the modal with a button -->
+									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModalActivate${tempUser.userName}">
+										<span data-toggle="tooltip"
+										title="Questo account è attivo, clicca per disattivare"
+										class="label">Attivo</span>
+									</button>
+								
+								</c:if>
 								
 								
 								
-							
-							
+								
 							</c:if>
 						
 						</td>
@@ -329,50 +337,38 @@
 										<li><a href="${pageContext.request.contextPath}/admin/showFormForUpdateUserSede?userUsername=${tempUser.userName}">Aggiorna Sede</a></li>
 										<c:if test="${tempUser.userName == adminAccount}">
 											<li class="disabled"><a href="#">Aggiorna Ruolo</a></li>
+											
 										</c:if>
+										
 										<c:if test="${tempUser.userName != adminAccount}">
 											<li><a href="${pageContext.request.contextPath}/admin/showFormForUpdateUserRole?userUsername=${tempUser.userName}">Aggiorna Ruolo</a></li>
+											
 										</c:if>
 										
 										
 										<li class="divider"></li>
 										<li class="dropdown-header">Elimina</li>
-										<!--  <li><a onclick="if((confirm('Sei sicuro di voler eliminare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'" >Delete</a></li> -->
-										<li>
 										
-											<a onclick="#Delete${tempUser.userName}" data-toggle="modal" data-target="#Delete${tempUser.userName}">Elimina Account
-											</a>
-											<!-- Trigger the modal with a button 
-											<button type="button" class="btn" data-toggle="modal" data-target="#myModal">
-												<span data-toggle="tooltip"
-												title="Questo account è stato disattivato, clicca per attivare"
-												class="label">Delete</span>
-											</button>-->
+											<c:if test="${tempUser.userName == adminAccount}">
+												<li class="disabled">
+													<a onclick="#" data-toggle="modal" data-target="#">Elimina Account
+													</a>
+												</li>
+											</c:if>
 											
+											<c:if test="${tempUser.userName != adminAccount}">
+												<li>
+													<a onclick="#Delete${tempUser.userName}" data-toggle="modal" data-target="#Delete${tempUser.userName}">Elimina Account
+													</a>
+												</li>
+											</c:if>
 											
-
-										</li>
+													
+										
 									</ul>
 								</div>
 
-								<!--  
-								<input type="button" value="Aggiorna Info"
-												onclick="window.location.href='${pageContext.request.contextPath}/admin/showFormForUpdateUser?userUsername=${tempUser.userName}'; return false;"
-												class="btn btn-success"/>
-												
-								<input type="button" value="Aggiorna Sede"
-												onclick="window.location.href='${pageContext.request.contextPath}/admin/showFormForUpdateUserSede?userUsername=${tempUser.userName}'; return false;"
-												class="btn btn-primary"/>
-																						
-								<input type="button" value="Aggiorna Ruolo"
-												onclick="window.location.href='${pageContext.request.contextPath}/admin/showFormForUpdateUserRole?userUsername=${tempUser.userName}'; return false;"
-												class="btn btn-warning"/>
-												
-								<input type="button" value="Delete"
-												onclick="if((confirm('Sei sicuro di voler eliminare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'; return false;"
-												class="btn btn-danger"/>
-												
-								-->
+									
 							</div>						
 						</td>
 					</tr>
