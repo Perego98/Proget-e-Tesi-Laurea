@@ -3,12 +3,12 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 
-<title>Register New Candidato</title>
+<title>Compilazione scheda di valutazione</title>
 
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -368,7 +368,7 @@
 						<!-- Register Button -->
 						<div style="margin-top: 10px" class="form-group ">
 							<div class="col-sm-6 controls">
-								<button type="submit" class="btn btn-primary">Register</button>
+								<button type="submit" class="btn btn-primary">Registra</button>
 							</div>
 						</div>
 
@@ -377,7 +377,7 @@
 				</div>
 
 		<div class="panel-footer">
-			<input type="button" value="Back"
+			<input type="button" value="Indietro"
 							onclick="window.location.href='${pageContext.request.contextPath}/manager/showListCandidati'; return false;"
 							class="btn btn-primary" />
 		</div>

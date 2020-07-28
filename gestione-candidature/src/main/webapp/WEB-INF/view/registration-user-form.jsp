@@ -3,7 +3,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <!doctype html>
-<html lang="en">
+<html>
 
 <head>
 	
@@ -137,7 +137,7 @@
 						<form:errors path="matchingPassword" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group col-xs-5" >
 							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span> 
-							<form:password path="matchingPassword" placeholder="confirm password (*)" class="form-control" />
+							<form:password path="matchingPassword" placeholder="conferma password (*)" class="form-control" />
 						</div>
 					
 						
@@ -145,14 +145,14 @@
 						<form:errors path="firstName" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-							<form:input path="firstName" placeholder="first name (*)" class="form-control" />
+							<form:input path="firstName" placeholder="nome (*)" class="form-control" />
 						</div>
 						
 						<!-- Last name -->
 						<form:errors path="lastName" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-							<form:input path="lastName" placeholder="last name (*)" class="form-control" />
+							<form:input path="lastName" placeholder="cognome (*)" class="form-control" />
 						</div>
 						
 						<!-- Email -->
@@ -167,7 +167,7 @@
 						<form:errors path="telephone" cssClass="error" />
 						<div style="margin-bottom: 25px" class="input-group col-xs-5">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> 
-							<form:input path="telephone" placeholder="telephone number (*)" class="form-control" />
+							<form:input path="telephone" placeholder="numero di telefono (*)" class="form-control" />
 						</div>
 						
 						<!-- Role -->
@@ -205,7 +205,7 @@
 						<!-- Register Button -->
 						<div style="margin-top: 10px" class="form-group">						
 							<div class="col-sm-6 controls">
-								<button type="submit" class="btn btn-primary">Register</button>
+								<button type="submit" class="btn btn-primary">Registra</button>
 							</div>
 						</div>
 						
@@ -213,7 +213,7 @@
 
 				</div>
 			<div class="panel-footer">
-				<input type="button" value="Back"
+				<input type="button" value="Indietro"
 					onclick="window.location.href='${pageContext.request.contextPath}/admin/showListUsers'; return false;"
 					class="btn btn-primary" />
 			</div>

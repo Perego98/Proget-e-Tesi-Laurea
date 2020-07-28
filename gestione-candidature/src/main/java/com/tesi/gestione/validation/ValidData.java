@@ -14,7 +14,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface ValidData {
-	String message() default "Invalid data";
+	String message() default "Data non valida";
 
 	Class<?>[] groups() default {};
 

@@ -30,38 +30,38 @@ public class CrmSchedaValutazione {
 	// ENUM('insuff', 'suff', 'discreto', 'buono', 'ottimo')
 	private String presenza;
 
-	@Size(max = 245, message = "Maximum length 245 characters")
+	@Size(max = 245, message = "Lunghezza massima 245 caratteri")
 	private String esperienzePosizione;
 
-	@Size(max = 245, message = "Maximum length 245 characters")
+	@Size(max = 245, message = "Lunghezza massima 245 caratteri")
 	private String esperienzeGenerali;
 
-	@Size(max = 145, message = "Maximum length 145 characters")
+	@Size(max = 145, message = "Lunghezza massima 145 caratteri")
 	private String motivazioneCambiamento;
 
-	@Size(max = 145, message = "Maximum length 145 characters")
+	@Size(max = 145, message = "Lunghezza massima 145 caratteri")
 	private String motivazioneProfessionale;
 
-	@Size(max = 145, message = "Maximum length 145 characters")
+	@Size(max = 145, message = "Lunghezza massima 145 caratteri")
 	private String noteSpostamenti;
 
-	@Size(max = 200, message = "Maximum length 200 characters")
+	@Size(max = 200, message = "Lunghezza massima 200 caratteri")
 	private String lingue;
 
-	@Size(max = 16777215, message = "Maximum length 16777215 characters")
+	@Size(max = 16777215, message = "Lunghezza massima 16777215 caratteri")
 	private String competenza;
 
-	@Size(max = 75, message = "Maximum length 75 characters")
+	@Size(max = 75, message = "Lunghezza massima 75 caratteri")
 	private String note;
 
 	private Float retribuzioneAttuale;
 
 	private Float retribuzioneRichiesta;
 
-	@Size(max = 75, message = "Maximum length 75 characters")
+	@Size(max = 75, message = "Lunghezza massima 75 caratteri")
 	private String inquadramentoAttuale;
 
-	@Size(max = 75, message = "Maximum length 75 characters")
+	@Size(max = 75, message = "Lunghezza massima 75 caratteri")
 	private String inquadramentoRichiesto;
 
 	private int periodoPreavviso;

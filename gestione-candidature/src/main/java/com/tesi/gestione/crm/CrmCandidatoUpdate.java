@@ -14,47 +14,47 @@ public class CrmCandidatoUpdate {
 
 	private String statoCandidatura;
 
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 1, message = "è richiesto")
 	private String nome;
 
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 1, message = "è richiesto")
 	private String cognome;
 
 	@ValidEmail
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 1, message = "è richiesto")
 	private String email;
 
-	@NotNull(message = "is required")
-	@Size(min = 10, max = 10, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 10, max = 10, message = "è richiesto")
 	private String telephone;
 
-//	@NotNull(message = "is required")
+//	@NotNull(message = "è richiesto")
 //	@ValidData
 	private String dataNascita;
 
-	@NotNull(message = "is required")
+	@NotNull(message = "è richiesto")
 	private String tipoContratto;
 
-	@NotNull(message = "is required")
+	@NotNull(message = "è richiesto")
 	private float ral;
 
-	@NotNull(message = "is required")
+	@NotNull(message = "è richiesto")
 	private int preavviso;
 
-	@NotNull(message = "is required")
+	@NotNull(message = "è richiesto")
 	private String offerta;
 
-	@NotNull(message = "is required")
-	@Size(max = 150, message = "Maximum length 150 characters")
+	@NotNull(message = "è richiesto")
+	@Size(max = 150, message = "Lunghezza massima 150 caratteri")
 	private String proveninenza;
 
-	@Size(max = 100, message = "Maximum length 100 characters")
+	@Size(max = 100, message = "Lunghezza massima 100 caratteri")
 	private String aspettative;
 
-	@Size(max = 65535, message = "Maximum length 65535 characters")
+	@Size(max = 65535, message = "Lunghezza massima 65535 caratteri")
 	private String note;
 
 	public CrmCandidatoUpdate() {

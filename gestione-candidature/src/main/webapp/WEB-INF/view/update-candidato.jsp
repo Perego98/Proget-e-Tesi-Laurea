@@ -113,7 +113,7 @@
 			<div style="margin-bottom: 25px" class="input-group col-xs-5">
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-user"></i></span>
-				<form:input path="nome" placeholder="first name (*)"
+				<form:input path="nome" placeholder="nome (*)"
 					class="form-control" />
 			</div>
 
@@ -122,7 +122,7 @@
 			<div style="margin-bottom: 25px" class="input-group col-xs-5">
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-user"></i></span>
-				<form:input path="cognome" placeholder="last name (*)"
+				<form:input path="cognome" placeholder="cognome (*)"
 					class="form-control" />
 			</div>
 
@@ -141,7 +141,7 @@
 			<div style="margin-bottom: 25px" class="input-group col-xs-5">
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-earphone"></i></span>
-				<form:input path="telephone" placeholder="telephone number (*)"
+				<form:input path="telephone" placeholder="nuymero di telefono (*)"
 					class="form-control" />
 			</div>
 
@@ -264,7 +264,7 @@
 		</div>
 			
 		<div class="panel-footer">
-			<input type="button" value="Back"
+			<input type="button" value="Indietro"
 							onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
 							class="btn btn-primary" />
 		</div>

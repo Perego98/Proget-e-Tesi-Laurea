@@ -8,7 +8,7 @@ import com.tesi.gestione.validation.ValidEmail;
 
 public class CrmSede {
 
-	@NotNull(message = "is required")
+	@NotNull(message = "è richiesto")
 	private int Sedeid;
 
 	public CrmSede() {

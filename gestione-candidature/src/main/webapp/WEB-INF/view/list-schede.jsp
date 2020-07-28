@@ -220,7 +220,7 @@
 								</table>
 								<c:if
 									test="${tempSchede.utenteRelatore.userName == accountAttuale}">
-									<input type="button" value="Delete"
+									<input type="button" value="Elimina"
 										onclick="window.location.href='${pageContext.request.contextPath}/hr/deleteScheda?codScheda=${tempSchede.id}&codFiscale=${codiceFiscale}'; return false;"
 										class="btn btn-danger btn-sm" />
 								</c:if>
@@ -239,7 +239,7 @@
 			
 			<div class="panel-footer">
 
-				<input type="button" value="Back"
+				<input type="button" value="Indietro"
 							onclick="window.location.href='${pageContext.request.contextPath}/hr/showListCandidati'; return false;"
 							class="btn btn-primary" />
 						

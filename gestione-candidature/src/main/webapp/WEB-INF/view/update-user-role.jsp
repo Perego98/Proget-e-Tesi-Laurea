@@ -137,7 +137,7 @@
 		</div>
 			
 		<div class="panel-footer">
-			<input type="button" value="Back"
+			<input type="button" value="Indietro"
 							onclick="window.location.href='${pageContext.request.contextPath}/admin/showListUsers'; return false;"
 							class="btn btn-primary" />
 		</div>

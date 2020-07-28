@@ -141,10 +141,9 @@
 					<th>Codice Fiscale</th>
 					<th>Nome</th>
 					<th>Cognome</th>
-					<th>Stato candidatura</th>
 					<th>Telefono</th>
 					<th>Email</th>
-					<th>Tipo di contratto</th>
+					<th>Stato candidatura</th>
 					<th>Supervisore</th>
 					<th>Action</th>
 				</tr>
@@ -158,10 +157,9 @@
 						<td> ${tempCandidato.codiceFiscale}</td>
 						<td> ${tempCandidato.nome}</td>
 						<td> ${tempCandidato.cognome}</td>
-						<td> ${tempCandidato.statoCandidatura}</td>
 						<td> ${tempCandidato.telephone}</td>
 						<td> ${tempCandidato.email}</td>
-						<td> ${tempCandidato.tipoContratto}</td>
+						<td> ${tempCandidato.statoCandidatura}</td>
 						<c:if test="${tempCandidato.supervisore.userName != null}">
 							<td> ${tempCandidato.supervisore.userName}</td>		
 						</c:if >
@@ -175,10 +173,10 @@
 							<div class="dropdown">
 									<button class="btn btn-primary dropdown-toggle" type="button"
 										data-toggle="dropdown">
-										Update / Info / Delete <span class="caret"></span>
+										Aggiorna / Info <span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu">
-										<li class="dropdown-header">Update</li>
+										<li class="dropdown-header">Aggiorna</li>
 										<li><a href="${pageContext.request.contextPath}/manager/showCandidatoUpdateStatoForm?codFiscale=${tempCandidato.codiceFiscale}">Aggiorna Stato</a></li>
 										<li><a href="${pageContext.request.contextPath}/manager/showCompilazioneSchedaValutazioneForm?codFiscale=${tempCandidato.codiceFiscale}">Compila Scheda Val.</a></li>
 										

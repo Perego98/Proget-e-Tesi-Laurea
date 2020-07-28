@@ -11,41 +11,41 @@ import com.tesi.gestione.validation.ValidUsername;
 		@FieldMatch(first = "password", second = "matchingPassword", message = "The password fields must match") })
 public class CrmUser {
 
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 1, message = "è richiesto")
 	@ValidUsername
 	private String userName;
 
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 1, message = "è richiesto")
 	private String password;
 
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 1, message = "è richiesto")
 	private String matchingPassword;
 
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 1, message = "è richiesto")
 	private String firstName;
 
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 1, message = "è richiesto")
 	private String lastName;
 
 	@ValidEmail
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 1, message = "è richiesto")
 	private String email;
 
-	@NotNull(message = "is required")
+	@NotNull(message = "è richiesto")
 	@Size(min = 10, max = 10, message = "Devono essere 10 cifre")
 	private String telephone;
 
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 1, message = "è richiesto")
 	private String idRole;
 
-	@NotNull(message = "is required")
+	@NotNull(message = "è richiesto")
 	private int Sedeid;
 
 	public CrmUser() {

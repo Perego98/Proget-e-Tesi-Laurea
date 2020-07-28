@@ -321,10 +321,10 @@
 								<div class="dropdown">
 									<button class="btn btn-primary dropdown-toggle" type="button"
 										data-toggle="dropdown">
-										Update/Delete <span class="caret"></span>
+										Aggiorna/Elimina <span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu">
-										<li class="dropdown-header">Update</li>
+										<li class="dropdown-header">Aggiorna</li>
 										<li><a href="${pageContext.request.contextPath}/admin/showFormForUpdateUser?userUsername=${tempUser.userName}">Aggiorna Info</a></li>
 										<li><a href="${pageContext.request.contextPath}/admin/showFormForUpdateUserSede?userUsername=${tempUser.userName}">Aggiorna Sede</a></li>
 										<c:if test="${tempUser.userName == adminAccount}">
@@ -336,11 +336,12 @@
 										
 										
 										<li class="divider"></li>
-										<li class="dropdown-header">Delete</li>
+										<li class="dropdown-header">Elimina</li>
 										<!--  <li><a onclick="if((confirm('Sei sicuro di voler eliminare questo utente?'))) window.location.href='${pageContext.request.contextPath}/admin/deleteUser?userUsername=${tempUser.userName}'" >Delete</a></li> -->
 										<li>
 										
-											<a onclick="#Delete${tempUser.userName}" data-toggle="modal" data-target="#Delete${tempUser.userName}">Delete</a>
+											<a onclick="#Delete${tempUser.userName}" data-toggle="modal" data-target="#Delete${tempUser.userName}">Elimina Account
+											</a>
 											<!-- Trigger the modal with a button 
 											<button type="button" class="btn" data-toggle="modal" data-target="#myModal">
 												<span data-toggle="tooltip"

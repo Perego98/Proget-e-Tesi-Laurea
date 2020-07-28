@@ -10,20 +10,20 @@ public class CrmUserUpdate {
 
 	private String userName;
 
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 1, message = "è richiesto")
 	private String firstName;
 
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 1, message = "è richiesto")
 	private String lastName;
 
 	@ValidEmail
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "è richiesto")
+	@Size(min = 1, message = "è richiesto")
 	private String email;
 
-	@NotNull(message = "is required")
+	@NotNull(message = "è richiesto")
 	@Size(min = 10, max = 10, message = "Devono essere 10 cifre")
 	private String telephone;
 
