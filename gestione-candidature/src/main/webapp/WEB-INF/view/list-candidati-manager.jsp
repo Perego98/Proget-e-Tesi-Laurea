@@ -133,7 +133,7 @@
 	</c:if>
 
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2>Elenco Candidati assegnati all'HR</h2></div>
+		<div class="panel-heading"><h2>Elenco Candidati assegnati al Manager</h2></div>
 		<div  class="panel-body">
 		
 		

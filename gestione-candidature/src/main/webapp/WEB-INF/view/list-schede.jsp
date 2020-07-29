@@ -115,11 +115,14 @@
 		<div  class="panel-body">
 		
 		<div class="panel-group" id="accordion">
+		
 			<c:forEach var="tempSchede" items="${schede}">
+				
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#accordion"
+								<a 	id="data${tempSchede.id}"
+									data-toggle="collapse" data-parent="#accordion"
 									href="#collapse${tempSchede.id}"> ${tempSchede.dataColloquio.getTime()}</a>
 							</h4>
 						</div>
@@ -234,7 +237,6 @@
 							</div>
 						</div>
 					</div>
-
 
 				</c:forEach>
 		</div>

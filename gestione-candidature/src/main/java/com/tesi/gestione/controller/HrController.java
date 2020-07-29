@@ -489,15 +489,22 @@ public class HrController {
 			@RequestParam(value = "registrationError", required = false) String registrationError, Model theModel) {
 
 		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
-
+		
+	
+		
 		if (theSchede.isEmpty()) {
 			theModel.addAttribute("schede", null);
 		} else {
 			theModel.addAttribute("schede", theSchede);
 			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+			int i = 0;
 			for (Schedavalutazione temp : theSchede) {
 				String formatted = format1.format(temp.getDataColloquio().getTime());
-				theModel.addAttribute("data" + temp.getId(), formatted);
+				theModel.addAttribute(String.valueOf(i), formatted);
+				i++;
+				//theModel.addAttribute("data"+temp.getId(), formatted);
+				//<c:set var="data" value="data"/>
+				//+ 
 			}
 
 		}
