@@ -65,7 +65,7 @@ public class SchedaDiValutazioneDaoImpl implements SchedaDiValutazioneDao {
 
 		// create a query
 		Query<Schedavalutazione> theQuery = currentSession
-				.createQuery("from Schedavalutazione where candidato_relativo=:codFiscale", Schedavalutazione.class);
+				.createQuery("from Schedavalutazione where candidato_relativo=:codFiscale order by dataColloquio DESC", Schedavalutazione.class);
 		theQuery.setParameter("codFiscale", codFiscale);
 
 		// execute query and get result list

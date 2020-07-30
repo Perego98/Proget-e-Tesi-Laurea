@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.tesi.gestione.copy.SchedavalutazioneCopy;
 import com.tesi.gestione.crm.CrmCandidatoUpdate;
 import com.tesi.gestione.crm.CrmRole;
 import com.tesi.gestione.crm.CrmSchedaValutazione;
@@ -300,17 +301,18 @@ public class ManagerController {
 			@RequestParam(value = "registrationError", required = false) String registrationError, Model theModel) {
 
 		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
-
+		List<SchedavalutazioneCopy> theSchedeCopy = new ArrayList<>();
+		
+		
 		if (theSchede.isEmpty()) {
 			theModel.addAttribute("schede", null);
 		} else {
-			theModel.addAttribute("schede", theSchede);
-			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 			for (Schedavalutazione temp : theSchede) {
-				String formatted = format1.format(temp.getDataColloquio().getTime());
-				theModel.addAttribute("data" + temp.getId(), formatted);
+				theSchedeCopy.add(new SchedavalutazioneCopy(temp));
 			}
-
+			
+			// aggiungo le schede con data formattata al model
+			theModel.addAttribute("schede", theSchedeCopy);
 		}
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

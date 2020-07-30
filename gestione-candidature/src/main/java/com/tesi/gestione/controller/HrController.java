@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tesi.gestione.copy.SchedavalutazioneCopy;
 import com.tesi.gestione.crm.CrmCandidato;
 import com.tesi.gestione.crm.CrmCandidatoUpdate;
 import com.tesi.gestione.crm.CrmSchedaValutazione;
@@ -489,24 +490,19 @@ public class HrController {
 			@RequestParam(value = "registrationError", required = false) String registrationError, Model theModel) {
 
 		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
+		List<SchedavalutazioneCopy> theSchedeCopy = new ArrayList<>();
 		
-	
 		
 		if (theSchede.isEmpty()) {
 			theModel.addAttribute("schede", null);
 		} else {
-			theModel.addAttribute("schede", theSchede);
-			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-			int i = 0;
+//			theModel.addAttribute("schede", theSchede);
 			for (Schedavalutazione temp : theSchede) {
-				String formatted = format1.format(temp.getDataColloquio().getTime());
-				theModel.addAttribute(String.valueOf(i), formatted);
-				i++;
-				//theModel.addAttribute("data"+temp.getId(), formatted);
-				//<c:set var="data" value="data"/>
-				//+ 
+				theSchedeCopy.add(new SchedavalutazioneCopy(temp));
 			}
-
+			
+			// aggiungo le schede con data formattata al model
+			theModel.addAttribute("schede", theSchedeCopy);
 		}
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
