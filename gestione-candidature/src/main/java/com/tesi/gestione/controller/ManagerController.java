@@ -22,7 +22,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.tesi.gestione.copy.SchedavalutazioneCopy;
+import com.tesi.gestione.bean.CandidatoBean;
+import com.tesi.gestione.bean.SchedavalutazioneBean;
+import com.tesi.gestione.bean.SedeBean;
+import com.tesi.gestione.bean.UserBean;
 import com.tesi.gestione.crm.CrmCandidatoUpdate;
 import com.tesi.gestione.crm.CrmRole;
 import com.tesi.gestione.crm.CrmSchedaValutazione;
@@ -71,18 +74,6 @@ public class ManagerController {
 	@GetMapping("/showListCandidati")
 	public String showMyListCandidati(Model theModel) {
 
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		String currentPrincipalName = authentication.getName();
-//
-//		List<Candidato> theCandidati = managerService.getCandidatiAssociati(currentPrincipalName);
-//
-//		
-//		// devo aggiungerli al model
-//		theModel.addAttribute("candidati", theCandidati);
-//		
-//		
-//		return "list-candidati-manager";	
-
 		return "redirect:/manager/showListCandidatiPagination";
 	}
 
@@ -115,6 +106,12 @@ public class ManagerController {
 			theCandidati = managerService.getCandidatiAssociati(currentPrincipalName, 0, candidatiPerPagina);
 		else
 			theCandidati = managerService.getCandidatiAssociati(currentPrincipalName, 0, maxSize);
+		
+		List<CandidatoBean> theCandidatiBean = new ArrayList<>();
+		
+		for(Candidato temp : theCandidati){
+			theCandidatiBean.add(new CandidatoBean(temp));
+		}
 
 		List<Integer> numeroPagine = new ArrayList<>();
 
@@ -123,7 +120,8 @@ public class ManagerController {
 		}
 
 		theModel.addAttribute("adminAccount", currentPrincipalName);
-		theModel.addAttribute("candidati", theCandidati);
+//		theModel.addAttribute("candidati", theCandidati);
+		theModel.addAttribute("candidati", theCandidatiBean);
 		theModel.addAttribute("numeroPagineList", numeroPagine);
 		theModel.addAttribute("firstPage", true);
 		theModel.addAttribute("pageNumber", 1);
@@ -162,13 +160,20 @@ public class ManagerController {
 		List<Candidato> theCandidati = managerService.getCandidatiAssociati(currentPrincipalName,
 				Integer.parseInt(firstPage), Integer.parseInt(maxPage));
 
+		List<CandidatoBean> theCandidatiBean = new ArrayList<>();
+		
+		for(Candidato temp : theCandidati){
+			theCandidatiBean.add(new CandidatoBean(temp));
+		}
+		
 		List<Integer> numeroPagine = new ArrayList<>();
 
 		for (int i = 0; i < numPagine; i++) {
 			numeroPagine.add(i + 1);
 		}
 
-		theModel.addAttribute("candidati", theCandidati);
+		
+		theModel.addAttribute("candidati", theCandidatiBean);
 		theModel.addAttribute("adminAccount", currentPrincipalName);
 		theModel.addAttribute("numeroPagineList", numeroPagine);
 		theModel.addAttribute("firstPage", false);
@@ -181,12 +186,12 @@ public class ManagerController {
 	@GetMapping("/showMoreInfoCandidato")
 	public String showMoreInfoCandidato(@RequestParam("codFiscale") String codFiscale, Model theModel) {
 
-		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
+		CandidatoBean theCandidato = getCandidato(codFiscale);
 		theModel.addAttribute("candidato", theCandidato);
 
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+//		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 
-		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
+		List<SchedavalutazioneBean> theSchede = getSchedeByCfBean(codFiscale);
 
 		if (theSchede.isEmpty()) {
 			theModel.addAttribute("schedaVal", null);
@@ -194,8 +199,8 @@ public class ManagerController {
 			theModel.addAttribute("schedaVal", theSchede);
 		}
 
-		String formatted = format1.format(theCandidato.getDataNascita().getTime());
-		theModel.addAttribute("dataN", formatted);
+//		String formatted = format1.format(theCandidato.getDataNascita().getTime());
+//		theModel.addAttribute("dataN", formatted);
 
 		return "info-candidato-manager";
 	}
@@ -203,7 +208,7 @@ public class ManagerController {
 	@GetMapping("/showCandidatoUpdateStatoForm")
 	public String showMyCandidatoUpdateStatoPage(@RequestParam("codFiscale") String codFiscale, Model theModel) {
 
-		theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
+		theModel.addAttribute("candidato", getCandidato(codFiscale));
 		return "update-stato-candidato-manager";
 	}
 
@@ -226,7 +231,7 @@ public class ManagerController {
 
 		candidatoService.dowloadCurriculum(codFiscale);
 
-		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
+		List<SchedavalutazioneBean> theSchede = getSchedeByCfBean(codFiscale);
 
 		if (theSchede.isEmpty()) {
 			theModel.addAttribute("schedaVal", null);
@@ -234,8 +239,7 @@ public class ManagerController {
 			theModel.addAttribute("schedaVal", theSchede);
 		}
 
-		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
-		theModel.addAttribute("candidato", theCandidato);
+		theModel.addAttribute("candidato", getCandidato(codFiscale));
 
 		return "info-candidato-manager";
 	}
@@ -248,9 +252,9 @@ public class ManagerController {
 		String currentPrincipalName = authentication.getName();
 
 		theModel.addAttribute("crmSchedaValutazione", new CrmSchedaValutazione());
-		theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
-		theModel.addAttribute("user", userService.findByUserName(currentPrincipalName));
-		theModel.addAttribute("sedi", candidatoService.getSedi());
+		theModel.addAttribute("candidato", getCandidato(codFiscale));
+		theModel.addAttribute("user", getUser(currentPrincipalName));
+		theModel.addAttribute("sedi", getSediBean());
 
 		return "compilazione-scheda-valutazione-manager";
 	}
@@ -269,9 +273,9 @@ public class ManagerController {
 		// form validation
 		if (theBindingResult.hasErrors()) {
 
-			theModel.addAttribute("sedi", candidatoService.getSedi());
-			theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
-			theModel.addAttribute("user", userService.findByUserName(currentPrincipalName));
+			theModel.addAttribute("sedi", getSediBean());
+			theModel.addAttribute("candidato", getCandidato(codFiscale));
+			theModel.addAttribute("user", getUser(currentPrincipalName));
 
 			return "compilazione-scheda-valutazione";
 		}
@@ -301,14 +305,14 @@ public class ManagerController {
 			@RequestParam(value = "registrationError", required = false) String registrationError, Model theModel) {
 
 		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
-		List<SchedavalutazioneCopy> theSchedeCopy = new ArrayList<>();
+		List<SchedavalutazioneBean> theSchedeCopy = new ArrayList<>();
 		
 		
 		if (theSchede.isEmpty()) {
 			theModel.addAttribute("schede", null);
 		} else {
 			for (Schedavalutazione temp : theSchede) {
-				theSchedeCopy.add(new SchedavalutazioneCopy(temp));
+				theSchedeCopy.add(new SchedavalutazioneBean(temp));
 			}
 			
 			// aggiungo le schede con data formattata al model
@@ -333,6 +337,55 @@ public class ManagerController {
 
 		return "redirect:/manager/showSchedeValutazione?codFiscale=" + codFiscale
 				+ "&registrationSucces=Scheda di valutazione cancellata con successo.";
+	}
+	
+	// metodi helper
+	private UserBean getUser(String currentPrincipalName){
+		return new UserBean(userService.findByUserName(currentPrincipalName));
+		
+	}
+	
+	private CandidatoBean getCandidato(String codFiscale) {
+		
+		return new CandidatoBean(candidatoService.findByCodiceFiscale(codFiscale));
+	}
+	
+	private List<UserBean> getManagers() {
+		List<User> theManagers = userService.getManager();
+		List<UserBean> managerBean = new ArrayList<>();
+		
+		for(User temp : theManagers){
+			managerBean.add(new UserBean(temp));
+		}
+		
+		return managerBean;
+	}
+	
+	private List<SchedavalutazioneBean> getSchedeByCfBean(String codFiscale){
+		List<Schedavalutazione> theSchede = 
+				schedaValutazioneService.findByCodiceFiscale(codFiscale);
+
+		
+		List<SchedavalutazioneBean> theSchedeBean = new ArrayList<>();
+		
+		for(Schedavalutazione temp : theSchede){
+			theSchedeBean.add(new SchedavalutazioneBean(temp));
+		}
+		
+		return theSchedeBean;
+	}
+	
+	private List<SedeBean> getSediBean(){
+		// get Sedi from dao
+		List<Sede> theSedi = userService.getSedi();
+		
+		List<SedeBean> theSediBean = new ArrayList<>();
+		
+		for(Sede temp : theSedi){
+			theSediBean.add(new SedeBean(temp));
+		}
+		
+		return theSediBean;
 	}
 
 }

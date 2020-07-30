@@ -120,7 +120,7 @@
 						<div class="panel-heading">
 							<h4 class="panel-title">
 								<a data-toggle="collapse" data-parent="#accordion"
-									href="#collapse${tempSchede.id}"> ${tempSchede.dataFormatted}</a>
+									href="#collapse${tempSchede.id}"> Scheda compilata il: ${tempSchede.dataFormatted}</a>
 							</h4>
 						</div>
 						<div id="collapse${tempSchede.id}" class="panel-collapse collapse">

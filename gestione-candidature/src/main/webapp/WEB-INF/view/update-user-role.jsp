@@ -123,7 +123,7 @@
 				
 					<!-- Print the radiobutton role -->
 					<c:forEach var="tempRole" items="${roles}">
-							<form:radiobutton path="idRole" value="${tempRole.name}"/> ${tempRole.name}		
+							<form:radiobutton path="idRole" value="${tempRole.name}"/> ${tempRole.nameFormatted}		
 							<br>											
 					</c:forEach>							
 			</div>

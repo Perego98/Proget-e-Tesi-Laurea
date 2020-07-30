@@ -21,12 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.tesi.gestione.bean.RoleBean;
+import com.tesi.gestione.bean.SedeBean;
+import com.tesi.gestione.bean.UserBean;
 import com.tesi.gestione.crm.CrmRole;
 import com.tesi.gestione.crm.CrmSede;
 import com.tesi.gestione.crm.CrmUser;
 import com.tesi.gestione.crm.CrmUserUpdate;
-import com.tesi.gestione.dao.RoleDao;
-import com.tesi.gestione.dao.SedeDao;
 import com.tesi.gestione.entity.Role;
 import com.tesi.gestione.entity.Sede;
 import com.tesi.gestione.entity.User;
@@ -55,19 +56,6 @@ public class AdminController {
 	@GetMapping("/showListUsers")
 	public String showMyListUsers(Model theModel) {
 
-//		// devo chiedere a UserService (UserDao) l'elenco degli user
-//		List<User> theUsers = userService.getUsers();
-//		
-//		// devo aggiungerli al model
-//		theModel.addAttribute("users", theUsers);
-//		
-//		// aggiungo le info di chi è loggato
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		String currentPrincipalName = authentication.getName();
-//		theModel.addAttribute("adminAccount", currentPrincipalName);
-//		
-//		
-//		return "list-users";	
 
 		return "redirect:/admin/showListUsersPagination";
 	}
@@ -96,6 +84,13 @@ public class AdminController {
 		else
 			theUsers = userService.getUsers(0, maxSize);
 
+		
+		List<UserBean> theUsersBean = new ArrayList<>();
+		
+		for(User temp : theUsers){
+			theUsersBean.add(new UserBean(temp));
+		}
+		
 		List<Integer> numeroPagine = new ArrayList<>();
 
 		for (int i = 0; i < numPagine; i++) {
@@ -107,7 +102,8 @@ public class AdminController {
 		String currentPrincipalName = authentication.getName();
 
 		theModel.addAttribute("adminAccount", currentPrincipalName);
-		theModel.addAttribute("users", theUsers);
+//		theModel.addAttribute("users", theUsers);
+		theModel.addAttribute("users", theUsersBean);
 		theModel.addAttribute("numeroPagineList", numeroPagine);
 		theModel.addAttribute("firstPage", true);
 		theModel.addAttribute("pageNumber", 1);
@@ -139,6 +135,12 @@ public class AdminController {
 		// devo chiedere a UserService (UserDao) l'elenco degli user
 		List<User> theUsers = userService.getUsers(Integer.parseInt(firstPage), Integer.parseInt(maxPage));
 
+		List<UserBean> theUsersBean = new ArrayList<>();
+		
+		for(User temp : theUsers){
+			theUsersBean.add(new UserBean(temp));
+		}
+		
 		// aggiungo le info di chi è loggato
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
@@ -149,7 +151,8 @@ public class AdminController {
 			numeroPagine.add(i + 1);
 		}
 
-		theModel.addAttribute("users", theUsers);
+//		theModel.addAttribute("users", theUsers);
+		theModel.addAttribute("users", theUsersBean);
 		theModel.addAttribute("adminAccount", currentPrincipalName);
 		theModel.addAttribute("numeroPagineList", numeroPagine);
 		theModel.addAttribute("firstPage", false);
@@ -176,20 +179,32 @@ public class AdminController {
 
 		System.out.println(" ********** RegistrationController -> Entrato in showMyLoginPage().");
 
-		// get Role from dao
-		List<Role> theRoles = userService.getRoles();
+//		// get Role from dao
+//		List<Role> theRoles = userService.getRoles();
+//
+//		// get Sedi from dao
+//		List<Sede> theSedi = userService.getSedi();
+//		
+//		List<RoleBean> theRolesBean = new ArrayList<>();
+//		List<SedeBean> theSediBean = new ArrayList<>();
+//		
+//		for(Role temp : theRoles){
+//			theRolesBean.add(new RoleBean(temp));
+//		}
+//		
+//		for(Sede temp : theSedi){
+//			theSediBean.add(new SedeBean(temp));
+//		}
+		
 
-		// fet Sedi from dao
-		List<Sede> theSedi = userService.getSedi();
-
-		System.out.println(" ********** RegistrationController -> Recuperati Ruoli: " + theRoles.toString());
-		System.out.println(" ********** RegistrationController -> Recuperati Sedi: " + theSedi.toString());
+//		System.out.println(" ********** RegistrationController -> Recuperati Ruoli: " + theRoles.toString());
+//		System.out.println(" ********** RegistrationController -> Recuperati Sedi: " + theSedi.toString());
 
 		// add the role to the model
-		theModel.addAttribute("roles", theRoles);
+		theModel.addAttribute("roles", getRolesBean());
 
 		// add the sedi to the model
-		theModel.addAttribute("sedi", theSedi);
+		theModel.addAttribute("sedi", getSediBean());
 
 		System.out.println(" ********** RegistrationController -> Aggiunti al modello: " + theModel.toString());
 
@@ -200,11 +215,11 @@ public class AdminController {
 	public String processRegistrationForm(@Valid @ModelAttribute("crmUser") CrmUser theCrmUser,
 			BindingResult theBindingResult, Model theModel) {
 
-		List<Role> theRoles = userService.getRoles();
-		List<Sede> theSedi = userService.getSedi();
+//		List<Role> theRoles = userService.getRoles();
+//		List<Sede> theSedi = userService.getSedi();
 
-		theModel.addAttribute("roles", theRoles);
-		theModel.addAttribute("sedi", theSedi);
+		theModel.addAttribute("roles", getRolesBean());
+		theModel.addAttribute("sedi", getSediBean());
 
 		String userName = theCrmUser.getUserName();
 
@@ -235,13 +250,13 @@ public class AdminController {
 		System.out.println("********* AdminController --------- Dentro showFormForUpdateUser ->  Start");
 		theModel.addAttribute("crmUser", new CrmUserUpdate());
 
-		User theUser = userService.findByUserName(theUsername);
-		List<Role> theRoles = userService.getRoles();
-		List<Sede> theSedi = userService.getSedi();
+//		User theUser = userService.findByUserName(theUsername);
+//		List<Role> theRoles = userService.getRoles();
+//		List<Sede> theSedi = userService.getSedi();
 
-		theModel.addAttribute("roles", theRoles);
-		theModel.addAttribute("sedi", theSedi);
-		theModel.addAttribute("user", theUser);
+		theModel.addAttribute("roles", getRolesBean());
+		theModel.addAttribute("sedi", getSediBean());
+		theModel.addAttribute("user", findUserByUsernameBean(theUsername));
 
 		return "update-user";
 	}
@@ -252,11 +267,11 @@ public class AdminController {
 			@Valid @ModelAttribute("crmUser") CrmUserUpdate theCrmUser, BindingResult theBindingResult,
 			Model theModel) {
 
-		List<Role> theRoles = userService.getRoles();
-		List<Sede> theSedi = userService.getSedi();
+//		List<Role> theRoles = userService.getRoles();
+//		List<Sede> theSedi = userService.getSedi();
 
-		theModel.addAttribute("roles", theRoles);
-		theModel.addAttribute("sedi", theSedi);
+		theModel.addAttribute("roles", getRolesBean());
+		theModel.addAttribute("sedi", getSediBean());
 
 		System.out.println("********* AdminController --------- Dentro processUpdateUserForm ->  Start");
 
@@ -265,9 +280,9 @@ public class AdminController {
 			System.out.println(
 					"********* AdminController --------- Dentro processUpdateUserForm ->  theBindingResult.hasErrors()");
 
-			User theUser = userService.findByUserName(theUsername);
+//			User theUser = userService.findByUserName(theUsername);
 
-			theModel.addAttribute("user", theUser);
+			theModel.addAttribute("user", findUserByUsernameBean(theUsername));
 
 			theModel.addAttribute("registrationError", "Uno o più parametri non sono corretti!");
 
@@ -301,16 +316,17 @@ public class AdminController {
 	@GetMapping("/showFormForUpdateUserSede")
 	public String showFormForUpdateUserSede(@RequestParam("userUsername") String theUsername, Model theModel) {
 
-		List<Sede> theSedi = userService.getSedi();
+//		List<Sede> theSedi = userService.getSedi();
 //		
-		theModel.addAttribute("sedi", theSedi);
+		theModel.addAttribute("sedi", getSediBean());
 
 		// recupero la sede attuale
-		theModel.addAttribute("sedeAttuale", userService.findByUserName(theUsername).getSedeAssegnamento());
+		SedeBean sedeAttuale = new SedeBean(userService.findByUserName(theUsername).getSedeAssegnamento());
+		theModel.addAttribute("sedeAttuale", sedeAttuale);
 
 		theModel.addAttribute("crmSede", new CrmSede());
 
-		theModel.addAttribute("userUsername", theUsername);
+		theModel.addAttribute("userUsername", findUserByUsernameBean(theUsername).getUserName());
 
 //		User theUser = userService.findByUserName(theUsername);
 //		
@@ -324,13 +340,12 @@ public class AdminController {
 	public String processUpdateUserSedeForm(@RequestParam("userUsername") String theUsername,
 			@Valid @ModelAttribute("crmUser") CrmSede theSede, BindingResult theBindingResult, Model theModel) {
 
-		List<Sede> theSedi = userService.getSedi();
+//		List<Sede> theSedi = userService.getSedi();
 
-		theModel.addAttribute("sedi", theSedi);
-
-		// create user account
+//		theModel.addAttribute("sedi", getSediBean());
 		User theUser = userService.findByUserName(theUsername);
-
+		
+		// create user account
 		userService.changeSede(theSede, theUser);
 
 		return "redirect:/admin/showListUsersPagination?registrationSucces=Sede aggiornata con successo.";
@@ -340,16 +355,18 @@ public class AdminController {
 	@GetMapping("/showFormForUpdateUserRole")
 	public String showFormForUpdateUserRole(@RequestParam("userUsername") String theUsername, Model theModel) {
 
-		List<Role> theRoles = userService.getRoles();
+//		List<Role> theRoles = userService.getRoles();
 //		
-		theModel.addAttribute("roles", theRoles);
+		theModel.addAttribute("roles", getRolesBean());
 
 		// recupero la sede attuale
+		
+		
 		theModel.addAttribute("ruoloAttuale", userService.findByUserName(theUsername).getRoles());
 
 		theModel.addAttribute("crmRole", new CrmRole());
 
-		theModel.addAttribute("userUsername", theUsername);
+		theModel.addAttribute("userUsername", findUserByUsernameBean(theUsername).getUserName());
 
 //		User theUser = userService.findByUserName(theUsername);
 //		
@@ -362,29 +379,52 @@ public class AdminController {
 	public String processUpdateUserRoleForm(@RequestParam("userUsername") String theUsername,
 			@Valid @ModelAttribute("crmUser") CrmRole theRole, BindingResult theBindingResult, Model theModel) {
 
-		List<Role> theSedi = userService.getRoles();
+//		List<Role> theSedi = userService.getRoles();
 
-		theModel.addAttribute("roles", theSedi);
+//		theModel.addAttribute("roles", getRolesBean());
 
 		// create user account
-		User theUser = userService.findByUserName(theUsername);
 
-		userService.changeRuolo(theRole, theUser);
+		userService.changeRuolo(theRole, userService.findByUserName(theUsername));
 
 		return "redirect:/admin/showListUsersPagination?registrationSucces=Ruolo aggiornato con successo.";
 
 	}
 
-	@GetMapping("/search")
-	public String searchCustomers(@RequestParam("theSearchName") String theSearchName, Model theModel) {
+	
+	// private method helper
+	private UserBean findUserByUsernameBean(String username) {
+		return new UserBean(userService.findByUserName(username));
+	}
+	
+	private List<RoleBean> getRolesBean(){
+		// get Role from dao
+		List<Role> theRoles = userService.getRoles();
 
-		// search customers from the service
-		List<User> theUsers = userService.search(theSearchName);
-
-		// add the customers to the model
-		theModel.addAttribute("users", theUsers);
-
-		return "list-users";
+	
+		
+		List<RoleBean> theRolesBean = new ArrayList<>();
+		
+		
+		for(Role temp : theRoles){
+			theRolesBean.add(new RoleBean(temp));
+		}
+		
+		return theRolesBean;
+		
+	}
+	
+	private List<SedeBean> getSediBean(){
+		// get Sedi from dao
+		List<Sede> theSedi = userService.getSedi();
+		
+		List<SedeBean> theSediBean = new ArrayList<>();
+		
+		for(Sede temp : theSedi){
+			theSediBean.add(new SedeBean(temp));
+		}
+		
+		return theSediBean;
 	}
 
 }

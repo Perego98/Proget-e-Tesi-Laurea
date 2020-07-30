@@ -6,23 +6,28 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
+import com.tesi.gestione.bean.UserBean;
 import com.tesi.gestione.service.CandidatoService;
+import com.tesi.gestione.service.UserService;
 
 @Controller
 public class HomeController {
 
 
-
     @Autowired
     private CandidatoService candidatoService;
+    
+    @Autowired
+    private UserService userService;
 	
 	@GetMapping("/")
 	public String showHome(Model theModel) {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
+		
+		UserBean theUser = new UserBean(userService.findByUserName(currentPrincipalName));
 		
 		int cn, chr, cm, cv, ca, cr;
 		// devo recuperare i valori
@@ -122,7 +127,7 @@ public class HomeController {
 				"	</script>";
 		
 		
-		
+		theModel.addAttribute("theUser", theUser);
 		theModel.addAttribute("valori", canvas);
 		theModel.addAttribute("valorihr", canvashr);
 		theModel.addAttribute("valorimanager", canvasmanager);

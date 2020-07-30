@@ -153,7 +153,7 @@
 			<!-- Data di nascita -->
 			<!--  TODO: mettere calendario-->
 			<form:errors path="dataNascita" cssClass="error" />
-			<label>Data nascita attuale: ${dataDiNascita} <br>(lasciare il campo vuoto per non cambiare)</label>
+			<label>Data nascita attuale: ${candidato.dataFormatted} <br>(lasciare il campo vuoto per non cambiare)</label>
 			<div style="margin-bottom: 25px" class="input-group col-xs-5">
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-calendar"></i></span>

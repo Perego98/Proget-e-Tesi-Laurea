@@ -128,27 +128,27 @@
 						  
 						<tr>
 							<th>Ruolo</th>
-							<td><security:authentication property="principal.authorities" /></td>
+							<td>${theUser.ruoli}</td>
 						</tr>
 						<tr>
 							<th>Nome</th>
-							<td>${user.firstName}</td>
+							<td>${theUser.firstName}</td>
 						</tr>
 						<tr>
 							<th>Cognome</th>
-							<td> ${user.lastName}</td>
+							<td> ${theUser.lastName}</td>
 						</tr>
 						<tr>
 							<th>Email</th>
-							<td>${user.email}</td>
+							<td>${theUser.email}</td>
 						</tr>
 						<tr>
 							<th>Telefono</th>
-							<td>${user.telephone}</td>
+							<td>${theUser.telephone}</td>
 						</tr>
 						<tr>
 							<th>Sede</th>
-							<td>${user.sedeAssegnamento}</td>
+							<td>${theUser.sedeAssegnamento}</td>
 						</tr>
 
 

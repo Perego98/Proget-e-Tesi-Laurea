@@ -149,7 +149,7 @@
 						</tr>
 						<tr>
 							<th>Data di nascita</th>
-							<td>${dataN}</td>
+							<td>${candidato.dataFormatted}</td>
 						</tr>
 						<tr>
 							<th>Tipo di contratto</th>
@@ -214,7 +214,7 @@
 						<tr>
 							<th>Supervisore</th>
 								<c:if test="${candidato.supervisore != null}">
-									<td>Username: ${candidato.supervisore.userName} - Ruolo: ${candidato.supervisore.roles}</td>
+									<td>${candidato.supervisore.userName}</td>
 								</c:if>
 								
 								<c:if test="${candidato.supervisore == null}">

@@ -32,7 +32,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tesi.gestione.copy.SchedavalutazioneCopy;
+import com.tesi.gestione.bean.CandidatoBean;
+import com.tesi.gestione.bean.SchedavalutazioneBean;
+import com.tesi.gestione.bean.SedeBean;
+import com.tesi.gestione.bean.UserBean;
 import com.tesi.gestione.crm.CrmCandidato;
 import com.tesi.gestione.crm.CrmCandidatoUpdate;
 import com.tesi.gestione.crm.CrmSchedaValutazione;
@@ -78,16 +81,6 @@ public class HrController {
 	@GetMapping("/showListCandidati")
 	public String showMyListCandidati(Model theModel) {
 
-//		// devo chiedere a UserService (UserDao) l'elenco degli user
-//		List<Candidato> theCandidati = candidatoService.getCandidati();
-//
-//		
-//		// devo aggiungerli al model
-//		theModel.addAttribute("candidati", theCandidati);
-//		
-//		
-//		return "list-candidati";		
-
 		return "redirect:/hr/showListCandidatiPagination";
 	}
 
@@ -116,6 +109,12 @@ public class HrController {
 		else
 			theCandidati = candidatoService.getCandidati(0, maxSize);
 
+		List<CandidatoBean> theCandidatiBean = new ArrayList<>();
+		
+		for(Candidato temp : theCandidati){
+			theCandidatiBean.add(new CandidatoBean(temp));
+		}
+		
 		List<Integer> numeroPagine = new ArrayList<>();
 
 		for (int i = 0; i < numPagine; i++) {
@@ -127,7 +126,7 @@ public class HrController {
 		String currentPrincipalName = authentication.getName();
 
 		theModel.addAttribute("adminAccount", currentPrincipalName);
-		theModel.addAttribute("candidati", theCandidati);
+		theModel.addAttribute("candidati", theCandidatiBean);
 		theModel.addAttribute("numeroPagineList", numeroPagine);
 		theModel.addAttribute("firstPage", true);
 		theModel.addAttribute("pageNumber", 1);
@@ -161,6 +160,12 @@ public class HrController {
 		List<Candidato> theCandidati = candidatoService.getCandidati(Integer.parseInt(firstPage),
 				Integer.parseInt(maxPage));
 
+		List<CandidatoBean> theCandidatiBean = new ArrayList<>();
+		
+		for(Candidato temp : theCandidati){
+			theCandidatiBean.add(new CandidatoBean(temp));
+		}
+		
 		// aggiungo le info di chi è loggato
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
@@ -171,7 +176,7 @@ public class HrController {
 			numeroPagine.add(i + 1);
 		}
 
-		theModel.addAttribute("candidati", theCandidati);
+		theModel.addAttribute("candidati", theCandidatiBean);
 		theModel.addAttribute("adminAccount", currentPrincipalName);
 		theModel.addAttribute("numeroPagineList", numeroPagine);
 		theModel.addAttribute("firstPage", false);
@@ -194,12 +199,12 @@ public class HrController {
 	@GetMapping("/showMoreInfoCandidato")
 	public String showMoreInfoCandidato(@RequestParam("codFiscale") String codFiscale, Model theModel) {
 
-		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
+		CandidatoBean theCandidato = getCandidato(codFiscale);
 		theModel.addAttribute("candidato", theCandidato);
 
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+//		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 
-		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
+		List<SchedavalutazioneBean> theSchede = getSchedeByCfBean(codFiscale);
 
 		if (theSchede.isEmpty()) {
 			theModel.addAttribute("schedaVal", null);
@@ -207,8 +212,8 @@ public class HrController {
 			theModel.addAttribute("schedaVal", theSchede);
 		}
 
-		String formatted = format1.format(theCandidato.getDataNascita().getTime());
-		theModel.addAttribute("dataN", formatted);
+//		String formatted = format1.format(theCandidato.getDataNascita().getTime());
+//		theModel.addAttribute("dataN", formatted);
 
 		return "info-candidato";
 	}
@@ -265,13 +270,13 @@ public class HrController {
 
 		System.out.println(" ********** RegistrationController -> dentro showMyCandidatoRegistrationPage()");
 
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+//		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 
-		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
+		CandidatoBean theCandidato = getCandidato(codFiscale);
 		theModel.addAttribute("crmCandidato", new CrmCandidatoUpdate());
 
-		String formatted = format1.format(theCandidato.getDataNascita().getTime());
-		theModel.addAttribute("dataDiNascita", formatted);
+//		String formatted = format1.format(theCandidato.getDataNascita().getTime());
+//		theModel.addAttribute("dataDiNascita", formatted);
 		theCandidato.setDataNascita(null);
 		theModel.addAttribute("candidato", theCandidato);
 
@@ -311,7 +316,7 @@ public class HrController {
 	@GetMapping("/showCandidatoUpdateStatoForm")
 	public String showMyCandidatoUpdateStatoPage(@RequestParam("codFiscale") String codFiscale, Model theModel) {
 
-		theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
+		theModel.addAttribute("candidato", getCandidato(codFiscale));
 		return "update-stato-candidato";
 	}
 
@@ -332,8 +337,8 @@ public class HrController {
 	@GetMapping("/showCandidatoSetManagerForm")
 	public String showMyCandidatoSetManagerPage(@RequestParam("codFiscale") String codFiscale, Model theModel) {
 
-		theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
-		theModel.addAttribute("managers", userService.getManager());
+		theModel.addAttribute("candidato", getCandidato(codFiscale));
+		theModel.addAttribute("managers", getManagers());
 		return "update-set-manager";
 	}
 
@@ -358,7 +363,7 @@ public class HrController {
 
 		boolean result = candidatoService.dowloadCurriculum(codFiscale);
 
-		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
+		List<SchedavalutazioneBean> theSchede = getSchedeByCfBean(codFiscale);
 
 		if (theSchede.isEmpty()) {
 			theModel.addAttribute("schedaVal", null);
@@ -366,10 +371,10 @@ public class HrController {
 			theModel.addAttribute("schedaVal", theSchede);
 		}
 
-		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
-		theModel.addAttribute("candidato", theCandidato);
+		
+		theModel.addAttribute("candidato", getCandidato(codFiscale));
 		if (result) {
-			theModel.addAttribute("registrationSucces", "Dowload Completato correttamente.");
+			theModel.addAttribute("registrationSucces", "Download Completato correttamente.");
 		} else {
 			theModel.addAttribute("registrationError", "Il Download non è andato a buon fine.");
 		}
@@ -381,8 +386,7 @@ public class HrController {
 	@RequestMapping(value = { "/showUploadCV" }, method = RequestMethod.GET)
 	public String addDocuments(@RequestParam("codFiscale") String codFiscale, ModelMap model) {
 
-		Candidato candidato = candidatoService.findByCodiceFiscale(codFiscale);
-		model.addAttribute("candidato", candidato);
+		model.addAttribute("candidato", getCandidato(codFiscale));
 
 		return "upload-cv";
 	}
@@ -399,34 +403,9 @@ public class HrController {
 
 		candidatoService.uploadCV(file, candidato);
 
-//		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
-//
-//		if (theSchede.isEmpty()) {
-//			theModel.addAttribute("schedaVal", null);
-//		} else {
-//			theModel.addAttribute("schedaVal", theSchede);
-//		}
-//
-//		Candidato theCandidato = candidatoService.findByCodiceFiscale(codFiscale);
-//		theModel.addAttribute("candidato", theCandidato);
-//
-//		theModel.addAttribute("registrationSucces", "Upload completato correttamente.");
-//
-//		return "info-candidato";
 		return "redirect:/hr/showListCandidatiPagination?registrationSucces=Upload completato correttamente.";
 	}
 
-	@GetMapping("/search")
-	public String searchCustomers(@RequestParam("theSearchName") String theSearchName, Model theModel) {
-
-		// search customers from the service
-		List<Candidato> theCandidati = candidatoService.search(theSearchName);
-
-		// aggiungo al model
-		theModel.addAttribute("candidati", theCandidati);
-
-		return "list-candidati";
-	}
 
 	@GetMapping("/showCompilazioneSchedaValutazioneForm")
 	public String showMyCompilazioneSchedaValutazionePage(@RequestParam("codFiscale") String codFiscale,
@@ -436,9 +415,9 @@ public class HrController {
 		String currentPrincipalName = authentication.getName();
 
 		theModel.addAttribute("crmSchedaValutazione", new CrmSchedaValutazione());
-		theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
-		theModel.addAttribute("user", userService.findByUserName(currentPrincipalName));
-		theModel.addAttribute("sedi", candidatoService.getSedi());
+		theModel.addAttribute("candidato", getCandidato(codFiscale));
+		theModel.addAttribute("user", getUser(currentPrincipalName));
+		theModel.addAttribute("sedi", getSediBean());
 
 		return "compilazione-scheda-valutazione";
 	}
@@ -457,9 +436,9 @@ public class HrController {
 		// form validation
 		if (theBindingResult.hasErrors()) {
 
-			theModel.addAttribute("sedi", candidatoService.getSedi());
-			theModel.addAttribute("candidato", candidatoService.findByCodiceFiscale(codFiscale));
-			theModel.addAttribute("user", userService.findByUserName(currentPrincipalName));
+			theModel.addAttribute("sedi", getSediBean());
+			theModel.addAttribute("candidato", getCandidato(codFiscale));
+			theModel.addAttribute("user", getUser(currentPrincipalName));
 
 			return "compilazione-scheda-valutazione";
 		}
@@ -490,7 +469,7 @@ public class HrController {
 			@RequestParam(value = "registrationError", required = false) String registrationError, Model theModel) {
 
 		List<Schedavalutazione> theSchede = schedaValutazioneService.findByCodiceFiscale(codFiscale);
-		List<SchedavalutazioneCopy> theSchedeCopy = new ArrayList<>();
+		List<SchedavalutazioneBean> theSchedeCopy = new ArrayList<>();
 		
 		
 		if (theSchede.isEmpty()) {
@@ -498,7 +477,7 @@ public class HrController {
 		} else {
 //			theModel.addAttribute("schede", theSchede);
 			for (Schedavalutazione temp : theSchede) {
-				theSchedeCopy.add(new SchedavalutazioneCopy(temp));
+				theSchedeCopy.add(new SchedavalutazioneBean(temp));
 			}
 			
 			// aggiungo le schede con data formattata al model
@@ -523,6 +502,55 @@ public class HrController {
 
 		return "redirect:/hr/showSchedeValutazione?codFiscale=" + codFiscale
 				+ "&registrationSucces=Scheda di valutazione cancellata con successo.";
+	}
+	
+	// metodi helper
+	private UserBean getUser(String currentPrincipalName){
+		return new UserBean(userService.findByUserName(currentPrincipalName));
+		
+	}
+	
+	private CandidatoBean getCandidato(String codFiscale) {
+		
+		return new CandidatoBean(candidatoService.findByCodiceFiscale(codFiscale));
+	}
+	
+	private List<UserBean> getManagers() {
+		List<User> theManagers = userService.getManager();
+		List<UserBean> managerBean = new ArrayList<>();
+		
+		for(User temp : theManagers){
+			managerBean.add(new UserBean(temp));
+		}
+		
+		return managerBean;
+	}
+	
+	private List<SchedavalutazioneBean> getSchedeByCfBean(String codFiscale){
+		List<Schedavalutazione> theSchede = 
+				schedaValutazioneService.findByCodiceFiscale(codFiscale);
+
+		
+		List<SchedavalutazioneBean> theSchedeBean = new ArrayList<>();
+		
+		for(Schedavalutazione temp : theSchede){
+			theSchedeBean.add(new SchedavalutazioneBean(temp));
+		}
+		
+		return theSchedeBean;
+	}
+	
+	private List<SedeBean> getSediBean(){
+		// get Sedi from dao
+		List<Sede> theSedi = userService.getSedi();
+		
+		List<SedeBean> theSediBean = new ArrayList<>();
+		
+		for(Sede temp : theSedi){
+			theSediBean.add(new SedeBean(temp));
+		}
+		
+		return theSediBean;
 	}
 
 }

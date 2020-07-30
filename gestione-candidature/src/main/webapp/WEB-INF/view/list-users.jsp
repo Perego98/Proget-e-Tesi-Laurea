@@ -317,7 +317,7 @@
 							</c:if>
 						
 						</td>
-						<td> ${tempUser.roles}</td>
+						<td> ${tempUser.ruoli}</td>
 						<td> ${tempUser.sedeAssegnamento}</td>
 						
 						
