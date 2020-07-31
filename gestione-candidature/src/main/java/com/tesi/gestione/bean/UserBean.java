@@ -27,17 +27,17 @@ public class UserBean {
 	
 	private String ruoli;
 
-	private Collection<Role> roles;
+	private Collection<RoleBean> roles;
 
-	private Sede sedeAssegnamento;
+//	private Sede sedeAssegnamento;
 
-	private List<Schedavalutazione> schedeValutazione;
+//	private List<Schedavalutazione> schedeValutazione;
 	
 //	private Collection<RoleBean> roles;
 //
-	private SedeBean sedeAssegnamentoBean;
+	private SedeBean sedeAssegnamento;
 //
-//	private List<SchedavalutazioneBean> schedeValutazione;
+	private List<SchedavalutazioneBean> schedeValutazione;
 
 	public UserBean() {
 	}
@@ -63,14 +63,25 @@ public class UserBean {
 		this.email = theUser.getEmail();
 		this.telephone = theUser.getTelephone();
 		this.qualified = theUser.isQualified();
-		this.roles = theUser.getRoles();
-		this.sedeAssegnamento = theUser.getSedeAssegnamento();
-		this.sedeAssegnamentoBean = new SedeBean(theUser.getSedeAssegnamento());
-		this.schedeValutazione = theUser.getSchedeValutazione();
-		this.ruoli = processRole(theUser.getRoles());
+		this.roles = processRole(theUser.getRoles());
+//		this.sedeAssegnamento = theUser.getSedeAssegnamento();
+		this.sedeAssegnamento = new SedeBean(theUser.getSedeAssegnamento());
+//		this.schedeValutazione = processScheda(theUser.getSchedeValutazione());
+		this.ruoli = stringRole(theUser.getRoles());
 	}
 	
-	private String processRole(Collection<Role> paramRole) {
+	private List<RoleBean> processRole(Collection<Role> paramRole) {
+		List<RoleBean> tempRole = new ArrayList<>();
+		
+		
+		for (Role temp : paramRole) {
+			tempRole.add(new RoleBean(temp));
+		}
+
+		return tempRole;
+	}
+	
+	private String stringRole(Collection<Role> paramRole) {
 		
 		String ruoli = "";
 		for (Role temp : paramRole) {
@@ -163,37 +174,35 @@ public class UserBean {
 		this.qualified = qualified;
 	}
 
-	public Collection<Role> getRoles() {
-		return roles;
-	}
 
-	public void setRoles(Collection<Role> roles) {
-		this.roles = roles;
-	}
 
-	public Sede getSedeAssegnamento() {
+
+
+	public SedeBean getSedeAssegnamento() {
 		return sedeAssegnamento;
 	}
 
-	public void setSedeAssegnamento(Sede sedeAssegnamento) {
+	public void setSedeAssegnamento(SedeBean sedeAssegnamento) {
 		this.sedeAssegnamento = sedeAssegnamento;
 	}
 
-	public List<Schedavalutazione> getSchedeValutazione() {
+	public Collection<RoleBean> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Collection<RoleBean> roles) {
+		this.roles = roles;
+	}
+
+	public List<SchedavalutazioneBean> getSchedeValutazione() {
 		return schedeValutazione;
 	}
 
-	public void setSchedeValutazione(List<Schedavalutazione> schedeValutazione) {
+	public void setSchedeValutazione(List<SchedavalutazioneBean> schedeValutazione) {
 		this.schedeValutazione = schedeValutazione;
 	}
 
-	public SedeBean getSedeAssegnamentoBean() {
-		return sedeAssegnamentoBean;
-	}
 
-	public void setSedeAssegnamentoBean(SedeBean sedeAssegnamentoBean) {
-		this.sedeAssegnamentoBean = sedeAssegnamentoBean;
-	}
 
 	
 	

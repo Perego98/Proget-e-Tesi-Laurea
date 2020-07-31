@@ -46,7 +46,7 @@ public class CandidatoBean {
 
 	private String dataFormatted;
 
-	private List<Schedavalutazione> schedeValutazione;
+//	private List<Schedavalutazione> schedeValutazione;
 	
 //	private List<SchedavalutazioneBean> schedeValutazione;
 
@@ -90,7 +90,7 @@ public class CandidatoBean {
 		this.note = candidato.getNote();
 		this.curriculum = candidato.getCurriculum();
 		this.supervisore = candidato.getSupervisore();
-		this.schedeValutazione = candidato.getSchedeValutazione();
+//		this.schedeValutazione = processSchede(candidato.getSchedeValutazione());
 		this.dataFormatted = formattedDataV2(candidato.getDataNascita());
 	}
 
@@ -247,13 +247,13 @@ public class CandidatoBean {
 		this.supervisore = supervisore;
 	}
 
-	public List<Schedavalutazione> getSchedeValutazione() {
-		return schedeValutazione;
-	}
-
-	public void setSchedeValutazione(List<Schedavalutazione> schedeValutazione) {
-		this.schedeValutazione = schedeValutazione;
-	}
+//	public List<Schedavalutazione> getSchedeValutazione() {
+//		return schedeValutazione;
+//	}
+//
+//	public void setSchedeValutazione(List<Schedavalutazione> schedeValutazione) {
+//		this.schedeValutazione = schedeValutazione;
+//	}
 
 	public String getDataFormatted() {
 		return dataFormatted;

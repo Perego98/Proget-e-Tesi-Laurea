@@ -131,7 +131,7 @@
 								<table class="table table-striped">
 									<tr>
 										<th>Intervistatore:</th>
-										<td>${tempSchede.utenteRelatore.userName}</td>
+										<td>${tempSchede.utenteRelatore}</td>
 									</tr>									
 									<tr>
 										<th>Sede preferita:</th>
@@ -227,7 +227,7 @@
 
 								</table>
 								<c:if
-									test="${tempSchede.utenteRelatore.userName == accountAttuale}">
+									test="${tempSchede.utenteRelatore == accountAttuale}">
 									<input type="button" value="Elimina"
 										onclick="window.location.href='${pageContext.request.contextPath}/hr/deleteScheda?codScheda=${tempSchede.id}&codFiscale=${codiceFiscale}'; return false;"
 										class="btn btn-danger btn-sm" />

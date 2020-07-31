@@ -13,11 +13,11 @@ public class SchedavalutazioneBean {
 
 	private int id;
 
-	private User utenteRelatore;
+	private String utenteRelatore; //Username
 
-	private Candidato candidatoRelativo;
+	private String candidatoRelativo; //CF
 
-	private Sede sedePreferita;
+	private SedeBean sedePreferita;
 
 	private String dispSpostamentiTrasferimenti;
 
@@ -64,9 +64,12 @@ public class SchedavalutazioneBean {
 
 	public SchedavalutazioneBean(Schedavalutazione scheda) {
 		this.id = scheda.getId();
-		this.utenteRelatore = scheda.getUtenteRelatore();
-		this.candidatoRelativo = scheda.getCandidatoRelativo();
-		this.sedePreferita = scheda.getSedePreferita();
+		
+		if(scheda.getUtenteRelatore() != null)
+			this.utenteRelatore = scheda.getUtenteRelatore().getUserName();
+		if(scheda.getCandidatoRelativo() != null)
+			this.candidatoRelativo = scheda.getCandidatoRelativo().getCodiceFiscale();
+		this.sedePreferita = new SedeBean(scheda.getSedePreferita());
 		this.dispSpostamentiTrasferimenti = scheda.getDispSpostamentiTrasferimenti();
 		this.dinamicita = scheda.getDinamicita();
 		this.comunicativita = scheda.getComunicativita();
@@ -111,27 +114,11 @@ public class SchedavalutazioneBean {
 		this.dataFormatted = dataFormatted;
 	}
 
-	public User getUtenteRelatore() {
-		return utenteRelatore;
-	}
-
-	public void setUtenteRelatore(User utenteRelatore) {
-		this.utenteRelatore = utenteRelatore;
-	}
-
-	public Candidato getCandidatoRelativo() {
-		return candidatoRelativo;
-	}
-
-	public void setCandidatoRelativo(Candidato candidatoRelativo) {
-		this.candidatoRelativo = candidatoRelativo;
-	}
-
-	public Sede getSedePreferita() {
+	public SedeBean getSedePreferita() {
 		return sedePreferita;
 	}
 
-	public void setSedePreferita(Sede sedePreferita) {
+	public void setSedePreferita(SedeBean sedePreferita) {
 		this.sedePreferita = sedePreferita;
 	}
 
@@ -295,4 +282,21 @@ public class SchedavalutazioneBean {
 		this.id = id;
 	}
 
+	public String getUtenteRelatore() {
+		return utenteRelatore;
+	}
+
+	public void setUtenteRelatore(String utenteRelatore) {
+		this.utenteRelatore = utenteRelatore;
+	}
+
+	public String getCandidatoRelativo() {
+		return candidatoRelativo;
+	}
+
+	public void setCandidatoRelativo(String candidatoRelativo) {
+		this.candidatoRelativo = candidatoRelativo;
+	}
+
+	
 }

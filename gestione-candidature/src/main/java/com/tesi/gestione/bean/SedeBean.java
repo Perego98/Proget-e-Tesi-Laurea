@@ -18,7 +18,7 @@ public class SedeBean {
 
 	private String civicNumber;
 
-	private List<User> user;
+//	private List<User> user;
 	
 	private String printFormatted;
 	
@@ -31,25 +31,27 @@ public class SedeBean {
 
 
 
-//	public SedeBean(Sede theSede) {
-//		this.id = theSede.getId();
-//		this.nameCity = theSede.getNameCity();
-//		this.via = theSede.getVia();
-//		this.cap = theSede.getCap();
-//		this.civicNumber = theSede.getCivicNumber();
-//		this.user = processUser(theSede.getUser());
-//	}
-	
 	public SedeBean(Sede theSede) {
 		this.id = theSede.getId();
 		this.nameCity = theSede.getNameCity();
 		this.via = theSede.getVia();
 		this.cap = theSede.getCap();
 		this.civicNumber = theSede.getCivicNumber();
-		this.user = theSede.getUser();
 		this.printFormatted = format();
 		this.printFormatted2 = format2();
+//		this.user = processUser(theSede.getUser());
 	}
+	
+//	public SedeBean(Sede theSede) {
+//		this.id = theSede.getId();
+//		this.nameCity = theSede.getNameCity();
+//		this.via = theSede.getVia();
+//		this.cap = theSede.getCap();
+//		this.civicNumber = theSede.getCivicNumber();
+//		this.user = theSede.getUser();
+//		this.printFormatted = format();
+//		this.printFormatted2 = format2();
+//	}
 
 
 
@@ -154,15 +156,15 @@ public class SedeBean {
 
 
 
-	public List<User> getUser() {
-		return user;
-	}
-
-
-
-	public void setUser(List<User> user) {
-		this.user = user;
-	}
+//	public List<User> getUser() {
+//		return user;
+//	}
+//
+//
+//
+//	public void setUser(List<User> user) {
+//		this.user = user;
+//	}
 
 
 

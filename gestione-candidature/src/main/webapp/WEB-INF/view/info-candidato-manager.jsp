@@ -125,7 +125,7 @@
 						</tr>
 						<tr>
 							<th>Stato candidatura</th>
-							<td>${candidato.statoCandidatura}</td>
+						<td>${candidato.statoCandidatura}</td> 	
 						</tr>
 						<tr>
 							<th>Telefono</th>
