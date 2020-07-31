@@ -148,7 +148,7 @@
 						</tr>
 						<tr>
 							<th>Sede</th>
-							<td>${theUser.sedeAssegnamento}</td>
+							<td>${theUser.sedeAssegnamentoBean.printFormatted2}</td>
 						</tr>
 
 

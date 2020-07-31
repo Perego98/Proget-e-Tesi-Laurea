@@ -318,7 +318,7 @@
 						
 						</td>
 						<td> ${tempUser.ruoli}</td>
-						<td> ${tempUser.sedeAssegnamento}</td>
+						<td> ${tempUser.sedeAssegnamentoBean.printFormatted2}</td>
 						
 						
 						

@@ -270,14 +270,11 @@ public class HrController {
 
 		System.out.println(" ********** RegistrationController -> dentro showMyCandidatoRegistrationPage()");
 
-//		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 
 		CandidatoBean theCandidato = getCandidato(codFiscale);
 		theModel.addAttribute("crmCandidato", new CrmCandidatoUpdate());
 
-//		String formatted = format1.format(theCandidato.getDataNascita().getTime());
-//		theModel.addAttribute("dataDiNascita", formatted);
-		theCandidato.setDataNascita(null);
+//		theCandidato.setDataNascita(null);
 		theModel.addAttribute("candidato", theCandidato);
 
 		return "update-candidato";

@@ -83,6 +83,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 
 		// recupero la data in forma String
 
+//		String data = crmCandidato.getDataNascita();
 		String data = crmCandidato.getDataNascita();
 
 		String giorno = null, mese = null, anno = null;
@@ -244,33 +245,40 @@ public class CandidatoServiceImpl implements CandidatoService {
 			candidato.setOfferta(crmCandidatoUpdate.getOfferta());
 		}
 
-		// recupero la data in forma String
-		if (crmCandidatoUpdate.getDataNascita() != null) {
-			String data = crmCandidatoUpdate.getDataNascita();
+		try {
+			// recupero la data in forma String
+			if (crmCandidatoUpdate.getDataFormatted() != null) {
+				
+				
+				String data = crmCandidatoUpdate.getDataFormatted();
 
-			// Estraggo i giorni
-			String giorno = data, mese, anno;
-			giorno = data.substring(0, data.indexOf("/"));
-			mese = data.substring(data.indexOf("/") + 1, data.lastIndexOf("/"));
-			anno = data.substring(data.lastIndexOf("/") + 1, data.length());
+				// Estraggo i giorni
+				String giorno = data, mese, anno;
+				giorno = data.substring(0, data.indexOf("/"));
+				mese = data.substring(data.indexOf("/") + 1, data.lastIndexOf("/"));
+				anno = data.substring(data.lastIndexOf("/") + 1, data.length());
 
-			int d = Integer.parseInt(giorno);
-			int m = Integer.parseInt(mese);
-			int a = Integer.parseInt(anno);
+				int d = Integer.parseInt(giorno);
+				int m = Integer.parseInt(mese);
+				int a = Integer.parseInt(anno);
 
-			// creo la data
-			Calendar calendar = GregorianCalendar.getInstance();
-			calendar.set(Calendar.DAY_OF_MONTH, d);
-			calendar.set(Calendar.MONTH, m - 1);
-			calendar.set(Calendar.YEAR, a);
-			calendar.set(Calendar.MILLISECOND, 0);
-			calendar.set(Calendar.SECOND, 0);
-			calendar.set(Calendar.MINUTE, 0);
-			calendar.set(Calendar.HOUR_OF_DAY, 0);
+				// creo la data
+				Calendar calendar = GregorianCalendar.getInstance();
+				calendar.set(Calendar.DAY_OF_MONTH, d);
+				calendar.set(Calendar.MONTH, m - 1);
+				calendar.set(Calendar.YEAR, a);
+				calendar.set(Calendar.MILLISECOND, 0);
+				calendar.set(Calendar.SECOND, 0);
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.set(Calendar.HOUR_OF_DAY, 0);
 
-			candidato.setDataNascita(calendar);
+				candidato.setDataNascita(calendar);
 
+			}
+		} catch (Exception e) {
+			System.out.println("!!! *** Errore nella formattazione della data, campo invariato");
 		}
+		
 
 		// save user in the database
 		candidatoDao.save(candidato);

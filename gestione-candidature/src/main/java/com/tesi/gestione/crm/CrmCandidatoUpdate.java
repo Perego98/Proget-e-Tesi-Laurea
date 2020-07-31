@@ -33,7 +33,8 @@ public class CrmCandidatoUpdate {
 
 //	@NotNull(message = "è richiesto")
 //	@ValidData
-	private String dataNascita;
+//	private String dataNascita;
+	private String dataFormatted;
 
 	@NotNull(message = "è richiesto")
 	private String tipoContratto;
@@ -101,12 +102,22 @@ public class CrmCandidatoUpdate {
 		this.telephone = telephone;
 	}
 
-	public String getDataNascita() {
-		return dataNascita;
+	
+	
+//	public String getDataNascita() {
+//		return dataNascita;
+//	}
+//
+//	public void setDataNascita(String dataNascita) {
+//		this.dataNascita = dataNascita;
+//	}
+
+	public String getDataFormatted() {
+		return dataFormatted;
 	}
 
-	public void setDataNascita(String dataNascita) {
-		this.dataNascita = dataNascita;
+	public void setDataFormatted(String dataFormatted) {
+		this.dataFormatted = dataFormatted;
 	}
 
 	public String getTipoContratto() {

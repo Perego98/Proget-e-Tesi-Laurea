@@ -91,9 +91,16 @@ public class CandidatoBean {
 		this.curriculum = candidato.getCurriculum();
 		this.supervisore = candidato.getSupervisore();
 		this.schedeValutazione = candidato.getSchedeValutazione();
-		this.dataFormatted = formattedData(candidato.getDataNascita());
+		this.dataFormatted = formattedDataV2(candidato.getDataNascita());
 	}
 
+	private String formattedDataV2(Calendar data) {
+		SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+		String formatted = format1.format(data.getTime());
+
+		return formatted;
+	}
+	
 	private String formattedData(Calendar data) {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String formatted = format1.format(data.getTime());

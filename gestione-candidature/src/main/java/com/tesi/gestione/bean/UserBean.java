@@ -35,7 +35,7 @@ public class UserBean {
 	
 //	private Collection<RoleBean> roles;
 //
-//	private SedeBean sedeAssegnamento;
+	private SedeBean sedeAssegnamentoBean;
 //
 //	private List<SchedavalutazioneBean> schedeValutazione;
 
@@ -65,6 +65,7 @@ public class UserBean {
 		this.qualified = theUser.isQualified();
 		this.roles = theUser.getRoles();
 		this.sedeAssegnamento = theUser.getSedeAssegnamento();
+		this.sedeAssegnamentoBean = new SedeBean(theUser.getSedeAssegnamento());
 		this.schedeValutazione = theUser.getSchedeValutazione();
 		this.ruoli = processRole(theUser.getRoles());
 	}
@@ -184,6 +185,14 @@ public class UserBean {
 
 	public void setSchedeValutazione(List<Schedavalutazione> schedeValutazione) {
 		this.schedeValutazione = schedeValutazione;
+	}
+
+	public SedeBean getSedeAssegnamentoBean() {
+		return sedeAssegnamentoBean;
+	}
+
+	public void setSedeAssegnamentoBean(SedeBean sedeAssegnamentoBean) {
+		this.sedeAssegnamentoBean = sedeAssegnamentoBean;
 	}
 
 	

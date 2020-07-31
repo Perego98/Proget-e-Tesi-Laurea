@@ -20,6 +20,10 @@ public class SedeBean {
 
 	private List<User> user;
 	
+	private String printFormatted;
+	
+	private String printFormatted2;
+	
 //	private List<UserBean> user;
 
 	public SedeBean() {
@@ -43,6 +47,22 @@ public class SedeBean {
 		this.cap = theSede.getCap();
 		this.civicNumber = theSede.getCivicNumber();
 		this.user = theSede.getUser();
+		this.printFormatted = format();
+		this.printFormatted2 = format2();
+	}
+
+
+
+	private String format() {
+		String temp = "";
+		temp = "città: " + nameCity + ", via: " + via + ", numero civico: " + civicNumber;		
+		return temp;
+	}
+	
+	private String format2() {
+		String temp = "";
+		temp = nameCity + ", " + via + " " + civicNumber + ", " + cap;		
+		return temp;
 	}
 
 
@@ -109,6 +129,30 @@ public class SedeBean {
 //	public void setUser(List<UserBean> user) {
 //		this.user = user;
 //	}
+
+	public String getPrintFormatted() {
+		return printFormatted;
+	}
+
+
+
+	public void setPrintFormatted(String printFormatted) {
+		this.printFormatted = printFormatted;
+	}
+
+
+
+	public String getPrintFormatted2() {
+		return printFormatted2;
+	}
+
+
+
+	public void setPrintFormatted2(String printFormatted2) {
+		this.printFormatted2 = printFormatted2;
+	}
+
+
 
 	public List<User> getUser() {
 		return user;

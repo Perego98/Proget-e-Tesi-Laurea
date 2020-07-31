@@ -107,7 +107,8 @@
 		<div  class="panel-body">
 
 		
-		<form:form action="${pageContext.request.contextPath}/hr/processUpdateCandidatoForm?codFiscale=${candidato.codiceFiscale}"  modelAttribute="candidato" method="POST">
+		<form:form action="${pageContext.request.contextPath}/hr/processUpdateCandidatoForm?codFiscale=${candidato.codiceFiscale}"  
+			modelAttribute="candidato" method="POST">
 		
 			<!-- need to associate this data with user username-->
 			<form:hidden path="codiceFiscale"/>
@@ -152,12 +153,11 @@
 
 			<!-- Data di nascita -->
 			<!--  TODO: mettere calendario-->
-			<form:errors path="dataNascita" cssClass="error" />
-			<label>Data nascita attuale: ${candidato.dataFormatted} <br>(lasciare il campo vuoto per non cambiare)</label>
+			<form:errors path="dataFormatted" cssClass="error" />
 			<div style="margin-bottom: 25px" class="input-group col-xs-5">
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-calendar"></i></span>
-				<form:input path="dataNascita" type="date"
+				<form:input path="dataFormatted" type="date"
 					placeholder="data di nascita dd/mm/aaaa (*)"
 					class="form-control" />
 			</div>

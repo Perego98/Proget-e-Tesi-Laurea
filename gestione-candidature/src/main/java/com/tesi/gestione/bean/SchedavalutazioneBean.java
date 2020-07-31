@@ -90,6 +90,13 @@ public class SchedavalutazioneBean {
 	}
 
 	private String formattedData(Calendar data) {
+		SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+		String formatted = format1.format(data.getTime());
+
+		return formatted;
+	}
+	
+	private String formattedData2(Calendar data) {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String formatted = format1.format(data.getTime());
 
