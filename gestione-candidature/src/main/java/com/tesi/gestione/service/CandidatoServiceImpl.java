@@ -153,7 +153,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 		JFrame parentFrame = new JFrame();
 
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setDialogTitle("Specify a file to save");
+		fileChooser.setDialogTitle("Seleziona il percorso dove vuoi salvare il Curriculum");
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
 		int userSelection = fileChooser.showSaveDialog(parentFrame);
