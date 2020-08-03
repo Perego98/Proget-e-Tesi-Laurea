@@ -1,13 +1,10 @@
 package com.tesi.gestione.bean;
 
-import java.util.List;
 import java.sql.Blob;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.tesi.gestione.entity.Candidato;
-import com.tesi.gestione.entity.Schedavalutazione;
 import com.tesi.gestione.entity.User;
 
 public class CandidatoBean {
@@ -33,7 +30,7 @@ public class CandidatoBean {
 	private int preavviso;
 
 	private String offerta;
-	
+
 	private String proveninenza;
 
 	private String aspettative;
@@ -46,33 +43,9 @@ public class CandidatoBean {
 
 	private String dataFormatted;
 
-//	private List<Schedavalutazione> schedeValutazione;
-	
-//	private List<SchedavalutazioneBean> schedeValutazione;
-
 	public CandidatoBean() {
 	}
 
-//	public CandidatoBean(Candidato candidato) {
-//		this.codiceFiscale = candidato.getCodiceFiscale();
-//		this.statoCandidatura = candidato.getStatoCandidatura();
-//		this.nome = candidato.getNome();
-//		this.cognome = candidato.getCognome();
-//		this.telephone = candidato.getTelephone();
-//		this.email = candidato.getEmail();
-//		this.dataNascita = candidato.getDataNascita();
-//		this.tipoContratto = candidato.getTipoContratto();
-//		this.ral = candidato.getRal();
-//		this.preavviso = candidato.getPreavviso();
-//		this.offerta = candidato.getOfferta();
-//		this.proveninenza = candidato.getProveninenza();
-//		this.aspettative = candidato.getAspettative();
-//		this.note = candidato.getNote();
-//		this.curriculum = candidato.getCurriculum();
-//		this.supervisore = candidato.getSupervisore();
-//		this.schedeValutazione = processSchede(candidato.getSchedeValutazione());
-//	}
-	
 	public CandidatoBean(Candidato candidato) {
 		this.codiceFiscale = candidato.getCodiceFiscale();
 		this.statoCandidatura = candidato.getStatoCandidatura();
@@ -90,7 +63,6 @@ public class CandidatoBean {
 		this.note = candidato.getNote();
 		this.curriculum = candidato.getCurriculum();
 		this.supervisore = candidato.getSupervisore();
-//		this.schedeValutazione = processSchede(candidato.getSchedeValutazione());
 		this.dataFormatted = formattedDataV2(candidato.getDataNascita());
 	}
 
@@ -99,24 +71,6 @@ public class CandidatoBean {
 		String formatted = format1.format(data.getTime());
 
 		return formatted;
-	}
-	
-	private String formattedData(Calendar data) {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-		String formatted = format1.format(data.getTime());
-
-		return formatted;
-	}
-
-	private List<SchedavalutazioneBean> processSchede(List<Schedavalutazione> paramSchede) {
-		
-		List<SchedavalutazioneBean> tempArray = new ArrayList<>();
-		
-		for(Schedavalutazione temp : paramSchede) {
-			tempArray.add(new SchedavalutazioneBean(temp));
-		}
-		
-		return tempArray;
 	}
 
 	public String getCodiceFiscale() {
@@ -247,14 +201,6 @@ public class CandidatoBean {
 		this.supervisore = supervisore;
 	}
 
-//	public List<Schedavalutazione> getSchedeValutazione() {
-//		return schedeValutazione;
-//	}
-//
-//	public void setSchedeValutazione(List<Schedavalutazione> schedeValutazione) {
-//		this.schedeValutazione = schedeValutazione;
-//	}
-
 	public String getDataFormatted() {
 		return dataFormatted;
 	}
@@ -262,18 +208,5 @@ public class CandidatoBean {
 	public void setDataFormatted(String dataFormatted) {
 		this.dataFormatted = dataFormatted;
 	}
-
-	
-	
-	
-//	public List<SchedavalutazioneBean> getSchedeValutazione() {
-//		return schedeValutazione;
-//	}
-//
-//	public void setSchedeValutazione(List<SchedavalutazioneBean> schedeValutazione) {
-//		this.schedeValutazione = schedeValutazione;
-//	}
-
-
 
 }

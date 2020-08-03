@@ -24,37 +24,18 @@ public class UserBean {
 	private String telephone;
 
 	private boolean qualified;
-	
+
 	private String ruoli;
 
 	private Collection<RoleBean> roles;
 
-//	private Sede sedeAssegnamento;
-
-//	private List<Schedavalutazione> schedeValutazione;
-	
-//	private Collection<RoleBean> roles;
-//
 	private SedeBean sedeAssegnamento;
-//
+
 	private List<SchedavalutazioneBean> schedeValutazione;
 
 	public UserBean() {
 	}
 
-//	public UserBean(User theUser) {
-//		this.userName = theUser.getUserName();
-//		this.password = theUser.getPassword();
-//		this.firstName = theUser.getFirstName();
-//		this.lastName = theUser.getLastName();
-//		this.email = theUser.getEmail();
-//		this.telephone = theUser.getTelephone();
-//		this.qualified = theUser.isQualified();
-//		this.roles = processRole(theUser.getRoles());
-//		this.sedeAssegnamento = processSede(theUser.getSedeAssegnamento());
-//		this.schedeValutazione = processScheda(theUser.getSchedeValutazione());
-//	}
-	
 	public UserBean(User theUser) {
 		this.userName = theUser.getUserName();
 		this.password = theUser.getPassword();
@@ -64,30 +45,27 @@ public class UserBean {
 		this.telephone = theUser.getTelephone();
 		this.qualified = theUser.isQualified();
 		this.roles = processRole(theUser.getRoles());
-//		this.sedeAssegnamento = theUser.getSedeAssegnamento();
 		this.sedeAssegnamento = new SedeBean(theUser.getSedeAssegnamento());
-//		this.schedeValutazione = processScheda(theUser.getSchedeValutazione());
 		this.ruoli = stringRole(theUser.getRoles());
 	}
-	
+
 	private List<RoleBean> processRole(Collection<Role> paramRole) {
 		List<RoleBean> tempRole = new ArrayList<>();
-		
-		
+
 		for (Role temp : paramRole) {
 			tempRole.add(new RoleBean(temp));
 		}
 
 		return tempRole;
 	}
-	
+
 	private String stringRole(Collection<Role> paramRole) {
-		
+
 		String ruoli = "";
 		for (Role temp : paramRole) {
 			ruoli += temp.toString();
-			
-			if(paramRole.size()>1) {
+
+			if (paramRole.size() > 1) {
 				ruoli += " - ";
 			}
 		}
@@ -102,21 +80,6 @@ public class UserBean {
 	public void setRuoli(String ruoli) {
 		this.ruoli = ruoli;
 	}
-	
-	private List<SchedavalutazioneBean> processScheda(List<Schedavalutazione> paramSchede) {
-		List<SchedavalutazioneBean> tempArray = new ArrayList<>();
-
-		for (Schedavalutazione temp : paramSchede) {
-			tempArray.add(new SchedavalutazioneBean(temp));
-		}
-
-		return tempArray;
-	}
-
-	private SedeBean processSede(Sede paramSede) {
-		return new SedeBean(paramSede);
-	}
-
 
 	public String getUserName() {
 		return userName;
@@ -174,10 +137,6 @@ public class UserBean {
 		this.qualified = qualified;
 	}
 
-
-
-
-
 	public SedeBean getSedeAssegnamento() {
 		return sedeAssegnamento;
 	}
@@ -201,33 +160,5 @@ public class UserBean {
 	public void setSchedeValutazione(List<SchedavalutazioneBean> schedeValutazione) {
 		this.schedeValutazione = schedeValutazione;
 	}
-
-
-
-	
-	
-//	public Collection<RoleBean> getRoles() {
-//		return roles;
-//	}
-//
-//	public void setRoles(Collection<RoleBean> roles) {
-//		this.roles = roles;
-//	}
-//
-//	public SedeBean getSedeAssegnamento() {
-//		return sedeAssegnamento;
-//	}
-//
-//	public void setSedeAssegnamento(SedeBean sedeAssegnamento) {
-//		this.sedeAssegnamento = sedeAssegnamento;
-//	}
-//
-//	public List<SchedavalutazioneBean> getSchedeValutazione() {
-//		return schedeValutazione;
-//	}
-//
-//	public void setSchedeValutazione(List<SchedavalutazioneBean> schedeValutazione) {
-//		this.schedeValutazione = schedeValutazione;
-//	}
 
 }

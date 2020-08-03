@@ -3,19 +3,15 @@ package com.tesi.gestione.bean;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-
-import com.tesi.gestione.entity.Candidato;
 import com.tesi.gestione.entity.Schedavalutazione;
-import com.tesi.gestione.entity.Sede;
-import com.tesi.gestione.entity.User;
 
 public class SchedavalutazioneBean {
 
 	private int id;
 
-	private String utenteRelatore; //Username
+	private String utenteRelatore; // Username
 
-	private String candidatoRelativo; //CF
+	private String candidatoRelativo; // CF
 
 	private SedeBean sedePreferita;
 
@@ -64,12 +60,13 @@ public class SchedavalutazioneBean {
 
 	public SchedavalutazioneBean(Schedavalutazione scheda) {
 		this.id = scheda.getId();
-		
-		if(scheda.getUtenteRelatore() != null)
+
+		if (scheda.getUtenteRelatore() != null)
 			this.utenteRelatore = scheda.getUtenteRelatore().getUserName();
-		if(scheda.getCandidatoRelativo() != null)
+		if (scheda.getCandidatoRelativo() != null)
 			this.candidatoRelativo = scheda.getCandidatoRelativo().getCodiceFiscale();
-		this.sedePreferita = new SedeBean(scheda.getSedePreferita());
+		if (scheda.getSedePreferita() != null)
+			this.sedePreferita = new SedeBean(scheda.getSedePreferita());
 		this.dispSpostamentiTrasferimenti = scheda.getDispSpostamentiTrasferimenti();
 		this.dinamicita = scheda.getDinamicita();
 		this.comunicativita = scheda.getComunicativita();
@@ -98,7 +95,7 @@ public class SchedavalutazioneBean {
 
 		return formatted;
 	}
-	
+
 	private String formattedData2(Calendar data) {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String formatted = format1.format(data.getTime());
@@ -298,5 +295,4 @@ public class SchedavalutazioneBean {
 		this.candidatoRelativo = candidatoRelativo;
 	}
 
-	
 }
