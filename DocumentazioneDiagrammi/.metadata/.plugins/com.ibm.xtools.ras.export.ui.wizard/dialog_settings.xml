@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="RASExportWizard">
+		<item value="false" key="Export to repository"/>
+		<item value="false" key="Use existing manifest"/>
+		<item value="" key="Repository name"/>
+		<item value="" key="Existing manifest"/>
+		<item value="C:\Users\Daniele\Documents\GitHub\ProgettoTesiLaurea\DocumentazioneDiagrammi\RSAFile\DiagrammaCasiUso.ras" key="File system path"/>
+		<item value="Incluso" key="Storage format"/>
+		<list key="Destinations">
+			<item value="C:\Users\Daniele\Documents\GitHub\ProgettoTesiLaurea\DocumentazioneDiagrammi\RSAFile\DiagrammaCasiUso.ras"/>
+		</list>
+	</section>
+</section>

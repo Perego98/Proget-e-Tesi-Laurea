@@ -1,5 +1,5 @@
-#Tue Jul 21 15:07:44 CEST 2020
-viewport.x=-99
+#Thu Aug 06 11:58:50 CEST 2020
+viewport.x=-117
 zoom=1.0
 print.margin.right=0.5
 rulergrid.rulerunit=1
@@ -16,4 +16,4 @@ rulergrid.gridlevel=true
 print.margin.top=0.5
 print.useMillim=true
 print.usePortrait=true
-viewport.y=-19
+viewport.y=-20
