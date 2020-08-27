@@ -177,36 +177,11 @@ public class AdminController {
 
 		theModel.addAttribute("crmUser", new CrmUser());
 
-		System.out.println(" ********** RegistrationController -> Entrato in showMyLoginPage().");
-
-//		// get Role from dao
-//		List<Role> theRoles = userService.getRoles();
-//
-//		// get Sedi from dao
-//		List<Sede> theSedi = userService.getSedi();
-//		
-//		List<RoleBean> theRolesBean = new ArrayList<>();
-//		List<SedeBean> theSediBean = new ArrayList<>();
-//		
-//		for(Role temp : theRoles){
-//			theRolesBean.add(new RoleBean(temp));
-//		}
-//		
-//		for(Sede temp : theSedi){
-//			theSediBean.add(new SedeBean(temp));
-//		}
-		
-
-//		System.out.println(" ********** RegistrationController -> Recuperati Ruoli: " + theRoles.toString());
-//		System.out.println(" ********** RegistrationController -> Recuperati Sedi: " + theSedi.toString());
-
 		// add the role to the model
 		theModel.addAttribute("roles", getRolesBean());
 
 		// add the sedi to the model
 		theModel.addAttribute("sedi", getSediBean());
-
-		System.out.println(" ********** RegistrationController -> Aggiunti al modello: " + theModel.toString());
 
 		return "registration-user-form";
 	}
@@ -254,8 +229,8 @@ public class AdminController {
 //		List<Role> theRoles = userService.getRoles();
 //		List<Sede> theSedi = userService.getSedi();
 
-		theModel.addAttribute("roles", getRolesBean());
-		theModel.addAttribute("sedi", getSediBean());
+//		theModel.addAttribute("roles", getRolesBean());
+//		theModel.addAttribute("sedi", getSediBean());
 		theModel.addAttribute("user", findUserByUsernameBean(theUsername));
 
 		return "update-user";
@@ -270,8 +245,8 @@ public class AdminController {
 //		List<Role> theRoles = userService.getRoles();
 //		List<Sede> theSedi = userService.getSedi();
 
-		theModel.addAttribute("roles", getRolesBean());
-		theModel.addAttribute("sedi", getSediBean());
+//		theModel.addAttribute("roles", getRolesBean());
+//		theModel.addAttribute("sedi", getSediBean());
 
 		System.out.println("********* AdminController --------- Dentro processUpdateUserForm ->  Start");
 
